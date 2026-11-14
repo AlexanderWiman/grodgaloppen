@@ -18,7 +18,8 @@ if(!process.env.N){
  assert(out.hardNormal.win<out.normal.win&&out.hardSkilled.win<=out.skilled.win,'hard should be harder');
  assert(out.hardSkilled.win>=.4,'a skilled player should still win often on hard');
  assert(out.masterSkilled.win<out.hardSkilled.win&&out.masterSkilled.win>=.1,'Mästare is the hardest level but still winnable');
- assert(out.normal.win<=.75,'Lagom should not be a walkover (survey 3: too easy)');
+ // Measured on its own with 150 races (standard error about 4 points), so it doesn't flake like the 45-race profiles.
+ {const lagom=sample({sigma:.07},150).win;console.log('lagom (150 lopp) vinst',(lagom*100).toFixed(0)+'%');assert(lagom<=.75,'Lagom should not be a walkover (survey 3: too easy)')}
  console.log('PASS: idle loses, skill and equipment both raise win rate, race length stays reasonable.');
 }
 // Every track on its own: a normal player should win sometimes and lose sometimes.
