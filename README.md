@@ -198,3 +198,24 @@ Christmas lives in `dist/jul.js` and runs from 1 December to 6 January (`holiday
   - There are 6 or 8 pairs, built from the player's own stickers first.
   - Dewdrops: 6 per pair minus 2 for each extra turn, at least 10, at most 40 a day.
   - The fewest turns for each size is kept as a record.
+
+## The secret forest, Stora Gorm, more Astrid stories, the rose garden and the kitchen garden (survey 4, step 3)
+- **The secret forest** (`dist/skogen.js`, Äventyr → Hemliga skogen) opens after 25 won races (milestone `secretforest`).
+  - Ugglan Hedvig asks one riddle a day (`owlRiddles`, 12 in turn). Wrong answers can be tried again. The first try gives 25 dewdrops, a later try 10.
+  - Räven Ruska hides in one of six places in the picture (`foxSpots`). Find him in three tries for 20 dewdrops.
+  - Each success gives a heart. At five hearts the animal moves a home into the glade (Hedvigs uggleholk, Ruskas lya).
+- **Stora Gorm** (milestone `challenger`: 3 wins on Mästare, counted in `state.masterWins`):
+  - A card on the race page starts a race where Gorm takes Mossa's place (`activeRun={kind:'challenge'}`, `challengeRivals()`).
+  - He races at Mästare speed with a steady pace of 1.15 (`gormDifficulty` is kept out of `difficulties`, so it never shows in the picker).
+  - The first win gives 150 dewdrops and Gorms pokal for the glade.
+  - Measured with the race bot (60 races each):
+    - Skilled timing alone wins about 1 in 20.
+    - Skilled timing with all equipment wins about 40 %.
+    - A strong, fully equipped frog wins about 50 %.
+- **Astrid stories:** six more (14 in all). The story book still comes after eight.
+- **The rose garden** at the castle: water one of five bushes a day. Three waterings make a bloom (30 dewdrops), and five blooms give Smaragdrosen for the glade.
+- **The kitchen garden** (`dist/tradgard.js`, Gläntan → Trädgården) opens with 6 pieces of furniture in the cottage (milestone `yard`).
+  - It has six beds. Tap to plant the chosen crop, tap to water it, and tap to harvest when it is ripe (`yardTap`).
+  - Crops: carrots 3 min, strawberries 5 min (4 berries), sunflowers 10 min, pumpkins 20 min.
+  - Ten harvests give a scarecrow for the glade.
+- **Frogs play in the glade:** with more than one frog, the others hop around the glade. Tap one and it plays with your frog. Once a day per frog, that gives +2 friendship to the other frog and +1 to yours (`frogPlay`).

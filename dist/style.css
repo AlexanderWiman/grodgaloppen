@@ -633,3 +633,55 @@ body[data-holiday="jul"] .villageMap:before{content:'';position:absolute;left:0;
 .wardrobePreview svg{width:140px;display:block}
 .wearOptions{gap:6px}
 .wearOptions button{padding:8px 11px;font-size:13px}
+
+/* Den hemliga skogen: Hedvig's riddle and Ruska's hide-and-seek */
+.forestLead{font-size:14px;color:var(--muted);margin:0 0 14px}
+.forestScene{position:relative;width:100%;aspect-ratio:5/3;min-height:260px;border-radius:24px;overflow:hidden;isolation:isolate}
+.forestBackdrop{position:absolute;inset:0;width:100%;height:100%}
+.forestGlow{animation:julBlink 3s ease-in-out infinite}
+.forestOwl{position:absolute;left:80%;top:22%;width:11%;min-width:46px;border:0;background:none;padding:0;z-index:5}
+.forestOwl svg,.foxSpot>svg{width:100%;display:block}
+.foxSpot{position:absolute;width:17%;min-width:60px;transform:translate(-50%,-60%);border:0;background:none;padding:0;z-index:4}
+.foxSpot:disabled{opacity:1;cursor:default}
+.foxSpot.empty{opacity:.5}
+.foxPeek{position:absolute;left:0;top:-38%;width:100%;animation:foxPop .5s ease-out}
+.foxPeek svg{width:100%;display:block}
+@keyframes foxPop{from{transform:translateY(40%) scale(.6);opacity:0}}
+.forestCards{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
+.forestWho{display:flex;gap:10px;align-items:center}
+.forestWho h3{margin:2px 0}
+.forestFace{width:56px;flex:0 0 56px}.forestFace svg{width:100%;display:block}
+.forestHearts{color:#d24b5a;letter-spacing:2px}
+.riddle{font-style:italic}
+.riddleAnswers{display:flex;flex-wrap:wrap;gap:6px}.riddleAnswers .outline{width:auto;margin:0;padding:9px 14px;font-size:13px}
+.forestStatus{font-weight:600;color:#3f5f45;min-height:1em}
+.forestNote{font-size:13px;color:var(--muted)}
+@media(max-width:700px){.forestCards{grid-template-columns:1fr}}
+/* Stora Gorm, the big challenger */
+.gormCard{display:grid;grid-template-columns:90px 1fr;gap:12px;align-items:center;padding:14px;margin:18px 0;border-radius:18px;background:linear-gradient(120deg,#2f4a2a,#4d6b3a);color:#f6f1c8}
+.gormCard .eyebrow{color:#e2c46a}.gormCard h3{margin:2px 0;color:#fff}.gormCard p{font-size:13px;margin:4px 0 10px;color:#f6f1c8}
+.gormCard .primary{width:auto;margin:0;background:#e2b94b;color:#2f3a20}
+.gormFace svg{width:100%;display:block}
+/* Skogsdrottningen's rose garden */
+.roseRow{display:flex;gap:6px;justify-content:space-between}
+.roseBush{flex:1;border:1px solid #d7dfc4;background:#f6f9ef;border-radius:12px;padding:4px 2px;min-width:0}
+.roseBush svg{width:100%;max-width:60px;display:block;margin:0 auto}
+.roseBush small{font-size:11px;color:var(--muted)}
+.roseBush:disabled{opacity:1;cursor:default;transform:none}
+/* The garden outside the cottage */
+.yardScene{position:relative;border-radius:24px;overflow:hidden;isolation:isolate;min-height:260px}
+.yardBackdrop{position:absolute;inset:0;width:100%;height:100%}
+.yardBeds{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:24% 4% 5%;max-width:640px}
+.yardBed{border:0;background:#fffaf0cc;border-radius:14px;padding:4px;min-width:0}
+.yardBed svg{width:100%;display:block}
+.yardBed small{display:block;font-size:11px;color:#4f5f45;font-weight:600}
+.yardBed.ripe{box-shadow:0 0 0 3px #f6d36b}
+.yardCrops{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}
+.yardCrops svg{width:28px;height:28px}
+/* The other frogs play in the glade */
+.gladeFrog{position:absolute;width:9%;min-width:40px;border:0;background:none;padding:0;z-index:57;animation:gladeHop 3.2s ease-in-out infinite}
+.gladeFrog svg{width:100%;display:block}
+.gladeFrog.play{animation:gladePlay .9s ease-out}
+@keyframes gladeHop{0%,60%,100%{transform:translateY(0)}70%{transform:translateY(-14px)}80%{transform:translateY(0) scaleY(.92)}}
+@keyframes gladePlay{30%{transform:translate(18px,-30px) rotate(-10deg)}60%{transform:translate(36px,0)}100%{transform:none}}
+@media (prefers-reduced-motion:reduce){.gladeFrog,.forestGlow,.foxPeek{animation:none}}
