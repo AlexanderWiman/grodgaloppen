@@ -153,3 +153,11 @@ Pushing to `main` runs all tests and deploys `dist/` to GitHub Pages via `.githu
 - **Background texture:**
   - The start picture (`scene()`) has a tree line, sun rays, grass tufts, flowers, cattails and a fine grain (`#grain`).
   - The tracks, glade, cottage, pond, village and portrait get a soft grain and vignette from CSS (`::before`/`::after` with an inline SVG noise image).
+
+## The fairy's look
+- She sits upright with level shoulders, small puff sleeves and a short neck. Both arms start at the shoulders: one hand rests on the frog's back and the other on its head (the fishing rod sits in that hand). All outfits in `outfitShape()` use the same torso.
+- **Hair has two layers:**
+  - `hairBackShape()` is drawn behind the neck and shoulders, so long hair falls down both sides of the back.
+  - `hairShape()` is drawn in front: a side-parted fringe, locks that frame the face, shine and shadow strands, and eyebrows.
+  - Short hair shows the ears.
+- **Eyes** (`eyeShape()`) have a white, an iris with a pupil and catch-light, an upper lid line and a lash. The iris colour is `state.eyeColor` (default brown).
