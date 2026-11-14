@@ -141,3 +141,10 @@ Pushing to `main` runs all tests and deploys `dist/` to GitHub Pages via `.githu
   - Each firefly is worth a dewdrop, at most 40 a day.
   - After 30 fireflies you get a firefly jar for the glade.
 - `node tests/progress.cjs` goes through all nine unlocks and every new part.
+
+## More detail on the frog and the fairy
+- `frog()` in app.js shares a set of gradients and patterns (`frogDefs`): volume shading (`fgShade`), skin speckles (`fgDots`), a soft ground shadow, shiny eyes and a blended belly.
+  - These overlays are white and dark green, so they work on every frog colour.
+  - The legs are drawn behind the body, and the frog has toes, nostrils and eyebrow ridges.
+- The fairy gets shading on her face and cheeks, a nose, a shine in her hair, folds and shading in her clothes, shadows on her arms, and hands. She casts a shadow on the frog's back.
+- The wings have sheen and veins (`wingShape` in seasons.js).
