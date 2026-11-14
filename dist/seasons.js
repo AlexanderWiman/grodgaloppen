@@ -82,7 +82,7 @@ function wireWardrobe(rerender){document.querySelectorAll('[data-wear]').forEach
 function wingShape(){return '<g transform="translate(0 34)">'+({
  'wings-classic':'<g stroke="#fff6ec" stroke-width="2"><ellipse cx="137" cy="80" rx="19" ry="43" transform="rotate(-40 137 80)" fill="#f5e6fb" opacity=".85"/><ellipse cx="167" cy="78" rx="16" ry="39" transform="rotate(35 167 78)" fill="#e3f0f6" opacity=".85"/></g><g stroke="none"><ellipse cx="137" cy="80" rx="19" ry="43" transform="rotate(-40 137 80)" fill="url(#fgWing)"/><ellipse cx="167" cy="78" rx="16" ry="39" transform="rotate(35 167 78)" fill="url(#fgWing)"/></g><g stroke="#b9a4d6" stroke-opacity=".55" stroke-width="1.1" fill="none" stroke-linecap="round"><path d="M150 96Q136 82 112 56M150 96Q130 92 108 76M143 88Q134 74 128 62"/><path d="M156 96Q168 80 186 56M156 96Q174 92 192 80M163 88Q172 76 176 64"/></g>',
  'wings-butterfly':'<g opacity=".9" stroke="#c98aa8" stroke-opacity=".6" stroke-width="2"><ellipse cx="130" cy="66" rx="20" ry="24" transform="rotate(-30 130 66)" fill="#f6c8de"/><ellipse cx="174" cy="64" rx="19" ry="23" transform="rotate(30 174 64)" fill="#f6c8de"/><ellipse cx="135" cy="98" rx="12" ry="15" transform="rotate(-20 135 98)" fill="#c9b5f0"/><ellipse cx="169" cy="96" rx="11" ry="14" transform="rotate(20 169 96)" fill="#c9b5f0"/><circle cx="128" cy="64" r="5" fill="#fff"/><circle cx="176" cy="62" r="5" fill="#fff"/></g><g fill="url(#fgWing)"><ellipse cx="130" cy="66" rx="20" ry="24" transform="rotate(-30 130 66)"/><ellipse cx="174" cy="64" rx="19" ry="23" transform="rotate(30 174 64)"/></g><g stroke="#a35f86" stroke-opacity=".35" stroke-width="1" fill="none"><path d="M150 86Q138 72 120 56M150 88Q140 96 128 104M154 86Q166 72 184 56M154 88Q164 96 176 102"/></g><g fill="#a35f86" opacity=".3"><circle cx="120" cy="74" r="2.4"/><circle cx="184" cy="72" r="2.4"/><circle cx="138" cy="102" r="1.8"/><circle cx="166" cy="100" r="1.8"/></g>',
- 'wings-dragonfly':'<g stroke="#7fb8c6" stroke-opacity=".5" stroke-width=".8" fill="none"><path d="M150 84L100 64M150 84L204 62M150 92L104 94M150 92L200 92"/></g><g opacity=".78" fill="#d8f1f7" stroke="#9fd0dc" stroke-width="1.5"><ellipse cx="126" cy="70" rx="30" ry="8" transform="rotate(-25 126 70)"/><ellipse cx="178" cy="68" rx="30" ry="8" transform="rotate(25 178 68)"/><ellipse cx="128" cy="90" rx="26" ry="7" transform="rotate(10 128 90)"/><ellipse cx="176" cy="88" rx="26" ry="7" transform="rotate(-10 176 88)"/></g>',
+ 'wings-dragonfly':'<g stroke="#7fb8c6" stroke-opacity=".5" stroke-width=".8" fill="none"><path d="M150 84L102 62M150 84L198 62M150 90L104 98M150 90L196 98"/></g><g opacity=".78" fill="#d8f1f7" stroke="#9fd0dc" stroke-width="1.5"><ellipse cx="124" cy="74" rx="30" ry="8" transform="rotate(25 124 74)"/><ellipse cx="176" cy="74" rx="30" ry="8" transform="rotate(-25 176 74)"/><ellipse cx="126" cy="94" rx="26" ry="7" transform="rotate(-12 126 94)"/><ellipse cx="174" cy="94" rx="26" ry="7" transform="rotate(12 174 94)"/></g>',
  'wings-star':'<g fill="#fff3b0" stroke="#e5c35a" stroke-width="1.5" opacity=".92"><path d="M150 84L114 40L134 70L100 62L140 86Z"/><path d="M156 84L190 38L172 70L206 60L166 86Z"/></g><g fill="#fff"><circle cx="114" cy="44" r="2.5"/><circle cx="190" cy="42" r="2.5"/></g>'
 })[wearing('wings')]+'</g>'}
 function outfitShape(){const c=state.outfit,dress=`<path d="M148 112 Q137 130 125 147 L157 153 165 113" fill="${c}"/>`;return ({
@@ -91,8 +91,8 @@ function outfitShape(){const c=state.outfit,dress=`<path d="M148 112 Q137 130 12
  'outfit-cape':`<path d="M146 108Q122 138 116 160L170 158Q160 132 166 110Z" fill="${c}" opacity=".6"/>`+dress+'<circle cx="156" cy="112" r="3" fill="#f1ce69"/>',
  'outfit-ballgown':`<path d="M148 112Q130 135 110 156Q140 168 174 156Q164 132 165 113Z" fill="${c}"/><g fill="#fff" opacity=".7"><circle cx="132" cy="150" r="1.8"/><circle cx="150" cy="156" r="1.8"/><circle cx="162" cy="146" r="1.8"/></g>`
 })[wearing('outfitStyle')]}
-// The frog's hat rests on top of the head between the eyes; frog() draws it before the eyes so the
-// eyes peek over the brim. Jewels hang under the chin, below the mouth.
+// The frog's hat rests on top of the head between the eyes; frog() draws it over the green eye domes
+// but under the eye whites, so the eyes peek over the brim. Jewels hang under the chin, below the mouth.
 function frogHatArt(){
  const hat={'hat-none':'',
   'hat-flower':'<g transform="translate(236 116)"><circle r="6" cx="-6" fill="#f6a5c0"/><circle r="6" cx="6" fill="#f6a5c0"/><circle r="6" cy="-6" fill="#f6a5c0"/><circle r="6" cy="6" fill="#f6a5c0"/><circle r="4" fill="#f6d36b"/></g>',
@@ -100,7 +100,8 @@ function frogHatArt(){
   'hat-beanie':'<path d="M180 118Q206 80 232 118Z" fill="#c95b5b"/><rect x="178" y="112" width="56" height="9" rx="4" fill="#f2e6d6"/><circle cx="206" cy="96" r="7" fill="#f2e6d6"/>',
   'hat-top':'<rect x="190" y="82" width="32" height="30" rx="3" fill="#2f3a35"/><rect x="180" y="108" width="52" height="7" rx="3" fill="#2f3a35"/><rect x="190" y="100" width="32" height="6" fill="#c2574e"/>',
   'hat-crownlet':'<path d="M190 116L186 96 197 106 206 90 215 106 226 96 222 116Z" fill="#f1ce69" stroke="#b58a22" stroke-width="1.5"/><circle cx="206" cy="104" r="3" fill="#4b9d8a"/>'}[wearing('frogHat')]||'';
- const lift={'hat-cap':2,'hat-beanie':0}[wearing('frogHat')]??10;
+ // Each hat is moved so its bottom rests at about y 128, the top of the head between the eyes.
+ const lift={'hat-flower':6,'hat-cap':12,'hat-beanie':8,'hat-top':13,'hat-crownlet':12}[wearing('frogHat')]??10;
  return hat?`<g transform="translate(0 ${lift})">${hat}</g>`:'';
 }
 function frogWearArt(){
