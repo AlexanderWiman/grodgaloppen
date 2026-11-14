@@ -8,7 +8,7 @@ assert(!g.run("housePlace('table')"),'cannot place what you do not own');
 assert(g.run("houseBuy('table')"));assert.equal(g.run('state.coins'),440);assert(!g.run("houseBuy('table')"),'bought only once');
 const uid=g.run("housePlace('table')");assert(uid);assert(!g.run("housePlace('table')"),'one table in the room');
 g.run(`houseMove('${uid}',{x:-50,y:500,scale:9,flip:true})`);const o=g.run(`JSON.stringify(state.house.items[0])`);
-assert.deepEqual(JSON.parse(o),{uid,id:'table',x:6,y:94,scale:1.6,flip:true},'kept inside the room');
+assert.deepEqual(JSON.parse(o),{uid,id:'table',x:6,y:94,scale:1.6,flip:true,lvl:'down'},'kept inside the room');
 assert(g.run(`houseStore('${uid}')`));assert.equal(g.run('state.house.items.length'),0);assert(g.run("housePlace('table')"),'stored furniture comes back');
 g.run('state.coins=10');assert(!g.run("houseBuy('stove')"),'too expensive');assert.equal(g.run('state.coins'),10);assert(!g.run("state.house.owned.includes('stove')"));
 assert(g.run("houseColour('wall','#d5e3ef')"));assert(!g.run("houseColour('wall','red')"));
