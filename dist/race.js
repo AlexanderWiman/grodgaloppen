@@ -56,7 +56,7 @@ const RIVAL_BASE=4.0;
 // slippery (a slightly narrower green field) but every good hop catches an extra raindrop.
 // Snow calms everything: the pointer moves slower and hops get shorter – for the rivals too.
 // No weather inside the crystal cave or under water. Tests set weatherOverride.
-const weatherKinds={rain:{name:'Regn',icon:'🌧',text:'Regn · halt men extra droppar',window:.92,extraDrop:1},snow:{name:'Snöfall',icon:'❄',text:'Snöfall · lugnare tempo för alla',period:1.12,hop:.93,rival:.95}};
+const weatherKinds={rain:{name:'Regn',icon:'🌧',text:'Regn · halt men extra droppar',window:.97,extraDrop:1},snow:{name:'Snöfall',icon:'❄',text:'Snöfall · lugnare tempo för alla',period:1.12,hop:.93,rival:.95}};
 let weatherOverride;
 function pickWeather(world){if(weatherOverride!==undefined)return weatherOverride;if(['crystal','sea'].includes(world.id))return null;const winter=world.id==='winter'||typeof seasonFor==='function'&&seasonFor(new Date())==='winter';const roll=Math.random();if(world.id==='winter')return roll<.45?'snow':null;return roll<.25?(winter?'snow':'rain'):null}
 function weatherHTML(kind){if(!kind)return '';const n=kind==='snow'?26:34;return `<div class="weather ${kind}" aria-hidden="true">${Array.from({length:n},(_,i)=>`<i style="left:${(i*37)%100}%;animation-delay:${-((i*.37)%(kind==='snow'?4:1))}s;animation-duration:${kind==='snow'?3+(i%5)*.5:.7+(i%4)*.12}s"></i>`).join('')}</div>`}
