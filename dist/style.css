@@ -285,3 +285,21 @@ body[data-season="summer"] .seasonFall i{color:#fff7b0;text-shadow:0 0 8px #fff2
 .wearOptions button:disabled{opacity:.45}
 .festParty .rewardList{list-style:none;padding:0}
 .langToggle{font:700 11px "DM Sans",sans-serif;letter-spacing:.5px;color:#927234}
+
+/* Five menu groups with small tabs inside (family survey: fewer tabs). */
+.mainCol{min-width:0}
+.subNav{display:inline-flex;max-width:100%;gap:2px;margin:0 0 18px;padding:4px;background:#e9eedf;border-radius:14px;overflow-x:auto;scrollbar-width:none}
+.subNav::-webkit-scrollbar{display:none}
+.subNav[hidden]{display:none}
+.subNav button{flex:none;border:0;background:transparent;border-radius:10px;padding:9px 18px;font-size:13px;font-weight:600;color:#6f7d6a}
+.subNav button[aria-selected="true"]{background:#fffef8;color:var(--green);box-shadow:0 1px 3px #2d4a3522}
+.hatching .subNav{display:none}
+nav{gap:6px}
+nav button{padding:12px 20px}
+.inviteButton{margin-top:0}
+@media(max-width:700px){
+nav{overflow:visible;justify-content:space-between;gap:2px;width:100%;margin:0;padding:0}
+nav button{flex:1 1 0;min-width:0;padding:10px 2px;font-size:13px;text-align:center}
+.subNav{display:flex;margin-bottom:12px}
+.subNav button{flex:1 1 auto;padding:8px 10px}
+}
