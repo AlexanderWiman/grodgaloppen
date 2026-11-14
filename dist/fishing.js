@@ -87,11 +87,22 @@ function renderFishBook(){const box=$('#fishBook');if(!box)return;const f=ensure
 
 function renderFishing(){
  ensureFishing();if(typeof ensureGarden==='function')ensureGarden();fishRun=null;const night=fishNight();
- $('#content').innerHTML=`<div class="sectionHead"><div><div class="eyebrow">NÄCKROSDAMMEN I GLÄNTAN</div><h2>Fiska i dammen</h2></div><button class="outline gardenTime" id="fishTime">${night?'☀ Morgonljus':'☾ Skymning'}</button></div><section id="fishPond" class="fishPond ${night?'night':''}" aria-label="Fiskedammen">${fishPondArt()}<div class="fishTeam">${frog()}</div><svg class="fishLine" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M27 34Q50 20 66 58" fill="none" stroke="#fffbe9" stroke-width=".5"/></svg><div id="fishFloat" class="fishFloat" aria-hidden="true"><i></i></div><div class="fishTroll" aria-hidden="true">${trollArt(trollWish()?'shy':'happy')}</div><div id="fishCatch" class="fishCatch"></div></section><div class="jumpControls fishControls"><p id="fishStatus" role="status">Kasta ut, vänta på napp och dra upp i rätt stund.</p><div id="fishMeter" class="fishMeter" hidden><div class="fishNet" style="left:${(.5-FISH_NET/2)*100}%;width:${FISH_NET*100}%"></div><div id="fishMarker" class="fishMarker"></div></div><div class="fishAction"><button class="primary" id="fishButton">Kasta ut</button><div id="fishHits" class="fishHits"></div></div></div><div class="fishLower"><section id="trollPanel" class="editor trollPanel"></section><section id="fishBook" class="editor fishBook"></section></div>`;
+ $('#content').innerHTML=`<div class="sectionHead"><div><div class="eyebrow">NÄCKROSDAMMEN I GLÄNTAN</div><h2>Fiska i dammen</h2></div><button class="outline gardenTime" id="fishTime">${night?'☀ Morgonljus':'☾ Skymning'}</button></div><section id="fishPond" class="fishPond ${night?'night':''}" aria-label="Fiskedammen">${fishPondArt()}<div class="fishTeam">${frog()}</div><svg class="fishLine" id="fishLine" aria-hidden="true"><path class="rod" d=""/><path class="line" d=""/></svg><div id="fishFloat" class="fishFloat" aria-hidden="true"><i></i></div><div class="fishTroll" aria-hidden="true">${trollArt(trollWish()?'shy':'happy')}</div><div id="fishCatch" class="fishCatch"></div></section><div class="jumpControls fishControls"><p id="fishStatus" role="status">Kasta ut, vänta på napp och dra upp i rätt stund.</p><div id="fishMeter" class="fishMeter" hidden><div class="fishNet" style="left:${(.5-FISH_NET/2)*100}%;width:${FISH_NET*100}%"></div><div id="fishMarker" class="fishMarker"></div></div><div class="fishAction"><button class="primary" id="fishButton">Kasta ut</button><div id="fishHits" class="fishHits"></div></div></div><div class="fishLower"><section id="trollPanel" class="editor trollPanel"></section><section id="fishBook" class="editor fishBook"></section></div>`;
  $('#fishButton').onclick=fishTap;
  $('#fishTime').onclick=()=>{state.garden.night=!state.garden.night;save();render()};
- renderTrollPanel();renderFishBook();
+ renderTrollPanel();renderFishBook();fishDrawLine();
 }
+// The rod sits in the fairy's hand and the line runs from its tip to the float, measured from the
+// real layout so it fits every screen size. The hand is at (195,129) in the 280×240 frog drawing.
+function fishDrawLine(){
+ const pond=$('#fishPond'),svg=$('#fishLine'),team=document.querySelector?.('.fishTeam svg'),float=$('#fishFloat');if(!pond?.getBoundingClientRect||!team||!svg)return;
+ const P=pond.getBoundingClientRect(),T=team.getBoundingClientRect(),F=float.getBoundingClientRect();if(!P.width||!T.width)return;
+ const hx=T.left-P.left+T.width*195/280,hy=T.top-P.top+T.height*129/240,tx=hx+T.width*.3,ty=hy-T.height*.42,fx=F.left-P.left+F.width/2,fy=F.top-P.top+F.height*.15;
+ svg.setAttribute('viewBox',`0 0 ${P.width} ${P.height}`);
+ svg.querySelector('.rod').setAttribute('d',`M${hx} ${hy}L${tx} ${ty}`);
+ svg.querySelector('.line').setAttribute('d',`M${tx} ${ty}Q${(tx+fx)/2} ${Math.max(ty,fy)+18} ${fx} ${fy}`);
+}
+if(typeof addEventListener==='function')addEventListener('resize',()=>{if(typeof tab!=='undefined'&&tab==='fish')fishDrawLine()});
 if(typeof document!=='undefined'&&document.addEventListener)document.addEventListener('keydown',e=>{if(typeof tab==='undefined'||tab!=='fish'||e.code!=='Space'||e.repeat)return;const b=$('#fishButton');if(!b||document.activeElement===b)return;e.preventDefault();b.click()});
 
 // Tuss peeks out from under the glade bridge once you are friends.

@@ -32,4 +32,21 @@ assert(g.run("(tab='house',render(),$('#content').innerHTML)").includes('queenFi
 // Her page and menu tab only show on visiting days; progress survives a reload.
 day(visit2);g.run("tab='queen';render()");assert(g.run("$('#content').innerHTML").includes('DAGENS UPPDRAG'));day(away);g.run('render()');assert(g.run("$('#content').innerHTML").includes('hemma i den djupa skogen'));
 const back=game(g.saved);assert.equal(back.run('state.queen.tasksDone'),5);assert.equal(back.run('state.queen.giftsTaken'),2);
-console.log('PASS: two visits a week, gifts, same-day tasks, fika lines and the portrait.');
+// The castle (survey 3): opens when she invites you, a forest flute, one story about little Astrid a day.
+const h=game();h.run('state.hatched=true;ensureGarden()');let quiet=[];for(let d=1;d<40&&quiet.length<6;d++)if(!h.run(`queenVisiting(new Date(2026,11,${d}))`))quiet.push(d);
+const at=d=>h.run(`queenClock=()=>new Date(2026,11,${d},12)`);
+at(quiet[0]);h.run("tab='castle';render()");assert(h.run("$('#content').innerHTML").includes('visar vägen'),'castle is closed before her invitation');assert(!h.run('queenGetFlute()'));
+assert(h.run('queenOpenCastle()'));assert(!h.run('queenOpenCastle()'));assert.equal(h.run("groupOf('castle').id"),'adventure');
+h.run('render()');assert(h.run('state.queen.flute'),'first castle visit gives the flute');assert(h.run("$('#content').innerHTML").includes('SKOGSFLÖJTEN'));
+// The flute calls her today, then rests three days.
+assert(!h.run('queenVisiting()'));assert(h.run('queenFluteReady()'));h.run('state.coins=0');assert(h.run('queenBlowFlute()'));assert(h.run('queenVisiting()'),'she comes when you blow the flute');
+assert(h.run('queenTakeGift()').coins>0,'a called visit has a gift too');assert(!h.run('queenBlowFlute()'),'not twice');
+const dayNum=d=>Math.floor(Date.UTC(2026,11,d)/864e5);const restDay=quiet.find(d=>dayNum(d)-dayNum(quiet[0])>=1&&dayNum(d)-dayNum(quiet[0])<3),okDay=quiet.find(d=>dayNum(d)-dayNum(quiet[0])>=3);
+if(restDay){at(restDay);assert(!h.run('queenVisiting()'),'the call lasts only that day');assert(!h.run('queenFluteReady()'),'the flute rests');assert(h.run('queenFluteRestDays()')>0)}
+at(okDay);assert(h.run('queenFluteReady()'),'ready again after three days');
+// Stories: one new a day, +15 each, the storybook for the cottage after all eight.
+let day0=quiet[0];h.run('state.coins=0');for(let i=0;i<8;i++){h.run(`queenClock=()=>new Date(2026,11,${day0+i},12)`);const st=h.run('queenHearStory()');assert(st&&st.n===i+1,'story '+(i+1));assert.equal(h.run('queenHearStory()'),null,'one story a day')}
+assert.equal(h.run('state.coins'),8*15);assert(h.run("state.house.owned.includes('storybook')"));assert(h.run("furnitureArt('storybook').length")>150);
+h.run(`queenClock=()=>new Date(2026,11,${day0+9},12)`);assert.equal(h.run('queenHearStory()'),null,'no more stories after the last');
+const again=game(h.saved);assert.equal(again.run('state.queen.stories.length'),8);assert(again.run('state.queen.castle&&state.queen.flute'));
+console.log('PASS: visits, gifts, same-day tasks, fika, the castle, the flute and the stories about little Astrid.');

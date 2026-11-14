@@ -300,8 +300,8 @@ nav button{padding:12px 20px}
 @media(max-width:700px){
 nav{overflow:visible;justify-content:space-between;gap:2px;width:100%;margin:0;padding:0}
 nav button{flex:1 1 0;min-width:0;padding:10px 2px;font-size:13px;text-align:center}
-.subNav{display:flex;margin-bottom:12px}
-.subNav button{flex:1 1 auto;padding:8px 10px}
+.subNav{display:flex;margin-bottom:12px;position:relative}
+.subNav button{flex:1 1 auto;padding:8px 10px;white-space:nowrap}
 }
 
 /* Weather in races: rain streaks and snowflakes over the track. */
@@ -320,8 +320,10 @@ nav button{flex:1 1 0;min-width:0;padding:10px 2px;font-size:13px;text-align:cen
 .fishPond.night .fishPondArt{filter:brightness(.55) saturate(.8) hue-rotate(18deg)}
 .fishTeam{position:absolute;left:6%;bottom:16%;width:30%;max-width:210px;z-index:2}
 .fishTeam svg{width:100%;display:block}
-.fishLine{position:absolute;inset:0;width:100%;height:100%;z-index:3;opacity:0;transition:opacity .3s}
-.fishPond.cast .fishLine,.fishPond.reeling .fishLine{opacity:1}
+.fishLine{position:absolute;inset:0;width:100%;height:100%;z-index:3;pointer-events:none}
+.fishLine .rod{stroke:#8a6a45;stroke-width:3.5;stroke-linecap:round;fill:none}
+.fishLine .line{stroke:#fffbe9;stroke-width:1.2;fill:none;opacity:0;transition:opacity .3s}
+.fishPond.cast .fishLine .line,.fishPond.reeling .fishLine .line{opacity:1}
 .fishFloat{position:absolute;left:66%;top:56%;width:18px;height:26px;transform:translate(-50%,-50%);z-index:3;opacity:0;transition:opacity .3s}
 .fishFloat i{display:block;width:100%;height:100%;border-radius:50% 50% 45% 45%;background:linear-gradient(#e2564a 0 50%,#fffaf0 50%);box-shadow:0 0 0 2px #fff8;animation:floatBob 1.6s ease-in-out infinite}
 .fishFloat:after{content:'';position:absolute;left:50%;top:80%;width:46px;height:12px;transform:translateX(-50%);border:2px solid #e9fbf3aa;border-radius:50%}
@@ -438,3 +440,44 @@ nav button{flex:1 1 0;min-width:0;padding:10px 2px;font-size:13px;text-align:cen
 .queenFika p{background:#fffef0f2;border-radius:12px;padding:7px 9px;font-size:11px;line-height:1.4;color:#4a5f43;margin:6px 0 0;box-shadow:0 3px 8px #4b3a2a22}
 @media(max-width:850px){.queenCards{grid-template-columns:1fr}}
 @media(max-width:700px){.queenBanner{display:grid;grid-template-columns:56px 1fr;gap:10px 12px}.queenBanner img{width:56px;height:56px}.queenBanner b{font-size:16px}.queenBanner .primary{grid-column:1/-1;width:100%;margin:0}.queenFika{width:38%;top:6%;right:2%}.queenFika p{font-size:10px}}
+
+/* Less scrolling on phones (survey 3): swipeable rows instead of long columns. */
+details.rivalHall>summary{cursor:pointer;list-style:none}
+details.rivalHall>summary::-webkit-details-marker{display:none}
+details.rivalHall>summary h2:after{content:' ▸';font-size:.8em;color:var(--muted)}
+details.rivalHall[open]>summary h2:after{content:' ▾'}
+@media(max-width:700px){
+body[data-tab=race] aside{display:none}
+.hero{height:190px}
+.raceCards{display:flex;position:relative;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px;margin:14px -16px 0;padding:2px 16px 8px;scrollbar-width:none}
+.raceCards::-webkit-scrollbar{display:none}
+.raceCards .card{flex:0 0 64%;scroll-snap-align:center}
+.raceBottom{margin-top:14px}
+.gardenInventory{display:flex;overflow-x:auto;scroll-snap-type:x proximity;gap:10px;padding-bottom:6px;scrollbar-width:thin}
+.gardenInventory article{flex:0 0 128px;scroll-snap-align:start}
+.rivalHall{margin-top:18px}
+}
+
+/* Music picker under the 🎵 button. */
+.musicMenu{position:absolute;z-index:200;width:min(260px,calc(100vw - 24px));max-height:min(70vh,520px);overflow-y:auto;background:#fffef8;border:1px solid var(--line);border-radius:16px;box-shadow:0 12px 30px #2a453033;padding:8px}
+.musicMenuHead{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-weight:700;padding:6px 10px}
+.musicMenu button{display:block;width:100%;text-align:left;border:0;background:none;border-radius:10px;padding:10px 12px;font-size:14px;color:var(--ink)}
+.musicMenu button[aria-checked="true"]{background:#e9eedf;color:var(--green);font-weight:700}
+.musicMenu button[aria-checked="true"]:after{content:' ✓'}
+.musicMenuList{border-top:1px solid var(--line);margin-top:6px;padding-top:6px}
+
+/* Skogsdrottningens slott. */
+.castleHero{position:relative;border-radius:22px;overflow:hidden;border:1px solid #c9d9b4;height:300px;margin-bottom:18px}
+.castleScene{position:absolute;inset:0;width:100%;height:100%}
+.castleWelcome{position:absolute;left:16px;bottom:16px;display:flex;align-items:flex-end;gap:10px;max-width:min(420px,calc(100% - 32px))}
+.castleWelcome img{width:78px;height:78px;border-radius:50%;object-fit:cover;object-position:50% 20%;border:3px solid #d6ad48;flex:none;box-shadow:0 4px 10px #2a453033}
+.castleWelcome p{background:#fffef0f2;border-radius:14px;padding:10px 12px;font-size:13px;line-height:1.5;color:#4a5f43;margin:0;box-shadow:0 3px 10px #2a453022}
+.castleCards{display:grid;grid-template-columns:1.6fr 1fr;gap:16px}
+.castleStory h4{font:17px Fredoka,sans-serif;margin:14px 0 4px}
+.castleStory p{line-height:1.7}
+.storyNew{background:#f3ecd6;border-radius:14px;padding:4px 16px 12px;margin-top:14px}
+.storyNew small{color:#8a6d2e}
+.storyList{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
+.storyList summary{cursor:pointer;font-weight:600;color:var(--green)}
+@media(max-width:850px){.castleCards{grid-template-columns:1fr}}
+@media(max-width:700px){.castleHero{height:240px}.castleWelcome img{width:58px;height:58px}.castleWelcome p{font-size:12px}}

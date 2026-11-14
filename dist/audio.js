@@ -45,7 +45,8 @@ function sfx(name){
    win:()=>notes([523,659,784,1047],.13,.18,'triangle',.15),
    finish:()=>notes([523,659,784],.12,.18,'sine',.12),
    chime:()=>notes([784,1047,1319],.09,.16,'sine',.09),
-   evolve:()=>notes([392,523,659,784,1047,1319],.07,.12,'triangle',.1)
+   evolve:()=>notes([392,523,659,784,1047,1319],.07,.12,'triangle',.1),
+   flute:()=>notes([587,659,784,880,784,988],.16,.24,'sine',.07)
   })[name]?.()
  }catch{}
 }
@@ -71,12 +72,15 @@ const musicThemes={
  sea:{bpm:70,root:55,scale:[0,2,4,7,9],prog:[[0,4,7],[9,12,16],[5,9,12],[7,11,14]],voice:'flute',bass:'walk',density:.42,air:.3},
  clouds:{bpm:78,root:60,scale:[0,2,4,7,9,11],prog:[[0,4,7,11],[5,9,12,16],[2,5,9,12],[7,11,14,17]],voice:'whistle',bass:'walk',density:.45,air:.5},
  winter:{bpm:68,root:60,scale:[0,2,4,7,9],prog:[[0,4,7],[-3,0,4],[-5,-1,2],[0,4,7]],voice:'flute',bass:'root',density:.38,air:.7},
+ emerald:{bpm:66,root:57,scale:[0,2,3,5,7,9],prog:[[0,3,7],[5,9,12],[-2,2,5],[3,7,10]],voice:'flute',bass:'walk',density:.4,air:.6},
  festival:{bpm:104,root:60,scale:[0,2,4,5,7,9],prog:[[0,4,7],[5,9,12],[7,11,14],[0,4,7]],voice:'reed',bass:'pulse',density:.68,brush:.55}
 };
 // Lead voices. All start softly; "hum" plays an octave lower.
 const leadVoices={flute:{type:'sine',vol:.042,attack:.07,vibrato:.005},reed:{type:'triangle',vol:.05,attack:.05,filter:950},hum:{type:'sine',vol:.055,attack:.1,octave:-12,vibrato:.003},whistle:{type:'sine',vol:.03,attack:.09,vibrato:.007}};
 // Which two-bar phrase plays in each of the 8 phrase slots of the 16-bar form; slots 4–5 are the bridge.
 const musicForm=['a','c','a','d','b','e','a','c'];
+// Names for the music picker in the header (survey 3: "we'd like to choose the song").
+const musicNames={meadow:'Ängen',glade:'Gläntan',village:'Älvbyn',castle:'Slottsträdgården',adventure:'Äventyret',pond:'Näckrosdammen',forest:'Svampskogen',marsh:'Månskensmyren',crystal:'Kristallgrottan',night:'Nattskogen',sea:'Undervattensriket',clouds:'Molnriket',winter:'Vintervärlden',festival:'Festen',emerald:'Skogsdrottningens slott'};
 let musicWanted='meadow',musicPlaying=null,musicTimer=null,musicStep=0,musicNext=0,musicMotifs=null,musicStarted=false,noiseBuffer=null;
 
 function seeded(text){let h=2166136261;for(const c of text)h=Math.imul(h^c.charCodeAt(0),16777619);return()=>{h=Math.imul(h^h>>>15,2246822507);h=Math.imul(h^h>>>13,3266489909);return((h^=h>>>16)>>>0)/4294967296}}
@@ -150,7 +154,7 @@ function playTheme(name){
  musicBus.gain.linearRampToValueAtTime(0,t+(switching?.7:.01));
  clearTimeout(musicTimer);
  setTimeout(()=>{
-  if(musicWanted!==name||state.music===false||musicHidden())return;
+  if(musicTheme()!==name||state.music===false||musicHidden())return;
   musicPlaying=name;musicStep=0;musicNext=audioCtx.currentTime+.1;musicMotifs=null;
   const now=audioCtx.currentTime;musicBus.gain.cancelScheduledValues(now);musicBus.gain.setValueAtTime(0,now);musicBus.gain.linearRampToValueAtTime(1,now+2.5);
   clearTimeout(musicTimer);scheduleMusic();
@@ -162,12 +166,15 @@ function stopMusic(fade=.6){
  musicPlaying=null;
 }
 function musicHidden(){return typeof document!=='undefined'&&document.visibilityState==='hidden'}
-function setMusic(name){musicWanted=name;if(!musicStarted||state.music===false)return;playTheme(name)}
-function startMusicSoon(){if(musicStarted||state.music===false)return;if(!audio())return;musicStarted=true;playTheme(musicWanted)}
+// The chosen song wins; otherwise the music follows the place you are at.
+function musicTheme(){return state.musicChoice&&musicThemes[state.musicChoice]?state.musicChoice:musicWanted}
+function setMusic(name){musicWanted=name;if(!musicStarted||state.music===false)return;playTheme(musicTheme())}
+function startMusicSoon(){if(musicStarted||state.music===false)return;if(!audio())return;musicStarted=true;playTheme(musicTheme())}
+function setMusicChoice(name){state.musicChoice=name&&musicThemes[name]?name:null;state.music=true;save();if(musicStarted)playTheme(musicTheme());else startMusicSoon()}
 function setMusicEnabled(on){state.music=on;save();if(on){musicStarted=false;startMusicSoon()}else{musicStarted=false;stopMusic()}}
 
 // The first tap anywhere unlocks audio; hidden tabs go quiet.
 if(typeof document!=='undefined'&&document.addEventListener){
  document.addEventListener('pointerdown',()=>startMusicSoon());
- document.addEventListener('visibilitychange',()=>{if(musicHidden())stopMusic(.3);else if(musicStarted&&state.music!==false)playTheme(musicWanted)});
+ document.addEventListener('visibilitychange',()=>{if(musicHidden())stopMusic(.3);else if(musicStarted&&state.music!==false)playTheme(musicTheme())});
 }
