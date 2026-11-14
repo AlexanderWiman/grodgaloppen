@@ -56,3 +56,10 @@ Pushing to `main` runs all tests and deploys `dist/` to GitHub Pages via `.githu
 - The music is softer: low lead voices (`leadVoices`) with a slow attack, no high sparkle notes and a quieter echo. Each theme follows a 16-bar form (`musicForm`): A, A', a bridge with other chords and a second voice, A, then a short pause. The main tune stays the same, and the other phrases change every other round. `node tests/music.cjs` plays every theme with a fake audio context and checks that no note goes above 1000 Hz.
 - "Bjud in en kompis" in the sidebar opens the phone's share sheet, or copies the link where sharing isn't available.
 - Bump `CACHE` in sw.js whenever the HTML and scripts change together, so an old page never runs new scripts.
+
+## Fishing, Tuss the troll and race weather (survey 2, step 2)
+- **Fiska** is a tab under Gläntan (`dist/fishing.js`). You cast, wait until the float dips, press "Dra upp!" within about 1.4 s (1.1 s for the pike), then press while the fish swims through the net (`fishMeterPos`, `FISH_NET`). After three misses the fish gets away.
+  - There are six kinds in `fishKinds`. The moonfish only bites at dusk, which uses the glade's day/dusk switch.
+  - Each catch goes into `state.fishing.bucket` and gives 2 dewdrops. The first catch of each kind gives a bonus.
+- **Tuss**, the troll under the bridge, has six wishes in `trollWishes`. Each one asks for certain fish from the bucket and gives dewdrops or a decoration for the glade (Trollsten, Brolykta and, last of all, Tuss himself). Once you are friends, he peeks out under the glade bridge.
+- **Weather**: `pickWeather` sometimes adds rain or snow to a race. Rain (25 %) gives a slightly narrower green field and +1 drop per good hop. Snow (only in winter and on the winter track) gives a slower pointer and shorter hops, and the rivals slow down too. There is no weather in the crystal cave or under water. `weatherOverride` forces a weather in tests, and `node tests/race.cjs` checks that weather keeps races fair.

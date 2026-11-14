@@ -303,3 +303,79 @@ nav button{flex:1 1 0;min-width:0;padding:10px 2px;font-size:13px;text-align:cen
 .subNav{display:flex;margin-bottom:12px}
 .subNav button{flex:1 1 auto;padding:8px 10px}
 }
+
+/* Weather in races: rain streaks and snowflakes over the track. */
+.weather{position:absolute;inset:0;pointer-events:none;z-index:4;overflow:hidden}
+.weather i{position:absolute;top:-12%;display:block}
+.weather.rain{background:linear-gradient(#5d7a8a22,#5d7a8a10)}
+.weather.rain i{width:2px;height:18px;border-radius:2px;background:linear-gradient(#ffffff00,#e8f4ffcc);animation:rainFall linear infinite}
+.weather.snow i{width:7px;height:7px;border-radius:50%;background:#fff;box-shadow:0 0 4px #fff;opacity:.9;animation:snowFall linear infinite}
+@keyframes rainFall{to{transform:translate(-30px,330px)}}
+@keyframes snowFall{0%{transform:translate(0,0)}50%{transform:translate(14px,150px)}100%{transform:translate(-6px,320px)}}
+@media(prefers-reduced-motion:reduce){.weather i{animation:none;top:auto;opacity:.5}.weather.rain i{top:30%}.weather.snow i{top:40%}}
+
+/* Fishing in the glade pond and Tuss the troll. */
+.fishPond{position:relative;height:300px;border-radius:22px;overflow:hidden;border:1px solid #b9cfa8;background:#9fcfc3}
+.fishPondArt{position:absolute;inset:0;width:100%;height:100%}
+.fishPond.night .fishPondArt{filter:brightness(.55) saturate(.8) hue-rotate(18deg)}
+.fishTeam{position:absolute;left:6%;bottom:16%;width:30%;max-width:210px;z-index:2}
+.fishTeam svg{width:100%;display:block}
+.fishLine{position:absolute;inset:0;width:100%;height:100%;z-index:3;opacity:0;transition:opacity .3s}
+.fishPond.cast .fishLine,.fishPond.reeling .fishLine{opacity:1}
+.fishFloat{position:absolute;left:66%;top:56%;width:18px;height:26px;transform:translate(-50%,-50%);z-index:3;opacity:0;transition:opacity .3s}
+.fishFloat i{display:block;width:100%;height:100%;border-radius:50% 50% 45% 45%;background:linear-gradient(#e2564a 0 50%,#fffaf0 50%);box-shadow:0 0 0 2px #fff8;animation:floatBob 1.6s ease-in-out infinite}
+.fishFloat:after{content:'';position:absolute;left:50%;top:80%;width:46px;height:12px;transform:translateX(-50%);border:2px solid #e9fbf3aa;border-radius:50%}
+.fishPond.cast .fishFloat{opacity:1}
+.fishPond.bite .fishFloat i{animation:floatBite .25s ease-in-out infinite alternate}
+.fishPond.bite .fishFloat:after{animation:ripple .5s ease-out infinite}
+.fishPond.reeling .fishFloat{opacity:0}
+.fishTroll{position:absolute;left:70%;top:10%;width:11%;min-width:55px;z-index:1;transform:translateY(20%)}
+.fishTroll svg{width:100%;display:block}
+.fishCatch{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:5;pointer-events:none}
+.fishCard{background:#fffef8ee;border-radius:18px;padding:14px 22px;text-align:center;box-shadow:0 8px 24px #2a453033;animation:appear .4s ease-out}
+.fishCard svg{width:120px;display:block;margin:auto}
+.fishCard strong{display:block;font:22px Fredoka,sans-serif;margin-top:4px}
+.fishCard span{font-size:12px;color:#8a6d2e}
+.fishControls{margin-top:14px}
+.fishMeter{position:relative;height:46px;border-radius:12px;background:#d9ebe6;overflow:hidden;margin-bottom:6px}
+.fishMeter[hidden]{display:none}
+.fishNet{position:absolute;top:0;bottom:0;background:repeating-linear-gradient(45deg,#9dc67b55 0 6px,#9dc67b99 6px 12px);border-left:2px solid #4d7635;border-right:2px solid #4d7635}
+.fishMarker{position:absolute;top:4px;width:62px;height:38px;transform:translateX(-50%);transition:filter .1s}
+.fishMarker svg{width:100%;height:100%}
+.fishMarker.inNet{filter:drop-shadow(0 0 6px #fffbb0)}
+.fishAction{display:flex;align-items:center;gap:16px;margin-top:12px}
+.fishAction .primary{min-width:180px;touch-action:manipulation}
+.fishAction .primary.hot{background:#c4702f;box-shadow:0 4px 0 #8a4b1b;animation:pulse .6s ease-in-out infinite alternate}
+.fishHits{display:flex;align-items:center;gap:6px}
+.fishHits span{width:14px;height:14px;border-radius:50%;background:#dfe5d2}
+.fishHits span.on{background:#6f9a4e}
+.fishHits small{color:#b5523f;font-weight:700;letter-spacing:2px;margin-left:6px}
+.fishLower{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px}
+.trollPanel{display:grid;grid-template-columns:110px 1fr;gap:16px;align-items:start}
+.trollPortrait svg{width:100%}
+.trollPanel h3{margin:4px 0;font-size:24px}
+.trollHearts span{color:#dcd7c8;font-size:18px;margin-right:2px}
+.trollHearts span.on{color:#d0706a}
+.trollSay{font-size:14px;line-height:1.7;color:#4a5f43}
+.trollNeed{font-size:12px;color:#7c897a}
+.trollPanel .primary{width:auto}
+.trollThanks{grid-column:1/-1;background:#f3ecd6;border-radius:12px;padding:12px 14px;font-size:13px;color:#6b5728;margin:0}
+.fishBook h3{margin-top:0}
+.fishBookGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.fishBookGrid article{border:1px solid #e0e5d5;border-radius:12px;padding:8px;text-align:center;background:#fafaf1}
+.fishBookGrid article>div{height:44px}
+.fishBookGrid svg{height:100%;max-width:100%}
+.fishBookGrid .unknown svg{filter:brightness(0) opacity(.15)}
+.fishBookGrid strong{display:block;font-size:12px;margin-top:4px}
+.fishBookGrid small{display:block;font-size:10px;color:#80906d;line-height:1.4}
+.gardenTroll{position:absolute;left:38%;top:52%;width:8%;min-width:44px;border:0;background:none;padding:0;z-index:26;transform:translate(-50%,-30%);animation:trollPeek 6s ease-in-out infinite}
+.gardenTroll svg{width:100%;display:block}
+@keyframes floatBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes floatBite{from{transform:translateY(0)}to{transform:translateY(9px)}}
+@keyframes ripple{from{transform:translateX(-50%) scale(.6);opacity:1}to{transform:translateX(-50%) scale(1.6);opacity:0}}
+@keyframes pulse{to{transform:scale(1.04)}}
+@keyframes trollPeek{0%,100%{transform:translate(-50%,-30%)}50%{transform:translate(-50%,-38%)}}
+@media(prefers-reduced-motion:reduce){.fishFloat i,.fishPond.bite .fishFloat i,.fishAction .primary.hot,.gardenTroll{animation:none}}
+@media(max-width:700px){.fishPond{height:230px}.fishTeam{width:42%}.fishLower{grid-template-columns:1fr}.fishAction .primary{flex:1;min-width:0}.trollPanel{grid-template-columns:80px 1fr;gap:12px}.fishBookGrid{grid-template-columns:repeat(3,1fr)}}
+.fishControls p#fishStatus{display:block;min-height:40px;margin:0 0 10px}
+.weatherChip{position:absolute;right:12px;bottom:10px;z-index:5;background:#fffef0dd;border-radius:14px;padding:5px 10px;font-size:11px;font-weight:600;color:#4b6156}
