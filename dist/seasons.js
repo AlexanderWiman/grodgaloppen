@@ -85,11 +85,11 @@ function wingShape(){return '<g transform="translate(0 34)">'+({
  'wings-dragonfly':'<g stroke="#7fb8c6" stroke-opacity=".5" stroke-width=".8" fill="none"><path d="M150 84L102 62M150 84L198 62M150 90L104 98M150 90L196 98"/></g><g opacity=".78" fill="#d8f1f7" stroke="#9fd0dc" stroke-width="1.5"><ellipse cx="124" cy="74" rx="30" ry="8" transform="rotate(25 124 74)"/><ellipse cx="176" cy="74" rx="30" ry="8" transform="rotate(-25 176 74)"/><ellipse cx="126" cy="94" rx="26" ry="7" transform="rotate(-12 126 94)"/><ellipse cx="174" cy="94" rx="26" ry="7" transform="rotate(12 174 94)"/></g>',
  'wings-star':'<g fill="#fff3b0" stroke="#e5c35a" stroke-width="1.5" opacity=".92"><path d="M150 84L114 40L134 70L100 62L140 86Z"/><path d="M156 84L190 38L172 70L206 60L166 86Z"/></g><g fill="#fff"><circle cx="114" cy="44" r="2.5"/><circle cx="190" cy="42" r="2.5"/></g>'
 })[wearing('wings')]+'</g>'}
-function outfitShape(){const c=state.outfit,dress=`<path d="M148 112 Q137 130 125 147 L157 153 165 113" fill="${c}"/>`;return ({
+function outfitShape(){const c=state.outfit,dress=`<path d="M144 109Q154 104 164 109L167 124Q171 140 174 154L130 154Q134 140 141 124Z" fill="${c}"/>`;return ({
  'outfit-dress':dress,
- 'outfit-overalls':dress+'<path d="M151 114L154 138M161 114L159 138" stroke="#ffffffaa" stroke-width="3"/><rect x="146" y="132" width="10" height="8" rx="2" fill="#ffffff66"/>',
- 'outfit-cape':`<path d="M146 108Q122 138 116 160L170 158Q160 132 166 110Z" fill="${c}" opacity=".6"/>`+dress+'<circle cx="156" cy="112" r="3" fill="#f1ce69"/>',
- 'outfit-ballgown':`<path d="M148 112Q130 135 110 156Q140 168 174 156Q164 132 165 113Z" fill="${c}"/><g fill="#fff" opacity=".7"><circle cx="132" cy="150" r="1.8"/><circle cx="150" cy="156" r="1.8"/><circle cx="162" cy="146" r="1.8"/></g>`
+ 'outfit-overalls':dress+'<path d="M148 110L150 132M160 110L158 132" stroke="#ffffffaa" stroke-width="3"/><rect x="148" y="128" width="12" height="9" rx="2" fill="#ffffff66"/><g fill="#f1ce69"><circle cx="150" cy="129" r="1.4"/><circle cx="158" cy="129" r="1.4"/></g>',
+ 'outfit-cape':`<path d="M142 108Q118 140 114 162L186 160Q176 132 166 108Z" fill="${c}" opacity=".6"/>`+dress+'<circle cx="154" cy="109" r="3" fill="#f1ce69"/>',
+ 'outfit-ballgown':`<path d="M144 109Q154 104 164 109L167 124Q180 142 190 158Q154 170 118 158Q128 142 141 124Z" fill="${c}"/><path d="M141 124Q154 128 167 124" stroke="#fff" stroke-opacity=".5" stroke-width="2" fill="none"/><g fill="#fff" opacity=".7"><circle cx="134" cy="150" r="1.8"/><circle cx="152" cy="156" r="1.8"/><circle cx="168" cy="146" r="1.8"/></g>`
 })[wearing('outfitStyle')]}
 // The frog's hat rests on top of the head between the eyes; frog() draws it over the green eye domes
 // but under the eye whites, so the eyes peek over the brim. Jewels hang under the chin, below the mouth.
