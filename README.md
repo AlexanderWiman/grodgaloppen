@@ -105,3 +105,8 @@ Pushing to `main` runs all tests and deploys `dist/` to GitHub Pages via `.githu
 - **Weather:** fog (the green field shows only up close), thunder (slippery, and lightning briefly startles the rivals) and the rare rainbow (every third hop golden, +1 drop) join rain and snow. `node tests/race.cjs` checks that every kind keeps a normal player's win rate within 20 points of normal weather.
 - **Tuss on adventures:** once you have three hearts with him, he comes along on adventures. The green field is 15 % wider there, and afterwards he gives you a fish for the bucket or 15 dewdrops (`tussJoins`, `tussAdventureFind` in fishing.js).
 - The **Slottet** tab now always shows. Before her first invitation it says when Skogsdrottningen comes next and how to get to the castle.
+
+## Bug fixes: wings, frog hats and the castle picture
+- The fairy's wings sit on her back. `wingShape()` moves them from head height down to the shoulders, and they are still drawn behind her.
+- The frog's hat rests on its head between the eyes. `frogHatArt()` is drawn before the eyes so they peek over the brim, and the cap and beanie are lifted less than the other hats. Jewels (bow tie, pearls, bell, medallion) hang under the chin instead of across the mouth.
+- The castle is a painted illustration (`assets/skogsdrottningen-slott.webp`) in the same style as Skogsdrottningen's portraits. It was made with Higgsfield (GPT Image 2.5) from a text prompt only, without uploading the portraits. The family chose it out of three options. The waterfall falls from a cliff into a pool.

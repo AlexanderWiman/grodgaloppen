@@ -78,31 +78,38 @@ function wear(id){const w=wardrobe.find(w=>w.id===id);if(!w||!ownsWear(id))retur
 function wardrobeHTML(slots,title){return `<section class="editor wardrobe"><h3>${title}</h3>${slots.map(([slot,label])=>`<label>${label}</label><div class="options wearOptions">${wardrobe.filter(w=>w.slot===slot).map(w=>{const own=ownsWear(w.id),on=wearing(slot)===w.id;return `<button data-wear="${w.id}" aria-pressed="${on}" class="${on?'chosen':''}" ${!own&&state.coins<w.cost?'disabled':''}>${w.name}${own?'':` · ${w.cost} ✦`}</button>`}).join('')}</div>`).join('')}<p>Köpta saker finns kvar för alltid. Grodans hatt och smycke följer just den grodan.</p></section>`}
 function wireWardrobe(rerender){document.querySelectorAll('[data-wear]').forEach(b=>b.onclick=()=>{const id=b.dataset.wear;if(ownsWear(id)?wear(id):buyWear(id)){sidebar();rerender()}else toast('Du behöver fler daggdroppar.')})}
 
-function wingShape(){return ({
+// Wings sit on the fairy's back: drawn behind her and moved down from head height to the shoulders.
+function wingShape(){return '<g transform="translate(0 34)">'+({
  'wings-classic':'<g stroke="#fff6ec" stroke-width="2"><ellipse cx="137" cy="80" rx="19" ry="43" transform="rotate(-40 137 80)" fill="#f5e6fb" opacity=".8"/><ellipse cx="167" cy="78" rx="16" ry="39" transform="rotate(35 167 78)" fill="#e3f0f6" opacity=".8"/></g>',
  'wings-butterfly':'<g opacity=".88" stroke="#fff6ec" stroke-width="2"><ellipse cx="130" cy="66" rx="20" ry="24" transform="rotate(-30 130 66)" fill="#f6c8de"/><ellipse cx="174" cy="64" rx="19" ry="23" transform="rotate(30 174 64)" fill="#f6c8de"/><ellipse cx="135" cy="98" rx="12" ry="15" transform="rotate(-20 135 98)" fill="#c9b5f0"/><ellipse cx="169" cy="96" rx="11" ry="14" transform="rotate(20 169 96)" fill="#c9b5f0"/><circle cx="128" cy="64" r="5" fill="#fff"/><circle cx="176" cy="62" r="5" fill="#fff"/></g>',
  'wings-dragonfly':'<g opacity=".75" fill="#d8f1f7" stroke="#9fd0dc" stroke-width="1.5"><ellipse cx="126" cy="70" rx="30" ry="8" transform="rotate(-25 126 70)"/><ellipse cx="178" cy="68" rx="30" ry="8" transform="rotate(25 178 68)"/><ellipse cx="128" cy="90" rx="26" ry="7" transform="rotate(10 128 90)"/><ellipse cx="176" cy="88" rx="26" ry="7" transform="rotate(-10 176 88)"/></g>',
  'wings-star':'<g fill="#fff3b0" stroke="#e5c35a" stroke-width="1.5" opacity=".92"><path d="M150 84L114 40L134 70L100 62L140 86Z"/><path d="M156 84L190 38L172 70L206 60L166 86Z"/></g><g fill="#fff"><circle cx="114" cy="44" r="2.5"/><circle cx="190" cy="42" r="2.5"/></g>'
-})[wearing('wings')]}
+})[wearing('wings')]+'</g>'}
 function outfitShape(){const c=state.outfit,dress=`<path d="M148 112 Q137 130 125 147 L157 153 165 113" fill="${c}"/>`;return ({
  'outfit-dress':dress,
  'outfit-overalls':dress+'<path d="M151 114L154 138M161 114L159 138" stroke="#ffffffaa" stroke-width="3"/><rect x="146" y="132" width="10" height="8" rx="2" fill="#ffffff66"/>',
  'outfit-cape':`<path d="M146 108Q122 138 116 160L170 158Q160 132 166 110Z" fill="${c}" opacity=".6"/>`+dress+'<circle cx="156" cy="112" r="3" fill="#f1ce69"/>',
  'outfit-ballgown':`<path d="M148 112Q130 135 110 156Q140 168 174 156Q164 132 165 113Z" fill="${c}"/><g fill="#fff" opacity=".7"><circle cx="132" cy="150" r="1.8"/><circle cx="150" cy="156" r="1.8"/><circle cx="162" cy="146" r="1.8"/></g>`
 })[wearing('outfitStyle')]}
-function frogWearArt(){
+// The frog's hat rests on top of the head between the eyes; frog() draws it before the eyes so the
+// eyes peek over the brim. Jewels hang under the chin, below the mouth.
+function frogHatArt(){
  const hat={'hat-none':'',
   'hat-flower':'<g transform="translate(236 116)"><circle r="6" cx="-6" fill="#f6a5c0"/><circle r="6" cx="6" fill="#f6a5c0"/><circle r="6" cy="-6" fill="#f6a5c0"/><circle r="6" cy="6" fill="#f6a5c0"/><circle r="4" fill="#f6d36b"/></g>',
   'hat-cap':'<path d="M182 116Q206 88 230 116Z" fill="#4f86c6"/><path d="M226 114Q246 112 252 120L226 120Z" fill="#3a6ea8"/><circle cx="206" cy="98" r="3" fill="#fff"/>',
-  'hat-beanie':'<path d="M180 118Q206 80 232 118Z" fill="#c95b5b"/><rect x="178" y="112" width="56" height="9" rx="4" fill="#f2e6d6"/><circle cx="206" cy="86" r="7" fill="#f2e6d6"/>',
+  'hat-beanie':'<path d="M180 118Q206 80 232 118Z" fill="#c95b5b"/><rect x="178" y="112" width="56" height="9" rx="4" fill="#f2e6d6"/><circle cx="206" cy="96" r="7" fill="#f2e6d6"/>',
   'hat-top':'<rect x="190" y="82" width="32" height="30" rx="3" fill="#2f3a35"/><rect x="180" y="108" width="52" height="7" rx="3" fill="#2f3a35"/><rect x="190" y="100" width="32" height="6" fill="#c2574e"/>',
   'hat-crownlet':'<path d="M190 116L186 96 197 106 206 90 215 106 226 96 222 116Z" fill="#f1ce69" stroke="#b58a22" stroke-width="1.5"/><circle cx="206" cy="104" r="3" fill="#4b9d8a"/>'}[wearing('frogHat')]||'';
+ const lift={'hat-cap':2,'hat-beanie':0}[wearing('frogHat')]??10;
+ return hat?`<g transform="translate(0 ${lift})">${hat}</g>`:'';
+}
+function frogWearArt(){
  const jewel={'jewel-none':'',
-  'jewel-bowtie':'<path d="M198 186L186 178V194ZM212 186L224 178V194Z" fill="#c2574e"/><circle cx="205" cy="186" r="4" fill="#a8443c"/>',
-  'jewel-pearls':'<path d="M172 176Q205 198 238 172" fill="none" stroke="#fffaf0" stroke-width="6" stroke-dasharray="1 7" stroke-linecap="round"/>',
-  'jewel-bell':'<path d="M180 178Q205 192 232 176" fill="none" stroke="#c2574e" stroke-width="3"/><circle cx="206" cy="190" r="6" fill="#f1ce69" stroke="#b58a22"/>',
-  'jewel-medallion':'<path d="M180 178Q205 192 232 176" fill="none" stroke="#b58a22" stroke-width="2"/><circle cx="206" cy="192" r="7" fill="#e8c35c"/><path d="M206 188l1.5 3 3 .5-2.2 2 .6 3-2.9-1.5-2.9 1.5.6-3-2.2-2 3-.5Z" fill="#fff6c4"/>'}[wearing('frogJewel')]||'';
- return hat+jewel;
+  'jewel-bowtie':'<path d="M199 196L187 189V203ZM211 196L223 189V203Z" fill="#c2574e"/><circle cx="205" cy="196" r="4" fill="#a8443c"/>',
+  'jewel-pearls':'<path d="M170 186Q205 206 238 176" fill="none" stroke="#fffaf0" stroke-width="6" stroke-dasharray="1 7" stroke-linecap="round"/>',
+  'jewel-bell':'<path d="M170 186Q205 206 238 176" fill="none" stroke="#c2574e" stroke-width="3"/><circle cx="205" cy="201" r="6" fill="#f1ce69" stroke="#b58a22"/>',
+  'jewel-medallion':'<path d="M170 186Q205 206 238 176" fill="none" stroke="#b58a22" stroke-width="2"/><circle cx="205" cy="203" r="7" fill="#e8c35c"/><path d="M205 199l1.5 3 3 .5-2.2 2 .6 3-2.9-1.5-2.9 1.5.6-3-2.2-2 3-.5Z" fill="#fff6c4"/>'}[wearing('frogJewel')]||'';
+ return jewel;
 }
 // Frog hats and jewels belong to each frog (frogs.js mirrors these fields per frog).
 if(typeof FROG_FIELDS!=='undefined')FROG_FIELDS.push('frogHat','frogJewel');

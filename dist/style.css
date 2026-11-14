@@ -467,8 +467,8 @@ body[data-tab=race] aside{display:none}
 .musicMenuList{border-top:1px solid var(--line);margin-top:6px;padding-top:6px}
 
 /* Skogsdrottningens slott. */
-.castleHero{position:relative;border-radius:22px;overflow:hidden;border:1px solid #c9d9b4;height:300px;margin-bottom:18px}
-.castleScene{position:absolute;inset:0;width:100%;height:100%}
+.castleHero{position:relative;border-radius:22px;overflow:hidden;border:1px solid #c9d9b4;aspect-ratio:16/8;max-height:440px;width:100%;margin-bottom:18px;background:#cfe3c8}
+.castleScene{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:55% 45%}
 .castleWelcome{position:absolute;left:16px;bottom:16px;display:flex;align-items:flex-end;gap:10px;max-width:min(420px,calc(100% - 32px))}
 .castleWelcome img{width:78px;height:78px;border-radius:50%;object-fit:cover;object-position:50% 20%;border:3px solid #d6ad48;flex:none;box-shadow:0 4px 10px #2a453033}
 .castleWelcome p{background:#fffef0f2;border-radius:14px;padding:10px 12px;font-size:13px;line-height:1.5;color:#4a5f43;margin:0;box-shadow:0 3px 10px #2a453022}
@@ -480,7 +480,7 @@ body[data-tab=race] aside{display:none}
 .storyList{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
 .storyList summary{cursor:pointer;font-weight:600;color:var(--green)}
 @media(max-width:850px){.castleCards{grid-template-columns:1fr}}
-@media(max-width:700px){.castleHero{height:240px}.castleWelcome img{width:58px;height:58px}.castleWelcome p{font-size:12px}}
+@media(max-width:700px){.castleHero{aspect-ratio:16/11}.castleWelcome img{width:58px;height:58px}.castleWelcome p{font-size:12px}}
 
 /* Survey 3: superpowers on the track, fog/thunder/rainbow, Tuss on adventures. */
 .powerThing{position:absolute;left:70%;bottom:62px;transform:translateX(-50%);z-index:4;font-size:30px;filter:drop-shadow(0 0 10px #fffbb0);animation:powerBob 1s ease-in-out infinite}

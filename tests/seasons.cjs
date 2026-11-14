@@ -23,7 +23,7 @@ assert.equal(g.run("wearing('wings')"),'wings-classic');g.run('state.coins=500')
 assert(g.run("buyWear('wings-star')"));assert.equal(g.run('state.coins'),360);assert(!g.run("buyWear('wings-star')"));assert(g.run("wear('wings-classic')"));assert(g.run("wear('wings-star')"));
 assert(g.run("buyWear('hat-top')"));g.run('startEgg();for(let i=0;i<5;i++)crackEgg()');const second=g.run('state.frogs[1].id');
 g.run(`switchFrog('${second}')`);assert.equal(g.run("wearing('frogHat')"),'hat-none');g.run("wear('hat-top')");g.run("switchFrog('f1')");assert.equal(g.run("wearing('frogHat')"),'hat-top');
-assert(g.run('frogWearArt().length')>0);assert(g.run('wingShape().includes("path")'));
+assert(g.run('frogHatArt().length')>0,'the hat is drawn');assert(g.run('frog().indexOf(frogHatArt())<frog().indexOf(\'cx="190" cy="141"\')'),'the hat is drawn before (behind) the eyes');assert(g.run('wingShape().includes("path")'));
 // New garden things have art; buyable ones cost drops, festival ones do not.
 for(const id of ['bench','swing','fountain','birdhouse','mushroomring','lanternstring','tulips','parasol','pumpkin','snowman'])assert(g.run(`gardenArt('${id}').length`)>60,id);
 g.run('state.coins=100');assert(g.run("buyDecoration('bench')"));assert(!g.run("buyDecoration('snowman')"));
