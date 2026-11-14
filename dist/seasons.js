@@ -8,9 +8,13 @@ const seasons={
  autumn:{name:'Hösten',label:'Lövdansen',fall:'🍂',festival:{name:'Lyktfesten',icon:'🏮',item:'pumpkin',text:'När mörkret kommer tänder alla sina lyktor och vandrar runt dammen.'}},
  winter:{name:'Vintern',label:'Snöstjärnetiden',fall:'❄',festival:{name:'Snöstjärnefesten',icon:'⛄',item:'snowman',text:'Alla bygger snögubbar och dricker varm blåbärssoppa under stjärnorna.'}}
 };
+// The game's date. On a local preview (localhost) ?datum=2026-12-05 pretends it is another day, so
+// Christmas can be tried in November; tests set gameClock.
+let gameClock=null;
+function gameDate(){if(gameClock)return gameClock();try{if(/^(localhost|127\.0\.0\.1)$/.test(location.hostname)){const m=/[?&]datum=(\d{4})-(\d{2})-(\d{2})/.exec(location.search);if(m){const n=new Date();return new Date(+m[1],m[2]-1,+m[3],n.getHours(),n.getMinutes())}}}catch{}return new Date()}
 function seasonFor(date){const m=date.getMonth();return m>=2&&m<=4?'spring':m>=5&&m<=7?'summer':m>=8&&m<=10?'autumn':'winter'}
-function currentSeason(){return seasonFor(new Date())}
-function seasonKey(){const d=new Date(),s=seasonFor(d);return s+'-'+(s==='winter'&&d.getMonth()<2?d.getFullYear()-1:d.getFullYear())}
+function currentSeason(){return seasonFor(gameDate())}
+function seasonKey(){const d=gameDate(),s=seasonFor(d);return s+'-'+(s==='winter'&&d.getMonth()<2?d.getFullYear()-1:d.getFullYear())}
 function applySeason(){
  const s=currentSeason();if(document.body?.dataset)document.body.dataset.season=s;
  const label=$('#seasonLabel');if(label)label.textContent=seasons[s].name+' · '+seasons[s].label;
@@ -50,7 +54,7 @@ function wireFestival(){
 
 // ---------- Daily surprise ----------
 const giftFinds=['en blank sten','en fjäder','ett glittrande löv','en liten kotte','en droppe morgondagg','ett fyrklöverblad','en vacker snäcka','en bit av en regnbåge'];
-function todayKey(){const d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()}
+function todayKey(){const d=gameDate();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()}
 function dailyGiftAvailable(){return state.hatched&&state.lastGift!==todayKey()}
 function takeDailyGift(){
  if(!dailyGiftAvailable())return null;
@@ -73,9 +77,9 @@ const wardrobe=[
 ];
 function wearing(slot){const v=state[slot];return v||wardrobe.find(w=>w.slot===slot&&w.cost===0).id}
 function ownsWear(id){const w=wardrobe.find(w=>w.id===id);return !!w&&(w.cost===0||(state.wardrobe||[]).includes(id))}
-function buyWear(id){const w=wardrobe.find(w=>w.id===id);if(!w||ownsWear(id)||state.coins<w.cost)return false;state.coins-=w.cost;state.wardrobe=[...(state.wardrobe||[]),id];state[w.slot]=id;save();return true}
+function buyWear(id){const w=wardrobe.find(w=>w.id===id);if(!w||w.gift||ownsWear(id)||state.coins<w.cost)return false;state.coins-=w.cost;state.wardrobe=[...(state.wardrobe||[]),id];state[w.slot]=id;save();return true}
 function wear(id){const w=wardrobe.find(w=>w.id===id);if(!w||!ownsWear(id))return false;state[w.slot]=id;save();return true}
-function wardrobeHTML(slots,title){return `<section class="editor wardrobe"><h3>${title}</h3>${slots.map(([slot,label])=>`<label>${label}</label><div class="options wearOptions">${wardrobe.filter(w=>w.slot===slot).map(w=>{const own=ownsWear(w.id),on=wearing(slot)===w.id;return `<button data-wear="${w.id}" aria-pressed="${on}" class="${on?'chosen':''}" ${!own&&state.coins<w.cost?'disabled':''}>${w.name}${own?'':` · ${w.cost} ✦`}</button>`}).join('')}</div>`).join('')}<p>Köpta saker finns kvar för alltid. Grodans hatt och smycke följer just den grodan.</p></section>`}
+function wardrobeHTML(slots,title){return `<section class="editor wardrobe"><h3>${title}</h3>${slots.map(([slot,label])=>`<label>${label}</label><div class="options wearOptions">${wardrobe.filter(w=>w.slot===slot&&(!w.gift||ownsWear(w.id))).map(w=>{const own=ownsWear(w.id),on=wearing(slot)===w.id;return `<button data-wear="${w.id}" aria-pressed="${on}" class="${on?'chosen':''}" ${!own&&state.coins<w.cost?'disabled':''}>${w.name}${own?'':` · ${w.cost} ✦`}</button>`}).join('')}</div>`).join('')}<p>Köpta saker finns kvar för alltid. Grodans hatt och smycke följer just den grodan.</p></section>`}
 function wireWardrobe(rerender){document.querySelectorAll('[data-wear]').forEach(b=>b.onclick=()=>{const id=b.dataset.wear;if(ownsWear(id)?wear(id):buyWear(id)){sidebar();rerender()}else toast('Du behöver fler daggdroppar.')})}
 
 // Wings sit on the fairy's back: drawn behind her and moved down from head height to the shoulders.
@@ -89,6 +93,8 @@ function outfitShape(){const c=state.outfit,dress=`<path d="M144 109Q154 104 164
  'outfit-dress':dress,
  'outfit-overalls':dress+'<path d="M148 110L150 132M160 110L158 132" stroke="#ffffffaa" stroke-width="3"/><rect x="148" y="128" width="12" height="9" rx="2" fill="#ffffff66"/><g fill="#f1ce69"><circle cx="150" cy="129" r="1.4"/><circle cx="158" cy="129" r="1.4"/></g>',
  'outfit-cape':`<path d="M142 108Q118 140 114 162L186 160Q176 132 166 108Z" fill="${c}" opacity=".6"/>`+dress+'<circle cx="154" cy="109" r="3" fill="#f1ce69"/>',
+ // Skogsdrottningen's Christmas gift: a longer coat in the outfit colour with white fur trim and a collar.
+ 'outfit-winter':`<path d="M143 109Q154 103 165 109L168 124Q173 142 177 158L131 158Q135 142 140 124Z" fill="${c}"/><path d="M154 110V157" stroke="#000" stroke-opacity=".15" stroke-width="1.4"/><path d="M131 157Q154 162 177 157" stroke="#f7f4ec" stroke-width="5.5" stroke-linecap="round" fill="none"/><path d="M144 110Q154 116 164 110" stroke="#f7f4ec" stroke-width="5" stroke-linecap="round" fill="none"/><g fill="#f1ce69"><circle cx="157" cy="124" r="1.5"/><circle cx="157" cy="134" r="1.5"/><circle cx="157" cy="144" r="1.5"/></g><g fill="#fff" opacity=".8"><path d="M139 140l1.2 2.4M141.4 140l-3.6 2.4M138 141.2h4.8" stroke="#fff" stroke-width=".8"/><path d="M168 132l1.2 2.4M170.4 132l-3.6 2.4M167 133.2h4.8" stroke="#fff" stroke-width=".8"/></g>`,
  'outfit-ballgown':`<path d="M144 109Q154 104 164 109L167 124Q180 142 190 158Q154 170 118 158Q128 142 141 124Z" fill="${c}"/><path d="M141 124Q154 128 167 124" stroke="#fff" stroke-opacity=".5" stroke-width="2" fill="none"/><g fill="#fff" opacity=".7"><circle cx="134" cy="150" r="1.8"/><circle cx="152" cy="156" r="1.8"/><circle cx="168" cy="146" r="1.8"/></g>`
 })[wearing('outfitStyle')]}
 // The frog's hat rests on top of the head between the eyes; frog() draws it over the green eye domes
@@ -99,9 +105,10 @@ function frogHatArt(){
   'hat-cap':'<path d="M182 116Q206 88 230 116Z" fill="#4f86c6"/><path d="M226 114Q246 112 252 120L226 120Z" fill="#3a6ea8"/><circle cx="206" cy="98" r="3" fill="#fff"/>',
   'hat-beanie':'<path d="M180 118Q206 80 232 118Z" fill="#c95b5b"/><rect x="178" y="112" width="56" height="9" rx="4" fill="#f2e6d6"/><circle cx="206" cy="96" r="7" fill="#f2e6d6"/>',
   'hat-top':'<rect x="190" y="82" width="32" height="30" rx="3" fill="#2f3a35"/><rect x="180" y="108" width="52" height="7" rx="3" fill="#2f3a35"/><rect x="190" y="100" width="32" height="6" fill="#c2574e"/>',
+  'hat-tomte':'<path d="M181 118Q192 86 216 80Q238 76 246 98Q236 92 228 96Q232 106 231 118Z" fill="#c9473f"/><path d="M194 98Q206 88 220 86" stroke="#fff" stroke-opacity=".25" stroke-width="3" fill="none" stroke-linecap="round"/><rect x="178" y="111" width="56" height="10" rx="5" fill="#f4f1ea"/><circle cx="246" cy="99" r="7" fill="#f4f1ea"/>',
   'hat-crownlet':'<path d="M190 116L186 96 197 106 206 90 215 106 226 96 222 116Z" fill="#f1ce69" stroke="#b58a22" stroke-width="1.5"/><circle cx="206" cy="104" r="3" fill="#4b9d8a"/>'}[wearing('frogHat')]||'';
  // Each hat is moved so its bottom rests at about y 128, the top of the head between the eyes.
- const lift={'hat-flower':6,'hat-cap':12,'hat-beanie':8,'hat-top':13,'hat-crownlet':12}[wearing('frogHat')]??10;
+ const lift={'hat-tomte':8,'hat-flower':6,'hat-cap':12,'hat-beanie':8,'hat-top':13,'hat-crownlet':12}[wearing('frogHat')]??10;
  return hat?`<g transform="translate(0 ${lift})">${hat}</g>`:'';
 }
 function frogWearArt(){

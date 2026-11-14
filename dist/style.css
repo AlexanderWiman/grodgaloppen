@@ -553,3 +553,56 @@ body[data-tab=race] aside{display:none}
 .gardenCanvas:after,.houseRoom:after,.villageMap:after{z-index:96}
 .fishPond:after{z-index:4}
 #portrait{position:relative;border-radius:16px;overflow:hidden}
+
+/* Jul i Älvbyn: lights, the tree in the glade, the advent calendar and decorating the tree. */
+.julLights{position:absolute;left:0;top:0;width:100%;height:13%;z-index:91;pointer-events:none}
+.julLights ellipse,.julTwinkle circle{animation:julBlink 2s ease-in-out infinite}
+@keyframes julBlink{50%{opacity:.4}}
+.julTreeGlade{position:absolute;left:4%;top:14%;width:17%;min-width:70px;z-index:26;border:0;background:none;padding:0;cursor:pointer;filter:drop-shadow(0 6px 4px #39533233)}
+.julTreeGlade svg{width:100%;display:block}
+.julSnow{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none}
+.julCal,.julTreeCard{background:linear-gradient(160deg,#fbf3e4,#f3e9d4);border:1px solid #e3cfa6;border-radius:20px;padding:16px 18px;margin-bottom:18px}
+.julHead{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.julHead h3{margin:2px 0 4px}
+.julCal p,.julTreeCard p{font-size:13px;color:#6d6650;margin:4px 0 12px}
+.julDoors{display:grid;grid-template-columns:repeat(8,1fr);gap:6px}
+.julDoor{aspect-ratio:1;border-radius:10px;border:1px solid #a8382f;background:#c9473f;color:#fff6e6;font-family:Fredoka,sans-serif;font-size:17px;display:flex;align-items:center;justify-content:center;padding:0;min-width:0}
+.julDoor:nth-child(3n){background:#3f8a55;border-color:#2f6e44}
+.julDoor:nth-child(5n){background:#b98a2a;border-color:#8d6a1f}
+.julDoor.eve{background:#6f3f86;border-color:#52306a}
+.julDoor:disabled{opacity:.45;cursor:default;filter:saturate(.6);transform:none}
+.julDoor.ready{box-shadow:0 0 0 3px #f6d36b;animation:julReady 1.6s ease-in-out infinite}
+@keyframes julReady{50%{transform:scale(1.07)}}
+.julDoor.open{background:#fffaf0;border:1px dashed #d9c49a;opacity:1;filter:none}
+.julDoor.open svg{width:72%;height:72%}
+.julCal .julStatus{font-weight:600;color:#3f5f45;min-height:1em;margin:10px 0 0}
+.julTreeWrap{position:relative;width:min(260px,72%);margin:0 auto 12px}
+.julTreeBig{width:100%;display:block}
+.julSpot{position:absolute;width:11%;aspect-ratio:1;margin:-5.5% 0 0 -5.5%;border-radius:50%;border:2px dashed #ffffffbb;background:#ffffff22;padding:0;min-width:0}
+.julSpot.full{border:0;background:none}
+.julBaubles{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.julBauble{display:flex;align-items:center;gap:4px;border-radius:14px;border:1px solid #d9c49a;background:#fffaf0;padding:4px 10px 4px 4px;font-size:12px;color:var(--ink)}
+.julBauble svg{width:24px;height:24px}
+.julBauble.chosen{background:#3f8a55;color:#fff;border-color:#2f6e44}
+.julTreeCard .julEmpty{margin:0}
+.julBanner{display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:12px;padding:10px 14px;margin-bottom:18px;border-radius:18px;background:linear-gradient(90deg,#f6e6d6,#e7f0dc);border:1px solid #d9c49a}
+.julBanner svg{width:44px;display:block}.julBanner p{margin:2px 0 0;font-size:13px}.julBanner .primary{width:auto;margin:0}
+@media(max-width:520px){.julDoors{grid-template-columns:repeat(6,1fr)}.julBanner{grid-template-columns:36px 1fr}.julBanner svg{width:36px}.julBanner .primary{grid-column:1/-1}}
+body[data-holiday="jul"] header{background-image:radial-gradient(circle at 12px 5px,#e5687a 0 3.5px,transparent 4.5px),radial-gradient(circle at 37px 7px,#f6d36b 0 3.5px,transparent 4.5px),radial-gradient(circle at 62px 5px,#7fc6d9 0 3.5px,transparent 4.5px),radial-gradient(circle at 87px 7px,#9fd37c 0 3.5px,transparent 4.5px);background-size:100px 12px;background-repeat:repeat-x;background-position:0 100%}
+body[data-holiday="jul"] .villageMap:before{content:'';position:absolute;left:0;right:0;top:0;height:16px;z-index:95;pointer-events:none;background-image:radial-gradient(circle at 12px 6px,#e5687a 0 4px,transparent 5px),radial-gradient(circle at 37px 9px,#f6d36b 0 4px,transparent 5px),radial-gradient(circle at 62px 6px,#7fc6d9 0 4px,transparent 5px),radial-gradient(circle at 87px 9px,#9fd37c 0 4px,transparent 5px);background-size:100px 16px;background-repeat:repeat-x}
+
+/* The frogs sleep in the cottage at night. */
+.houseNightShade{position:absolute;inset:0;background:#1b2c4a;opacity:.4;z-index:55;pointer-events:none}
+.frogBeds{position:absolute;right:4%;bottom:5%;display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px 6px;max-width:62%;z-index:93;pointer-events:none}
+.frogBed{position:relative;width:66px;height:44px;border-radius:12px 12px 6px 6px;background:#a37a4c;box-shadow:inset 0 -6px #7b5638}
+.bedFrog{position:absolute;left:6px;top:-8px;width:40px;transform-origin:50% 100%;animation:frogBreath 3s ease-in-out infinite;animation-delay:inherit}
+.bedFrog svg{width:100%;display:block}
+.bedQuilt{position:absolute;left:3px;right:3px;top:14px;bottom:8px;border-radius:8px;background:repeating-linear-gradient(45deg,#e5c3d5 0 6px,#f3dbe6 6px 12px)}
+.frogBed i{position:absolute;right:5px;top:-16px;color:#e8f0ff;font-style:normal;font-weight:700;animation:zzz 2.4s ease-in-out infinite;animation-delay:inherit}
+@keyframes frogBreath{50%{transform:scaleY(.93)}}
+@keyframes zzz{0%{opacity:0;transform:translate(0,6px)}40%{opacity:1}100%{opacity:0;transform:translate(8px,-10px)}}
+.houseRoom .houseNight{position:absolute;top:10px;right:10px;z-index:97;width:auto;margin:0;padding:7px 12px;background:#fffaf0e6}
+@media (prefers-reduced-motion:reduce){.julLights ellipse,.julTwinkle circle,.julDoor.ready,.bedFrog,.frogBed i{animation:none}}
+
+/* Grid children may shrink, so the sideways list in "Din samling" scrolls instead of stretching the page on phones. */
+.gardenLower>*{min-width:0}
