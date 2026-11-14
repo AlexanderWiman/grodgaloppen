@@ -22,13 +22,13 @@ async function flushPendingScores(){
 }
 function leaderRows(data){
  if(!data.top.length)return '<p class="leaderEmpty">Ingen har satt en tid här än. Bli den första!</p>';
- return `<ol class="leaderList">${data.top.map(r=>`<li class="${r.me?'me':''}"><span class="rank">${r.rank}</span><span class="who">${escapeText(r.name)} <small>#${r.tag}</small>${r.me?' <em>du</em>':''}</span><span class="time">${r.time.toFixed(1)} s</span></li>`).join('')}</ol>${data.me&&!data.top.some(r=>r.me)?`<p class="leaderMe">Din plats: ${data.me.rank} av ${data.total} · ${data.me.time.toFixed(1)} s</p>`:''}`;
+ return `<ol class="leaderList">${data.top.map(r=>`<li class="${r.me?'me':''}"><span class="rank">${r.rank}</span><span class="who"><span translate="no">${escapeText(r.name)}</span> <small>#${r.tag}</small>${r.me?' <em>du</em>':''}</span><span class="time">${r.time.toFixed(1)} s</span></li>`).join('')}</ol>${data.me&&!data.top.some(r=>r.me)?`<p class="leaderMe">Din plats: ${data.me.rank} av ${data.total} · ${data.me.time.toFixed(1)} s</p>`:''}`;
 }
 function renderLeaderboard(el,route){
  if(!el)return;
  if(leaderTrack===null||!trackUnlocked(leaderTrack))leaderTrack=route;
  const t=trackWorlds[leaderTrack],n=leaderName();
- el.innerHTML=`<div class="sectionHead"><h2>Topplista</h2><span class="pill">Alla som spelar</span></div><div class="leaderTabs" role="tablist">${trackWorlds.map((x,i)=>trackUnlocked(i)?`<button role="tab" aria-selected="${i===leaderTrack}" data-leader="${i}">${x.icon} ${x.name}</button>`:'').join('')}</div><div class="leaderBody" id="leaderBody"><p class="leaderEmpty">Hämtar ${t.name}…</p></div><p class="leaderNote">Du heter <b>${n.adj} ${n.noun}</b> på topplistan. Bara bästa tiden per bana räknas. <button class="linkish" id="leaderRename">Byt namn</button></p><div id="leaderRenameBox"></div>${state.leaderOptOut?'<p class="leaderNote">Spelet frågar inte om dina rekord. <button class="linkish" id="leaderOptIn">Fråga igen efter nya rekord</button></p>':''}`;
+ el.innerHTML=`<div class="sectionHead"><h2>Topplista</h2><span class="pill">Alla som spelar</span></div><div class="leaderTabs" role="tablist">${trackWorlds.map((x,i)=>trackUnlocked(i)?`<button role="tab" aria-selected="${i===leaderTrack}" data-leader="${i}">${x.icon} ${x.name}</button>`:'').join('')}</div><div class="leaderBody" id="leaderBody"><p class="leaderEmpty">Hämtar ${t.name}…</p></div><p class="leaderNote">Du heter <b translate="no">${n.adj} ${n.noun}</b> på topplistan. Bara bästa tiden per bana räknas. <button class="linkish" id="leaderRename">Byt namn</button></p><div id="leaderRenameBox"></div>${state.leaderOptOut?'<p class="leaderNote">Spelet frågar inte om dina rekord. <button class="linkish" id="leaderOptIn">Fråga igen efter nya rekord</button></p>':''}`;
  if($('#leaderOptIn'))$('#leaderOptIn').onclick=()=>{state.leaderOptOut=false;save();renderLeaderboard(el,route)};
  el.querySelectorAll('[data-leader]').forEach(b=>b.onclick=()=>{leaderTrack=+b.dataset.leader;renderLeaderboard(el,route)});
  $('#leaderRename').onclick=()=>namePicker($('#leaderRenameBox'),()=>renderLeaderboard(el,route));
@@ -44,7 +44,7 @@ function namePicker(box,done){
 function offerLeaderboard(el,world,time,record){
  if(!el||!record||time===null||state.leaderOptOut)return;
  const n=leaderName();
- el.innerHTML=`<div class="leaderOffer"><p><b>Nytt rekord!</b> Vill du skicka ${time.toFixed(1)} s till topplistan som <b>${n.adj} ${n.noun}</b>?</p><div class="leaderOfferActions"><button class="primary" id="leaderSend">Skicka</button><button class="outline" id="leaderNoThanks">Nej tack</button><button class="linkish" id="leaderNever">Fråga inte igen</button></div><div id="leaderResult"></div></div>`;
+ el.innerHTML=`<div class="leaderOffer"><p><b>Nytt rekord!</b> Vill du skicka ${time.toFixed(1)} s till topplistan som <b translate="no">${n.adj} ${n.noun}</b>?</p><div class="leaderOfferActions"><button class="primary" id="leaderSend">Skicka</button><button class="outline" id="leaderNoThanks">Nej tack</button><button class="linkish" id="leaderNever">Fråga inte igen</button></div><div id="leaderResult"></div></div>`;
  const score={player:playerId(),track:world.id,adj:n.adj,noun:n.noun,time:Math.round(time*10)/10};
  $('#leaderSend').onclick=async()=>{
   $('#leaderSend').disabled=true;

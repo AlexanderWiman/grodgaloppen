@@ -62,7 +62,7 @@ function takeDailyGift(){
  state.bond=Math.min(100,state.bond+2);save();return gift;
 }
 function dailyGiftHTML(){if(!dailyGiftAvailable())return '';return `<section class="dailyGift" id="dailyGift"><span class="giftFrog">${miniFrog(state.frog)}</span><div><b>${escapeText(state.frogName)} har något åt dig!</b><p>Din groda har letat i gläntan medan du var borta.</p></div><button class="primary" id="takeGift">Titta!</button></section>`}
-function wireDailyGift(){if(!$('#takeGift'))return;$('#takeGift').onclick=()=>{const g=takeDailyGift();if(!g)return;sfx('chime');sidebar();$('#dailyGift').innerHTML=`<span class="giftFrog">${miniFrog(state.frog)}</span><div><b>${escapeText(state.frogName)} hittade ${g.find}!</b><p>${g.sticker?`Och ett klistermärke: ${g.sticker.icon} ${g.sticker.name}`:g.berries?'Och två bär till korgen.':`Och ${g.coins} daggdroppar.`} +2 vänskap. Vi ses i morgon – om du vill!</p></div>`}}
+function wireDailyGift(){if(!$('#takeGift'))return;$('#takeGift').onclick=()=>{const g=takeDailyGift();if(!g)return;sfx('chime');sidebar();$('#dailyGift').innerHTML=`<span class="giftFrog">${miniFrog(state.frog)}</span><div><b>${escapeText(state.frogName)} hittade ${g.find}!</b><p>${g.sticker?`Och ett klistermärke: ${g.sticker.icon} ${g.sticker.name}`:g.berries?'Och två bär till korgen.':`Och ${g.coins} daggdroppar.`}</p><p>+2 vänskap. Vi ses i morgon – om du vill!</p></div>`}}
 
 // ---------- Wardrobe ----------
 const wardrobe=[

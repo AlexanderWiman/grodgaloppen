@@ -47,3 +47,6 @@ Pushing to `main` runs all tests and deploys `dist/` to GitHub Pages via `.githu
 
 ## Seasons, festivals, wardrobe and the daily surprise
 `seasons.js`: the season follows the calendar (spring Mar–May, summer Jun–Aug, autumn Sep–Nov, winter Dec–Feb) and tints the garden, village and hero, with falling petals/leaves/snow. Each season Älvbyn prepares a festival (three tasks → celebration → a seasonal garden thing). Once a calendar day the frog has a small gift (no streaks, nothing lost by skipping). Wardrobe: fairy wings and clothes, frog hats and jewels (per frog). Ten new garden things. `node tests/seasons.cjs`.
+
+## English
+`i18n.js` translates the page live when English is chosen (EN/SV button in the header). The game is still written in Swedish; text is matched as exact phrases (`EN`), phrases with numbers (`#`), patterns with names (`EN_PATTERNS`), quotes and sentences. Character names stay Swedish. Anything inside `translate="no"` is left alone (leaderboard names must stay as the server's Swedish words). When you add Swedish text, add its English to `EN`. `node tests/i18n.cjs`.

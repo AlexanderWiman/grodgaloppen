@@ -284,3 +284,4 @@ body[data-season="summer"] .seasonFall i{color:#fff7b0;text-shadow:0 0 8px #fff2
 .wardrobe{margin-top:18px}
 .wearOptions button:disabled{opacity:.45}
 .festParty .rewardList{list-style:none;padding:0}
+.langToggle{font:700 11px "DM Sans",sans-serif;letter-spacing:.5px;color:#927234}
