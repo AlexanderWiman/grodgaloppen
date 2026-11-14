@@ -94,3 +94,14 @@ Pushing to `main` runs all tests and deploys `dist/` to GitHub Pages via `.githu
 - **Phones:** on phones the race tracks and the glade and cottage collections are now swipeable rows. The race tab no longer shows the sidebar at the bottom, the rivals section folds open, and the hero image is shorter. That makes the race tab about 1,340 px instead of 4,030 px, and the glade about 1,500 px instead of 4,450 px.
 - **Fishing line:** the rod sits in the fairy's hand and the line runs from its tip to the float. `fishDrawLine()` measures the real layout and runs again when the window is resized.
 - On `localhost` the service worker never serves from its cache, so a local preview always shows fresh files.
+
+## Harder races, superpowers, more weather and Tuss on adventures (survey 3, step 2)
+- **Harder:** `RIVAL_BASE` went from 4.0 to 4.2, and a fourth level, **Mästare**, was added (rivals ×1.16, +50 % dewdrops). A normal player now wins about 55–60 % on Lagom instead of about 70–76 %. Månskensmyren's hop bonus went from 4 to 4.4 so it isn't the odd one out.
+- **Superpowers** (`powerKinds`, `powerRate`): sometimes one waits over the next landing spot, and a good landing picks it up.
+  - ⚡ **Blixtfart:** ×1.5 speed for 3 s.
+  - 🫧 **Bubbelsköld:** the next miss costs no speed.
+  - 🍀 **Klöverlycka:** a wider field for 3 hops.
+  - 🌟 **Stjärnhopp:** the next hop is golden, without a narrower field.
+- **Weather:** fog (the green field shows only up close), thunder (slippery, and lightning briefly startles the rivals) and the rare rainbow (every third hop golden, +1 drop) join rain and snow. `node tests/race.cjs` checks that every kind keeps a normal player's win rate within 20 points of normal weather.
+- **Tuss on adventures:** once you have three hearts with him, he comes along on adventures. The green field is 15 % wider there, and afterwards he gives you a fish for the bucket or 15 dewdrops (`tussJoins`, `tussAdventureFind` in fishing.js).
+- The **Slottet** tab now always shows. Before her first invitation it says when Skogsdrottningen comes next and how to get to the castle.

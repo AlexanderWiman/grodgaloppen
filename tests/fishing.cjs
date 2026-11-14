@@ -26,4 +26,8 @@ assert.equal(g.run('giveTroll()'),null,'no more wishes');
 const back=game(g.saved);assert.equal(back.run('state.fishing.troll'),6);assert.equal(back.run('state.fishing.caught.mort'),3);
 // The fishing page renders and is in the Gläntan menu group.
 g.run("tab='fish';render()");assert(g.run("$('#content').innerHTML").includes('Fiska i dammen'));assert.equal(g.run("groupOf('fish').id"),'home');
+// Tuss joins adventures from three hearts and finds a fish or 15 dewdrops on the way.
+const t=game();t.run('state.hatched=true;ensureGarden();ensureFishing()');assert(!t.run('tussJoins()'));t.run('state.fishing.troll=3');assert(t.run('tussJoins()'));
+t.run('state.coins=0');assert.equal(t.run('tussAdventureFind(()=>.9)'),'15 daggdroppar');assert.equal(t.run('state.coins'),15);
+const found=t.run('tussAdventureFind(()=>.1)');assert(['Mört','Abborre','Gammal stövel'].includes(found));assert.equal(t.run('bucketCount()'),1);
 console.log('PASS: fish choice, dusk fish, catches, bucket and all six of Tuss\'s wishes.');
