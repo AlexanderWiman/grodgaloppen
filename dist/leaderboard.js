@@ -48,7 +48,7 @@ function offerLeaderboard(el,world,time,record){
  const score={player:playerId(),track:world.id,adj:n.adj,noun:n.noun,time:Math.round(time*10)/10};
  $('#leaderSend').onclick=async()=>{
   $('#leaderSend').disabled=true;
-  try{const d=await leaderApi('/api/score',score);const me=d.me;$('#leaderResult').innerHTML=`<p>✦ Du är nummer <b>${me?.rank??'?'}</b> av ${d.total} på ${world.name}!</p>`;sfx('chime')}
+  try{const d=await leaderApi('/api/score',score);state.leaderSubmitted=true;save();const me=d.me;$('#leaderResult').innerHTML=`<p>✦ Du är nummer <b>${me?.rank??'?'}</b> av ${d.total} på ${world.name}!</p>`;sfx('chime')}
   catch{state.pendingScores=[...(state.pendingScores||[]),score];save();$('#leaderResult').innerHTML='<p>Ingen internet just nu – tiden skickas nästa gång du öppnar topplistan.</p>'}
   $('#leaderNoThanks').hidden=true;$('#leaderNever').hidden=true;
  };

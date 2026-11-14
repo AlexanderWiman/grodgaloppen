@@ -168,3 +168,79 @@ body.gardenView aside{display:none}
 .frogPicker button svg{width:30px}
 .frogPicker button[aria-pressed="true"]{border-color:var(--green);background:#e9eedf;font-weight:700}
 .raceNote{font-size:13px;margin:8px 0 0}
+/* Step 4: five new places */
+.jumpWorld.castle{background:radial-gradient(ellipse at 75% 15%,#fff6d6 0,transparent 40%),linear-gradient(#efe4f6 55%,#d9c7a0 55%)}
+.castle .worldDecor{opacity:.55}
+.stepPad{height:30px;background:linear-gradient(#efe2c4,#d6c094);border:3px solid #b39762;border-radius:6px;box-shadow:0 6px 0 #a8905e}
+.castle #nextPad{filter:saturate(.7)}
+.castle #nextPad.ready{background:linear-gradient(#e9f7c9,#b9dc87);border-color:#5f8a3a}
+.jumpWorld.sea{background:radial-gradient(circle at 20% 30%,#ffffff33 0 6px,transparent 7px),radial-gradient(circle at 70% 20%,#ffffff33 0 4px,transparent 5px),linear-gradient(#8fd0de,#3f7e94 55%,#2f6b7c 55%);color:#f2fbff}
+.sea .worldDecor{opacity:.6}
+.shellPad{height:30px;border-radius:50% 50% 12px 12px;background:repeating-linear-gradient(90deg,#f6d5c4 0 10px,#ecc0ab 10px 13px);border:3px solid #d29c86;box-shadow:0 6px 0 #1f566433}
+.sea #landingCue{color:#f2fbff}
+.sea #nextPad.ready{background:repeating-linear-gradient(90deg,#d9f5b5 0 10px,#bfe68d 10px 13px);border-color:#5f8a3a}
+.jumpWorld.clouds{background:linear-gradient(#cfe2fb,#eef5ff 55%,#ffffff 55%)}
+.clouds .worldDecor{opacity:.7;color:#fff}
+.cloudPad{height:32px;border-radius:30px;background:#fff;border:3px solid #d9e5f4;box-shadow:0 6px 0 #c6d6ec,inset 0 -6px 0 #eef3fb}
+.clouds #nextPad.ready{background:#f3ffe0;border-color:#8fbf5a;box-shadow:0 0 0 6px #e9ffbf88,0 0 20px #f6ffd6}
+.jumpWorld.night{background:radial-gradient(circle at 80% 18%,#fffbe0 0 14px,transparent 15px),linear-gradient(#141c35,#25365a 55%,#1b2741 55%);color:#e9efff}
+.night .worldDecor{opacity:.6;color:#fff7c4}
+.moonPad{height:28px;border-radius:50%;background:#5b6c55;border:3px solid #3d4a3a;box-shadow:0 6px 0 #0f1628}
+.night #nextPad{filter:brightness(.8)}
+.night #nextPad.ready{background:#9ec46f;border-color:#e9ffbf;filter:none;box-shadow:0 0 22px #fff7a6}
+.night #landingCue,.night .worldCaption{color:#e9efff}
+.jumpWorld.winter{background:linear-gradient(#e7f1fa,#f6fbff 55%,#d6e7f4 55%)}
+.winter .worldDecor{opacity:.6;color:#9fbfd8}
+.icePad{height:24px;border-radius:40% 55% 45% 50%;background:linear-gradient(135deg,#ffffff,#cfe6f6);border:3px solid #a9c9e0;box-shadow:0 5px 0 #b5cfe2}
+.winter #nextPad.ready{background:linear-gradient(135deg,#f7ffe6,#d4f2a8);border-color:#7fb24a}
+/* Saga, album and collections */
+.advTabs{display:flex;gap:6px;margin:4px 0 18px;overflow-x:auto;scrollbar-width:none}
+.advTabs button{flex:none;border:1px solid var(--line);background:#fffef8;border-radius:20px;padding:9px 16px;font:inherit;font-size:13px;color:var(--ink);cursor:pointer}
+.advTabs button[aria-selected="true"]{background:var(--green);border-color:var(--green);color:#fff;font-weight:600}
+.sagaHero{display:grid;grid-template-columns:150px 1fr;gap:18px;align-items:center;background:#eef2e3;border:1px solid #d7dfc4;border-radius:20px;padding:16px}
+.sagaHero img{width:100%;aspect-ratio:1;object-fit:cover;object-position:50% 25%;border-radius:14px}
+.sagaHero h3{margin:4px 0}
+.sagaHero p{font-size:13px;color:var(--muted);line-height:1.6}
+.crownSlots{display:flex;gap:8px;font-size:22px}
+.crownSlots span{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:#fffef8;border:2px dashed #cfd8bd;color:#c3c9b5}
+.crownSlots span.found{border:2px solid #d6ad48;background:#fff7d6;color:inherit;box-shadow:0 0 10px #f3dc8a}
+.chapterList{display:grid;gap:12px;margin-top:16px}
+.chapter{display:grid;grid-template-columns:46px 1fr;gap:14px;background:#fffef8;border:1px solid var(--line);border-radius:16px;padding:16px}
+.chapter h3{margin:2px 0 6px}
+.chapter p{font-size:13px;color:var(--muted);line-height:1.6;margin:0 0 10px}
+.chapter .primary,.chapter .outline{width:auto;margin:0}
+.chapterNum{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-family:Fredoka,sans-serif;font-size:20px;background:#e9eedf;color:var(--green)}
+.chapter.done .chapterNum{background:#f6e7b3;color:#8a6a1f}
+.chapter.locked{opacity:.55}
+.chapter.epilogue{background:linear-gradient(135deg,#fff8de,#f4ebff);border-color:#e6d49a}
+.sagaDialog{background:#fffef8;border:1px solid var(--line);border-radius:18px;padding:22px}
+.sagaDialog blockquote{font-size:16px;line-height:1.7;margin:14px 0;padding:14px 16px;background:#f4f6e9;border-radius:12px}
+.sagaDialog .primary{margin-right:8px}
+.sagaDialog .outline{width:auto}
+.dialogDots{display:flex;gap:6px;margin-bottom:14px}
+.dialogDots i{width:8px;height:8px;border-radius:50%;background:#d4dfcb}
+.dialogDots i.on{background:#779b69}
+.sagaArt svg,.albumPic svg{width:100%;display:block;border-radius:14px}
+.sagaEnding{grid-template-columns:44% 1fr;align-items:center}
+.sagaEnding .sagaArt{padding:16px}
+.rewardList{font-size:13px;line-height:1.8;padding-left:18px;color:var(--ink)}
+.epilogueView .sagaArt{max-width:460px;margin-bottom:14px}
+.albumGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.albumPic{margin:0;background:#fffef8;border:1px solid var(--line);border-radius:16px;padding:10px;transform:rotate(-.6deg)}
+.albumPic:nth-child(even){transform:rotate(.7deg)}
+.albumPic figcaption{font-size:12px;color:var(--muted);text-align:center;margin-top:8px;font-family:Fredoka,sans-serif}
+.albumPic.empty div{aspect-ratio:16/10;border-radius:14px;background:repeating-linear-gradient(135deg,#f3f2e8 0 10px,#eceadc 10px 20px);display:grid;place-items:center;font-size:30px;color:#c8c9b6}
+.medalGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.medal{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;background:#fffef8;border:1px solid var(--line);border-radius:14px;padding:14px 10px;opacity:.6}
+.medal.won{opacity:1;border-color:#e3cf8d;background:linear-gradient(#fffdf2,#fff7dc)}
+.medal span{font-size:30px}
+.medal b{font-size:13px}
+.medal small{font-size:11px;color:var(--muted)}
+.stickerBook{margin-top:26px}
+.stickerGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(76px,1fr));gap:10px}
+.sticker{aspect-ratio:1;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#f3f2e8;border:2px dashed #dcdcc8}
+.sticker.got{background:#fff;border:3px solid #fff;box-shadow:0 2px 8px #0002;transform:rotate(-4deg)}
+.sticker.got:nth-child(3n){transform:rotate(5deg)}
+.sticker span{font-size:28px;line-height:1}
+.sticker small{font-size:9px;color:var(--muted);margin-top:2px}
+@media(max-width:700px){.sagaHero{grid-template-columns:90px 1fr;gap:12px}.crownSlots span{width:34px;height:34px;font-size:18px}.sagaEnding{grid-template-columns:1fr}.chapter{grid-template-columns:36px 1fr;padding:14px}.chapterNum{width:34px;height:34px;font-size:16px}}

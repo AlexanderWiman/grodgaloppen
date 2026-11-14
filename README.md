@@ -41,3 +41,6 @@ Pushing to `main` runs all tests and deploys `dist/` to GitHub Pages via `.githu
 
 ## Several frogs
 `frogs.js`: hatch up to six frogs (an egg costs 200 drops or comes as a reward), pick who races, frogs grow through four stages (Liten → Ung → Stor → Magisk groda) from races, adventures and care. Each stage adds stats, colours and a stronger ability. Personalities (Modig, Sömnig, Busig, Nyfiken, Glad) each give an ability through `frogAbilityMods()`. Friendship unlocks five short stories per personality. The active frog is mirrored into the old single-frog fields and synced back in `save()`. `node tests/frogs.cjs`.
+
+## The Star Crown saga, album, medals and stickers
+`saga.js` owns the Äventyr tab (sub-tabs Sagan, Småäventyr, Album, Medaljer). Five chapters (`sagaChapters`): read the intro → six-hop adventure in a new place (opens its track via `placeOpen`, gives an egg and a garden decoration) → finish one race on that track → chapter done. After all five: the coronation epilogue. Album pictures are drawn from `albumEntries` with the player's own frog and fairy. Medals (`medals`) are checked after races and chapters; stickers drop after races (40 %, 60 % on a win) and always after an adventure. New tracks: Slottsträdgården (royal), Undervattensriket (current), Molnriket (wind), Nattskogen (dark), Vintervärlden (ice). `node tests/saga.cjs`.
