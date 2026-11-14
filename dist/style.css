@@ -37,3 +37,37 @@ header{height:auto;flex-wrap:wrap;gap:15px;padding-top:20px;padding-bottom:20px}
 .laneFinish{position:absolute;right:-14px;top:3px;font-style:normal;color:#947634}
 @media(max-width:700px){.twistBadge{top:40px;left:12px;right:90px;font-size:10px}.laneRow{grid-template-columns:72px 1fr}.laneRow small{display:none}}
 @media(prefers-reduced-motion:reduce){.timingTarget{transition:none}}
+
+/* Phone layout: compact header, one swipeable menu row, play area that fits one screen. */
+.jumpWorld{touch-action:manipulation;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;cursor:pointer}
+#jumpButton{-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
+@media(hover:none){.kbdHint{display:none}}
+@media(max-width:700px){
+header{padding:10px 16px;gap:10px}
+.brand{font-size:19px;gap:8px}
+.brand small{font-size:8px;letter-spacing:1.5px}
+.wallet{order:2;margin-left:auto;padding:8px 12px;font-size:13px}
+nav{order:3;flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;gap:4px;width:calc(100% + 32px);margin:0 -16px;padding:0 16px 2px;scrollbar-width:none;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity}
+nav::-webkit-scrollbar{display:none}
+nav button{flex:none;white-space:nowrap;padding:10px 14px;font-size:13px;scroll-snap-align:center}
+main{padding:14px 16px 0}
+.intro{display:none}
+body[data-tab=race] aside,body[data-tab=frog] aside{display:block;order:2;margin-top:4px}
+body.gardenView aside{display:none}
+.jumpWorld{scroll-margin-top:8px}
+.worldCaption{top:12px;left:12px;font-size:12px}
+.twistBadge{top:36px}
+.placeChip{top:10px;right:10px;font-size:12px;padding:5px 10px}
+.streakChip{top:40px;right:12px}
+.jumpControls{padding:12px 14px;margin-top:10px}
+.jumpControls>p:first-child{display:none}
+.jumpAction{margin:12px 0 8px}
+.jumpAction button{width:100%;min-height:62px;font-size:18px}
+.jumpAction span{width:100%;text-align:center}
+#jumpFeedback{min-height:0;font-size:12px}
+.swatch{width:42px;height:42px}
+.options{gap:10px}
+}
+.villageDialog{flex-wrap:wrap}
+.villageDialog>h3,.villageDialog>p{flex-basis:100%;margin-bottom:0}
+.villageDialog>div:not(.dialogPortrait){flex:1;min-width:0}
