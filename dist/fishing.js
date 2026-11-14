@@ -100,11 +100,11 @@ function renderFishing(){
  renderTrollPanel();renderFishBook();fishDrawLine();
 }
 // The rod sits in the fairy's hand and the line runs from its tip to the float, measured from the
-// real layout so it fits every screen size. The hand is at (195,129) in the 280×240 frog drawing.
+// real layout so it fits every screen size. The hand is at (192,128) in the 280×240 frog drawing.
 function fishDrawLine(){
  const pond=$('#fishPond'),svg=$('#fishLine'),team=document.querySelector?.('.fishTeam svg'),float=$('#fishFloat');if(!pond?.getBoundingClientRect||!team||!svg)return;
  const P=pond.getBoundingClientRect(),T=team.getBoundingClientRect(),F=float.getBoundingClientRect();if(!P.width||!T.width)return;
- const hx=T.left-P.left+T.width*195/280,hy=T.top-P.top+T.height*129/240,tx=hx+T.width*.3,ty=hy-T.height*.42,fx=F.left-P.left+F.width/2,fy=F.top-P.top+F.height*.15;
+ const hx=T.left-P.left+T.width*192/280,hy=T.top-P.top+T.height*128/240,tx=hx+T.width*.3,ty=hy-T.height*.42,fx=F.left-P.left+F.width/2,fy=F.top-P.top+F.height*.15;
  svg.setAttribute('viewBox',`0 0 ${P.width} ${P.height}`);
  svg.querySelector('.rod').setAttribute('d',`M${hx} ${hy}L${tx} ${ty}`);
  svg.querySelector('.line').setAttribute('d',`M${tx} ${ty}Q${(tx+fx)/2} ${Math.max(ty,fy)+18} ${fx} ${fy}`);
