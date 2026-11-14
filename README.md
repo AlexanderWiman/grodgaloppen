@@ -44,3 +44,6 @@ Pushing to `main` runs all tests and deploys `dist/` to GitHub Pages via `.githu
 
 ## The Star Crown saga, album, medals and stickers
 `saga.js` owns the Äventyr tab (sub-tabs Sagan, Småäventyr, Album, Medaljer). Five chapters (`sagaChapters`): read the intro → six-hop adventure in a new place (opens its track via `placeOpen`, gives an egg and a garden decoration) → finish one race on that track → chapter done. After all five: the coronation epilogue. Album pictures are drawn from `albumEntries` with the player's own frog and fairy. Medals (`medals`) are checked after races and chapters; stickers drop after races (40 %, 60 % on a win) and always after an adventure. New tracks: Slottsträdgården (royal), Undervattensriket (current), Molnriket (wind), Nattskogen (dark), Vintervärlden (ice). `node tests/saga.cjs`.
+
+## Seasons, festivals, wardrobe and the daily surprise
+`seasons.js`: the season follows the calendar (spring Mar–May, summer Jun–Aug, autumn Sep–Nov, winter Dec–Feb) and tints the garden, village and hero, with falling petals/leaves/snow. Each season Älvbyn prepares a festival (three tasks → celebration → a seasonal garden thing). Once a calendar day the frog has a small gift (no streaks, nothing lost by skipping). Wardrobe: fairy wings and clothes, frog hats and jewels (per frog). Ten new garden things. `node tests/seasons.cjs`.

@@ -244,3 +244,43 @@ body.gardenView aside{display:none}
 .sticker span{font-size:28px;line-height:1}
 .sticker small{font-size:9px;color:var(--muted);margin-top:2px}
 @media(max-width:700px){.sagaHero{grid-template-columns:90px 1fr;gap:12px}.crownSlots span{width:34px;height:34px;font-size:18px}.sagaEnding{grid-template-columns:1fr}.chapter{grid-template-columns:36px 1fr;padding:14px}.chapterNum{width:34px;height:34px;font-size:16px}}
+/* Step 5: seasons, festival, daily surprise, wardrobe */
+body[data-season="spring"] .gardenBackdrop,body[data-season="spring"] .hero svg{filter:saturate(1.1) hue-rotate(4deg)}
+body[data-season="summer"] .gardenBackdrop,body[data-season="summer"] .hero svg{filter:saturate(1.2) brightness(1.03)}
+body[data-season="autumn"] .gardenBackdrop,body[data-season="autumn"] .hero svg{filter:sepia(.3) saturate(1.25) hue-rotate(-14deg)}
+body[data-season="winter"] .gardenBackdrop,body[data-season="winter"] .hero svg{filter:saturate(.45) brightness(1.1)}
+.seasonFall{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:3}
+.seasonFall i{position:absolute;top:-30px;font-style:normal;font-size:16px;opacity:.8;animation:seasonFall linear infinite}
+body[data-season="summer"] .seasonFall i{color:#fff7b0;text-shadow:0 0 8px #fff2a0}
+@keyframes seasonFall{0%{transform:translate(0,0) rotate(0)}50%{transform:translate(18px,300px) rotate(120deg)}100%{transform:translate(-10px,620px) rotate(240deg)}}
+@media(prefers-reduced-motion:reduce){.seasonFall{display:none}}
+.villageMap{position:relative}
+.festival{display:flex;gap:16px;margin-top:20px;padding:18px;border-radius:18px;background:linear-gradient(135deg,#fff7e0,#f3ecff);border:1px solid #eadfb8}
+.festival.done{background:#f4f6e9;border-color:var(--line)}
+.festival h3{margin:4px 0 6px}
+.festival p{font-size:13px;color:var(--muted);margin:0 0 10px}
+.festIcon{font-size:40px;line-height:1}
+.festTasks{list-style:none;padding:0;margin:0 0 12px;font-size:13px;line-height:1.9}
+.festTasks li.ok{color:var(--green);font-weight:600}
+.festActions{display:flex;gap:8px;flex-wrap:wrap}
+.festActions .outline,.festActions .primary{width:auto;margin:0}
+.festParty{position:relative;overflow:hidden;text-align:center;padding:30px 18px;border-radius:22px;background:radial-gradient(ellipse at 50% 20%,#fff8de,#f1ecff 70%);border:1px solid #eadfb8}
+.festParty h2{font-family:Fredoka,sans-serif;font-size:34px;margin:6px 0}
+.partyRow{display:flex;justify-content:center;align-items:flex-end;gap:6px;flex-wrap:wrap;margin:14px 0}
+.partyGuest{width:80px;animation:partyHop 1s ease-in-out infinite}
+.partyGuest:nth-child(2n){animation-delay:.3s}
+.partyGuest svg{width:100%;display:block}
+.frogGuest{width:130px}
+@keyframes partyHop{50%{transform:translateY(-10px)}}
+.confetti{position:absolute;inset:0;pointer-events:none}
+.confetti i{position:absolute;top:-20px;font-style:normal;animation:seasonFall 4s linear infinite}
+@media(prefers-reduced-motion:reduce){.partyGuest,.confetti i{animation:none}}
+.dailyGift{display:flex;align-items:center;gap:12px;padding:12px 14px;margin-bottom:18px;border-radius:16px;background:linear-gradient(135deg,#fffbe6,#eef6e0);border:1px dashed #cdbf7a}
+.dailyGift .giftFrog{width:46px;flex:none;animation:partyHop 1.6s ease-in-out infinite}
+.dailyGift .giftFrog svg{width:100%}
+.dailyGift div{flex:1}
+.dailyGift p{margin:2px 0 0;font-size:12px;color:var(--muted)}
+.dailyGift .primary{flex:none;padding:11px 18px}
+.wardrobe{margin-top:18px}
+.wearOptions button:disabled{opacity:.45}
+.festParty .rewardList{list-style:none;padding:0}
