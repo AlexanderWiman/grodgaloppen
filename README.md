@@ -148,3 +148,8 @@ Pushing to `main` runs all tests and deploys `dist/` to GitHub Pages via `.githu
   - The legs are drawn behind the body, and the frog has toes, nostrils and eyebrow ridges.
 - The fairy gets shading on her face and cheeks, a nose, a shine in her hair, folds and shading in her clothes, shadows on her arms, and hands. She casts a shadow on the frog's back.
 - The wings have sheen and veins (`wingShape` in seasons.js).
+- Frog hats are drawn over the green eye domes but under the eye whites. Each hat has its own offset (`lift` in `frogHatArt`), so its bottom rests on the head between the eyes.
+- The dragonfly's front wings point up and out, and its hind wings slightly down.
+- **Background texture:**
+  - The start picture (`scene()`) has a tree line, sun rays, grass tufts, flowers, cattails and a fine grain (`#grain`).
+  - The tracks, glade, cottage, pond, village and portrait get a soft grain and vignette from CSS (`::before`/`::after` with an inline SVG noise image).
