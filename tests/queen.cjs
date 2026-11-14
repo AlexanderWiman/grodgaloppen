@@ -36,7 +36,7 @@ const back=game(g.saved);assert.equal(back.run('state.queen.tasksDone'),5);asser
 const h=game();h.run('state.hatched=true;ensureGarden()');let quiet=[];for(let d=1;d<40&&quiet.length<6;d++)if(!h.run(`queenVisiting(new Date(2026,11,${d}))`))quiet.push(d);
 const at=d=>h.run(`queenClock=()=>new Date(2026,11,${d},12)`);
 at(quiet[0]);h.run("tab='castle';render()");assert(h.run("$('#content').innerHTML").includes('visar vägen'),'castle is closed before her invitation');assert(!h.run('queenGetFlute()'));
-assert(h.run('queenOpenCastle()'));assert(!h.run('queenOpenCastle()'));assert.equal(h.run("groupOf('castle').id"),'adventure');
+assert(h.run("$('#content').innerHTML").includes('Hon kommer på besök igen på'),'tells when she comes next');assert(h.run('queenOpenCastle()'));assert(!h.run('queenOpenCastle()'));assert.equal(h.run("groupOf('castle').id"),'adventure');
 h.run('render()');assert(h.run('state.queen.flute'),'first castle visit gives the flute');assert(h.run("$('#content').innerHTML").includes('SKOGSFLÖJTEN'));
 // The flute calls her today, then rests three days.
 assert(!h.run('queenVisiting()'));assert(h.run('queenFluteReady()'));h.run('state.coins=0');assert(h.run('queenBlowFlute()'));assert(h.run('queenVisiting()'),'she comes when you blow the flute');

@@ -113,3 +113,8 @@ Object.assign(extraGardenArt,{
  bridgelamp:'<path d="M60 102V30" stroke="#6e5a40" stroke-width="5"/><path d="M60 30Q60 18 74 20" fill="none" stroke="#6e5a40" stroke-width="4"/><path d="M74 20V30" stroke="#6e5a40" stroke-width="2"/><path d="M62 30H86L82 62H66Z" fill="#cfd8f5" stroke="#8796bf" stroke-width="2"/><circle cx="74" cy="46" r="8" fill="#fff8cf"/><circle cx="74" cy="46" r="15" fill="#fff8cf" opacity=".3"/><ellipse cx="60" cy="102" rx="22" ry="5" fill="#7d9a6a"/>',
  trollfriend:trollArt().replace(/<svg[^>]*>|<\/svg>/g,'')
 });
+
+// Tuss joins adventures once you have three hearts with him (survey 3). He holds the lily pads
+// steady (a 15 % wider green field in adventures) and finds something along the way.
+function tussJoins(){return (state.fishing?.troll||0)>=3}
+function tussAdventureFind(rnd=Math.random){const r=rnd();if(r<.55){const id=['mort','abborre','stovel'][Math.floor(rnd()*3)];ensureFishing();state.fishing.bucket[id]=(state.fishing.bucket[id]||0)+1;save();return fishKind(id).name}state.coins+=15;save();return '15 daggdroppar'}
