@@ -50,3 +50,9 @@ Pushing to `main` runs all tests and deploys `dist/` to GitHub Pages via `.githu
 
 ## English
 `i18n.js` translates the page live when English is chosen (EN/SV button in the header). The game is still written in Swedish; text is matched as exact phrases (`EN`), phrases with numbers (`#`), patterns with names (`EN_PATTERNS`), quotes and sentences. Character names stay Swedish. Anything inside `translate="no"` is left alone (leaderboard names must stay as the server's Swedish words). When you add Swedish text, add its English to `EN`. `node tests/i18n.cjs`.
+
+## Menu, softer music and invites (survey 2, step 1)
+- The menu has five groups (`navGroups` in app.js): Tävla (Lopp, Mästerskap), Teamet (Grodvän, Utrustning, Älvan), Äventyr (Äventyr, Drottning Astrid), Gläntan and Älvbyn. Groups with more than one page show small tabs in `#subNav`. The internal `tab` names are unchanged, and each group remembers its last open tab.
+- The music is softer: low lead voices (`leadVoices`) with a slow attack, no high sparkle notes and a quieter echo. Each theme follows a 16-bar form (`musicForm`): A, A', a bridge with other chords and a second voice, A, then a short pause. The main tune stays the same, and the other phrases change every other round. `node tests/music.cjs` plays every theme with a fake audio context and checks that no note goes above 1000 Hz.
+- "Bjud in en kompis" in the sidebar opens the phone's share sheet, or copies the link where sharing isn't available.
+- Bump `CACHE` in sw.js whenever the HTML and scripts change together, so an old page never runs new scripts.
