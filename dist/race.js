@@ -52,6 +52,14 @@ const rivals=[
  lines:{start:'Jag sparar krafterna till slutet…',passed:'Oj, vad du glittrar idag!',passes:'Här kommer jag! ✨',sprint:'Nu! Nu är det min tur!',win:'Slutspurten är min hemlighet.',lose:'Du glittrade starkast idag!'}}
 ];
 const RIVAL_BASE=4.0;
+// Weather (survey 2): now and then it rains or snows during a race. Rain makes the pads
+// slippery (a slightly narrower green field) but every good hop catches an extra raindrop.
+// Snow calms everything: the pointer moves slower and hops get shorter – for the rivals too.
+// No weather inside the crystal cave or under water. Tests set weatherOverride.
+const weatherKinds={rain:{name:'Regn',icon:'🌧',text:'Regn · halt men extra droppar',window:.97,extraDrop:1},snow:{name:'Snöfall',icon:'❄',text:'Snöfall · lugnare tempo för alla',period:1.12,hop:.93,rival:.95}};
+let weatherOverride;
+function pickWeather(world){if(weatherOverride!==undefined)return weatherOverride;if(['crystal','sea'].includes(world.id))return null;const winter=world.id==='winter'||typeof seasonFor==='function'&&seasonFor(new Date())==='winter';const roll=Math.random();if(world.id==='winter')return roll<.45?'snow':null;return roll<.25?(winter?'snow':'rain'):null}
+function weatherHTML(kind){if(!kind)return '';const n=kind==='snow'?26:34;return `<div class="weather ${kind}" aria-hidden="true">${Array.from({length:n},(_,i)=>`<i style="left:${(i*37)%100}%;animation-delay:${-((i*.37)%(kind==='snow'?4:1))}s;animation-duration:${kind==='snow'?3+(i%5)*.5:.7+(i%4)*.12}s"></i>`).join('')}</div>`}
 // Difficulty only changes how fast the rivals are; hard races pay a little more.
 const difficulties={easy:{label:'Lätt',rival:.9,reward:1},normal:{label:'Lagom',rival:1,reward:1},hard:{label:'Svår',rival:1.1,reward:1.25}};
 function difficulty(){return difficulties[state.difficulty]||difficulties.normal}
@@ -84,10 +92,11 @@ function startRace(){
  tune.window*=mods.window||1;tune.hopMult*=mods.hop||1;tune.missSlow=Math.min(.92,tune.missSlow+(mods.missSlow||0));
  const names=[typeof activeFrogName==='function'?activeFrogName():'Ditt team',...rivals.map(x=>x.name)],colors=[state.frog,...rivals.map(x=>x.color)];
  let progress=[0,0,0,0],finished=[],last=performance.now(),elapsed=0,phaseTime=0,period=world.period,zone={c:.82,w:tune.window},baseZone=zone,cycle=0,golden=false,surprise=false,lastSurprise=-9,attempted=false,slowUntil=0,good=0,perfect=0,misses=0,drops=0,streak=0,bestStreak=0,surprisesCleared=0,ended=false,platformFlight=null,sprint=false,place=1,finishTime=null,sayUntil=0,firstPerfectUsed=false;
- const diff=difficulty(),seed=Math.random()*6;
- const speeds=[2.8+strength*.009,...rivals.map(()=>RIVAL_BASE*diff.rival*(.97+Math.random()*.06))];
+ const diff=difficulty(),seed=Math.random()*6,weather=adventure?null:pickWeather(world),wx=weatherKinds[weather]||{};
+ if(wx.window)tune.window*=wx.window;if(wx.hop)tune.hopMult*=wx.hop;
+ const speeds=[2.8+strength*.009,...rivals.map(()=>RIVAL_BASE*diff.rival*(wx.rival||1)*(.97+Math.random()*.06))];
  const rivalMult=[1,1,1,1],spurts=[0,0,0,0],nextSpurt=[0,...rivals.map(()=>3+Math.random()*5)],said={};
- $('#content').innerHTML=`${adventure?`<div class="storyStage"><strong>${adventure.title}</strong><p id="storyStep">${adventure.steps[Math.min(5,storyProgress(adventure.id).steps)]}</p><span id="storyCount">${storyProgress(adventure.id).steps} / 6 etapper</span><button class="outline" id="pauseStory">Pausa äventyret</button></div>`:''}<div class="sectionHead"><h2>${r.name}</h2><span class="pill">${r.type} ger fördel</span></div><section class="jumpWorld ${world.className}" aria-label="${r.name}, tävlingsbana"><div class="worldCaption">${world.label}</div>${adventure?'':`<div class="twistBadge">✦ ${world.twistText}</div><div id="placeChip" class="placeChip">Plats 1 av 4</div><div id="streakChip" class="streakChip"></div><div id="rivalSay" class="rivalSay" role="status"></div>`}<div class="worldDecor">${world.decor}</div>${adventure?'':rivals.map((x,i)=>`<div class="rival" id="rival${i+1}" aria-hidden="true">${miniFrog(x.color,x.hat)}</div>`).join('')}${platformScene(world)}${adventure?`<div id="storyToken" class="storyToken" aria-label="${adventure.tokenLabel||adventure.title}">${adventure.icon}</div>`:''}<div id="jumpRider">${frog()}</div><div id="jumpObstacle" aria-hidden="true">${world.icon}</div><div class="ground"></div></section><div class="jumpControls"><p>${world.hint}</p><div class="timingLabel"><span id="timingState">Vänta…</span><strong id="timingHelp">HOPPA I DET GRÖNA FÄLTET</strong></div><div class="timingMeter" aria-hidden="true"><div class="timingTarget" id="timingTarget"></div><div id="timingPointer"></div></div><div class="jumpAction"><button class="primary" id="jumpButton">Hoppa!<span class="kbdHint"> · Mellanslag</span></button><span id="jumpScore">✦ 0 daggdroppar</span></div><p id="jumpFeedback" role="status">Tryck en gång per hinder. Missar kostar lite fart – du fortsätter direkt.</p></div><div class="raceLane">${names.map((n,i)=>`<div class="laneRow ${i?'':'me'}"><span>${escapeText(n)}${i?`<small>${rivals[i-1].style}</small>`:''}</span><div class="laneWater"><i class="laneFinish">⚑</i><b id="runner${i}">${miniFrog(colors[i],i?rivals[i-1].hat:'')}</b></div></div>`).join('')}</div><div class="raceInfo"><h2 id="raceTitle">Astrid: Låt racet börja!</h2></div>`;
+ $('#content').innerHTML=`${adventure?`<div class="storyStage"><strong>${adventure.title}</strong><p id="storyStep">${adventure.steps[Math.min(5,storyProgress(adventure.id).steps)]}</p><span id="storyCount">${storyProgress(adventure.id).steps} / 6 etapper</span><button class="outline" id="pauseStory">Pausa äventyret</button></div>`:''}<div class="sectionHead"><h2>${r.name}</h2><span class="pill">${r.type} ger fördel</span></div><section class="jumpWorld ${world.className}" aria-label="${r.name}, tävlingsbana"><div class="worldCaption">${world.label}</div>${weatherHTML(weather)}${adventure?'':`<div class="twistBadge">✦ ${world.twistText}</div>${weather?`<div class="weatherChip">${wx.icon} ${wx.text}</div>`:''}<div id="placeChip" class="placeChip">Plats 1 av 4</div><div id="streakChip" class="streakChip"></div><div id="rivalSay" class="rivalSay" role="status"></div>`}<div class="worldDecor">${world.decor}</div>${adventure?'':rivals.map((x,i)=>`<div class="rival" id="rival${i+1}" aria-hidden="true">${miniFrog(x.color,x.hat)}</div>`).join('')}${platformScene(world)}${adventure?`<div id="storyToken" class="storyToken" aria-label="${adventure.tokenLabel||adventure.title}">${adventure.icon}</div>`:''}<div id="jumpRider">${frog()}</div><div id="jumpObstacle" aria-hidden="true">${world.icon}</div><div class="ground"></div></section><div class="jumpControls"><p>${world.hint}</p><div class="timingLabel"><span id="timingState">Vänta…</span><strong id="timingHelp">HOPPA I DET GRÖNA FÄLTET</strong></div><div class="timingMeter" aria-hidden="true"><div class="timingTarget" id="timingTarget"></div><div id="timingPointer"></div></div><div class="jumpAction"><button class="primary" id="jumpButton">Hoppa!<span class="kbdHint"> · Mellanslag</span></button><span id="jumpScore">✦ 0 daggdroppar</span></div><p id="jumpFeedback" role="status">Tryck en gång per hinder. Missar kostar lite fart – du fortsätter direkt.</p></div><div class="raceLane">${names.map((n,i)=>`<div class="laneRow ${i?'':'me'}"><span>${escapeText(n)}${i?`<small>${rivals[i-1].style}</small>`:''}</span><div class="laneWater"><i class="laneFinish">⚑</i><b id="runner${i}">${miniFrog(colors[i],i?rivals[i-1].hat:'')}</b></div></div>`).join('')}</div><div class="raceInfo"><h2 id="raceTitle">Astrid: Låt racet börja!</h2></div>`;
  const button=$('#jumpButton'),rider=$('#jumpRider'),pointer=$('#timingPointer'),target=$('#timingTarget'),feedback=$('#jumpFeedback'),thing=$('#surpriseThing');
  function say(i,key){if(adventure||said[i+key]||elapsed<sayUntil)return;said[i+key]=true;sayUntil=elapsed+2.6;const b=$('#rivalSay');b.innerHTML=`<b>${rivals[i-1].name}:</b> ${rivals[i-1].lines[key]}`;b.classList.toggle('show',true);setTimeout(()=>b.classList?.toggle('show',false),2400)}
  function drawZone(){target.style.left=(zone.c-zone.w/2)*100+'%';target.style.width=zone.w*100+'%';$('#nextPad').classList.toggle('golden',golden);target.classList.toggle('golden',golden);target.classList.toggle('surprise',surprise);thing.classList.toggle('show',surprise);$('#timingHelp').textContent=surprise?'HINDER! TRÄFFA DET SMALA FÄLTET':golden?'GYLLENE – DUBBELT SKUTT':'HOPPA I DET GRÖNA FÄLTET'}
@@ -95,7 +104,7 @@ function startRace(){
   phaseTime=0;attempted=false;button.disabled=false;golden=false;surprise=false;
   if(adventure){period=world.period;zone={c:.82,w:tune.window};drawZone();return}
   cycle++;
-  period=world.period*(.82+Math.random()*.36)*(sprint?.85:1);
+  period=world.period*(.82+Math.random()*.36)*(sprint?.85:1)*(wx.period||1);
   const z={c:.82,...(rule.zone?rule.zone({cycle,elapsed,seed}):{})};
   let w=tune.window*(z.wMult||1);golden=!!z.golden;
   if(golden)w*=.65;
@@ -123,7 +132,7 @@ function startRace(){
   if(verdict==='miss'){miss(true);return}
   good++;streak++;bestStreak=Math.max(bestStreak,streak);setStreak();
   const isPerfect=verdict==='perfect';if(isPerfect){perfect++;sfx('perfect')}
-  let gain=world.bonus*tune.hopMult+(isPerfect?1.2:0),earned=isPerfect?3:1;
+  let gain=world.bonus*tune.hopMult+(isPerfect?1.2:0),earned=(isPerfect?3:1)+(wx.extraDrop||0);
   if(golden){gain*=2;earned+=2;sfx('golden')}
   if(surprise){surprisesCleared++;earned+=2+(mods.surpriseDrops||0);gain+=1}
   const flowFrom=mods.streakFrom||3;
@@ -135,7 +144,7 @@ function startRace(){
   $('#jumpScore').textContent='✦ '+drops+' daggdroppar';
  }
  function shownPhase(){const p=phaseTime/period;return rule.path?rule.path(p):p}
- raceProbe={phase:()=>shownPhase(),zone:()=>zone,ready:()=>!ended&&!attempted&&!platformFlight,hop,result:()=>({place:finished.indexOf(0)+1,time:finishTime,good,perfect,misses,bestStreak,surprisesCleared})};
+ raceProbe={phase:()=>shownPhase(),zone:()=>zone,ready:()=>!ended&&!attempted&&!platformFlight,hop,result:()=>({weather,place:finished.indexOf(0)+1,time:finishTime,good,perfect,misses,bestStreak,surprisesCleared})};
  function keydown(e){if(e.code==='Space'&&!e.repeat){e.preventDefault();hop()}else if(e.code==='Space')e.preventDefault()}
  function stop(){ended=true;running=false;document.removeEventListener('keydown',keydown)}
  button.onclick=hop;document.addEventListener('keydown',keydown);
@@ -154,10 +163,10 @@ function startRace(){
   // Head-to-head record against each rival.
   state.rivalRecord=state.rivalRecord||{};rivals.forEach((rv,i)=>{const rec=state.rivalRecord[rv.name]||{won:0,lost:0};finished.indexOf(0)<finished.indexOf(i+1)||!finished.includes(i+1)?rec.won++:rec.lost++;state.rivalRecord[rv.name]=rec});
   const trust=recordRoyalRace(rank,route);if(run?.kind==='cup')recordCupRound(finished);
-  afterRace({route,rank,time:finishTime,perfect,bestStreak,surprisesCleared,difficulty:state.difficulty||'normal'});
+  afterRace({route,weather,rank,time:finishTime,perfect,bestStreak,surprisesCleared,difficulty:state.difficulty||'normal'});
   activeRun=null;save();sidebar();sfx(rank===1?'win':'finish');
   const winner=finished[0],rv=rivals[(winner||[1,2,3].sort((a,b)=>progress[b]-progress[a])[0])-1];
-  $('#content').innerHTML=`<div class="jumpSummary"><strong>Plats ${rank} av 4 · ${diff.label} · ${finishTime.toFixed(1)} s${record?' · ✦ Nytt banrekord!':prev!==undefined?' · Banrekord '+prev.toFixed(1)+' s':''}</strong><p>${good} lyckade hopp · ${perfect} perfekta · ${misses} missar · bästa serie ${bestStreak} i rad${surprisesCleared?` · ${surprisesCleared} hinder`:''}<br>Du samlade ${drops} extra daggdroppar under racet.</p><p class="rivalQuote">${miniFrog(rv.color,rv.hat)}<span><b>${rv.name}:</b> ”${winner?rv.lines.win:rv.lines.lose}”</span></p>${raceNotes.map(n=>`<p class="raceNote">${n}</p>`).join('')}<div id="leaderSubmit"></div></div><div class="raceInfo">${coronation(rank,reward+drops,trust,finished[0])}</div>`;
+  $('#content').innerHTML=`<div class="jumpSummary"><strong>Plats ${rank} av 4 · ${diff.label}${weather?' · '+wx.icon+' '+wx.name:''} · ${finishTime.toFixed(1)} s${record?' · ✦ Nytt banrekord!':prev!==undefined?' · Banrekord '+prev.toFixed(1)+' s':''}</strong><p>${good} lyckade hopp · ${perfect} perfekta · ${misses} missar · bästa serie ${bestStreak} i rad${surprisesCleared?` · ${surprisesCleared} hinder`:''}<br>Du samlade ${drops} extra daggdroppar under racet.</p><p class="rivalQuote">${miniFrog(rv.color,rv.hat)}<span><b>${rv.name}:</b> ”${winner?rv.lines.win:rv.lines.lose}”</span></p>${raceNotes.map(n=>`<p class="raceNote">${n}</p>`).join('')}<div id="leaderSubmit"></div></div><div class="raceInfo">${coronation(rank,reward+drops,trust,finished[0])}</div>`;
   if(typeof offerLeaderboard==='function')offerLeaderboard($('#leaderSubmit'),world,finishTime,record);
   scrollToContent();
   if(run?.kind==='cup'){$('#again').textContent='Visa mästerskapet →';$('#again').onclick=()=>{tab='cup';render()}}else $('#again').onclick=render;
