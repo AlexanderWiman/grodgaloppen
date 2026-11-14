@@ -32,3 +32,9 @@ Pushing to `main` runs all tests and deploys `dist/` to GitHub Pages via `.githu
 - Background music is generated live with Web Audio (no files). Each place has a theme in `musicThemes` (audio.js); `setMusic(name)` crossfades. Music and sound effects have separate toggles in the header.
 - Difficulty (Lätt/Lagom/Svår) only scales rival speed (`difficulties` in race.js); Svår pays 25 % more. `node tests/race.cjs` checks the ordering.
 - `manifest.webmanifest` + `sw.js` make the game installable and playable offline. The service worker serves from cache and refreshes in the background, so a new deploy shows on the next start. Add new files to `FILES` in sw.js.
+
+## Tracks, rivals and leaderboard
+- Tracks are data in `trackWorlds` (race.js): pad style, twist (`twistRules`), music, surprise obstacle and optional `unlock`. Keep the order stable – saves store best times by index.
+- Surprise obstacles appear now and then in races (narrower window, bonus drops when cleared, a longer bump when missed).
+- Rivals Klöver, Mossa and Pärla have pace curves, lines during the race and a head-to-head record (`state.rivalRecord`).
+- Online leaderboard: `server/` is a small Node + Postgres API on Railway (project `grodgaloppen-topplista`, service `api`). Names come only from `server/names.json` (copied in `dist/leaderboard.js`); the server rejects anything else, times under 12 s and more than 20 submissions per 10 minutes. Deploy with `cd server && railway up -s api`. Allowed origins: `ALLOWED_ORIGINS`.

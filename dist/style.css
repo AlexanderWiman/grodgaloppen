@@ -87,3 +87,55 @@ body.gardenView aside{display:none}
 .installHint .primary{padding:9px 14px;font-size:12px;box-shadow:none;flex:none}
 .installClose{border:0;background:none;color:var(--muted);font-size:14px;padding:6px;cursor:pointer;flex:none}
 @media(max-width:700px){.difficultyPick{width:100%}.difficultyPick div button{flex:1}.raceBottom .primary{width:100%}}
+/* Step 2: crystal cave, surprises, rival lines, rival hall, leaderboard */
+.raceCards{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+.card.locked{opacity:.6;background:repeating-linear-gradient(135deg,#f6f5ec 0 10px,#f1f0e4 10px 20px)}
+.jumpWorld.crystal{background:radial-gradient(ellipse at 30% 20%,#6b5aa6 0,transparent 55%),radial-gradient(ellipse at 80% 30%,#3f7e94 0,transparent 50%),linear-gradient(#2c2846 55%,#3b3561 55%);color:#efe9ff}
+.crystal .worldDecor{opacity:.55;color:#cfe8ff}
+.crystalPad{height:34px;background:linear-gradient(135deg,#bfe7f5,#8db8e8 45%,#b49ae6);clip-path:polygon(12% 0,88% 0,100% 45%,82% 100%,18% 100%,0 45%);box-shadow:none;border:0}
+.crystal #nextPad{filter:saturate(.6) brightness(.9)}
+.crystal #nextPad.ready{filter:drop-shadow(0 0 12px #e9ffbf) saturate(1.3) brightness(1.15)}
+.crystal #landingCue{color:#f2edff}
+#surpriseThing{position:absolute;left:45%;bottom:36px;transform:translateX(-50%) scale(.3);font-size:40px;opacity:0;z-index:2;transition:opacity .2s,transform .25s}
+#surpriseThing.show{opacity:1;transform:translateX(-50%) scale(1)}
+.timingTarget.surprise{background:#f0b27a;border-color:#a8622b}
+.timingTarget.surprise:after{content:'HINDER'}
+.rivalSay{position:absolute;left:50%;top:70px;transform:translate(-50%,-6px);max-width:80%;background:#fffef8;color:#263d32;border-radius:14px;padding:7px 12px;font-size:12px;box-shadow:0 4px 14px #0002;opacity:0;transition:opacity .25s,transform .25s;z-index:4;pointer-events:none;text-align:center}
+.rivalSay.show{opacity:1;transform:translate(-50%,0)}
+.rivalQuote{display:flex;align-items:center;gap:10px;margin:12px 0 0}
+.rivalQuote svg{width:44px;flex:none}
+.rivalHall{margin-top:30px}
+.rivalCards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.rivalCard{display:flex;gap:14px;background:#fffef8;border:1px solid var(--line);border-radius:16px;padding:16px}
+.rivalCard h3{margin:0}
+.rivalCard p{font-size:12px;color:var(--muted);line-height:1.6;margin:6px 0 0}
+.rivalPortrait{width:74px;height:74px;flex:none;border-radius:50%;background:radial-gradient(circle,#fff 0,color-mix(in srgb,var(--c) 25%,#f4f6ea) 70%);display:grid;place-items:center}
+.rivalPortrait svg{width:56px}
+.rivalScore{color:var(--ink)!important}
+.leaderboard{margin-top:30px}
+.leaderTabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.leaderTabs button{flex:none;border:1px solid var(--line);background:#fffef8;border-radius:20px;padding:8px 13px;font:inherit;font-size:12px;color:var(--ink);cursor:pointer}
+.leaderTabs button[aria-selected="true"]{background:var(--green);color:#fff;border-color:var(--green)}
+.leaderBody{background:#fffef8;border:1px solid var(--line);border-radius:16px;padding:8px 14px;margin-top:10px}
+.leaderList{list-style:none;margin:0;padding:0}
+.leaderList li{display:grid;grid-template-columns:30px 1fr auto;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);font-size:13px}
+.leaderList li:last-child{border-bottom:0}
+.leaderList li.me{font-weight:700;color:var(--green)}
+.leaderList .rank{font-family:Fredoka,sans-serif;color:#947634;font-variant-numeric:tabular-nums}
+.leaderList li:nth-child(1) .rank:before{content:'♛ '}
+.leaderList small{color:var(--muted);font-weight:400}
+.leaderList em{font-style:normal;font-size:10px;background:#e9eedf;border-radius:8px;padding:2px 6px}
+.leaderList .time{font-variant-numeric:tabular-nums}
+.leaderEmpty,.leaderMe{font-size:13px;color:var(--muted)}
+.leaderNote{font-size:12px;color:var(--muted);margin-top:10px}
+.linkish{border:0;background:none;color:var(--green);text-decoration:underline;text-underline-offset:3px;font:inherit;cursor:pointer;padding:0}
+.namePicker{display:grid;gap:6px;background:#fffef8;border:1px solid var(--line);border-radius:14px;padding:14px;max-width:420px}
+.namePicker label{font-size:11px;color:var(--muted)}
+.namePicker select{padding:10px;border-radius:9px;border:1px solid var(--line);background:var(--cream);font:inherit;color:var(--ink)}
+.namePickerActions{display:flex;gap:8px;margin-top:6px}
+.namePickerActions button{flex:1;margin:0}
+.leaderOffer{margin-top:14px;padding:14px;border-radius:12px;background:#fffef8;border:1px dashed #b9c99c}
+.leaderOffer p{margin:0 0 10px}
+.leaderOfferActions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.leaderOfferActions .outline{width:auto;margin:0}
+@media(max-width:700px){.rivalSay{top:62px;font-size:11px}.rivalCard{padding:13px}.rivalPortrait{width:60px;height:60px}}
