@@ -4,7 +4,7 @@
 // where she comments on how it is furnished.
 
 let queenClock=null,queenOverride; // tests set these
-function queenNow(){return queenClock?queenClock():new Date()}
+function queenNow(){return queenClock?queenClock():typeof gameDate==='function'?gameDate():new Date()}
 function queenDay(d=queenNow()){return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()}
 // Two different random days in every Monday–Sunday week, the same for everyone.
 function queenVisitDays(d=queenNow()){const week=Math.floor((Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/864e5+3)/7),rnd=seeded('skogsdrottningen'+week),a=Math.floor(rnd()*7);let b=Math.floor(rnd()*6);if(b>=a)b++;return [a,b].sort()}

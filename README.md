@@ -167,3 +167,19 @@ Pushing to `main` runs all tests and deploys `dist/` to GitHub Pages via `.githu
   - Eyes: winking, glancing sideways and long lashes join round, almond and happy.
   - Mouths: cheeky grin, tongue out, cat mouth and gap-toothed join the old four.
   - Eye colour: six to choose from (`state.eyeColor`).
+
+## Jul i Älvbyn (survey 4, step 1)
+Christmas lives in `dist/jul.js` and runs from 1 December to 6 January (`holidays` list, `holidayFor()`). Christmas belongs to the year it started (`julYear()`), so each Christmas starts fresh in `state.jul[year]`.
+- **Advent calendar** (in the glade): 24 doors in a mixed-up order (`adventOrder`).
+  - Today's door and every earlier door can be opened; doors for later days stay shut (`julToday()`, `julCanOpen()`). Missing a day costs nothing.
+  - Each door gives a bauble for the tree and dewdrops, berries or a sticker (`adventGifts`).
+  - Door 13 (Lucia) gives the fairy a Lucia crown (`state.headwearOwned`). Door 24 gives the star for the tree and a Santa hat for the frog.
+- **Christmas tree:** it stands in the glade and is decorated in its own card under the calendar. Choose a bauble, then tap one of 12 places (`julHang`, `julTakeDown`). Ten baubles the first time give 50 dewdrops and a tomte for the glade to keep (`julTreeCheck`).
+- **Skogsdrottningen:** her first visit at Christmas brings a winter coat for the fairy (`outfit-winter`, a gift item in `wardrobe` that cannot be bought).
+- **Look and sound:**
+  - Lights under the header, over the glade and on the village square, and snow on the glade's hills (`body[data-holiday="jul"]`, `julSnowHTML`).
+  - A Christmas tune (`musicThemes.jul`) plays in the glade, the village and the meadow when the music follows the place. It is also in the music picker.
+- A banner on the race page points to today's door.
+- **Sleeping frogs:** all year, when it is night in the glade, the frogs sleep in beds in the cottage (`sleepingFrogsHTML`). The cottage has its own Godnatt / God morgon button.
+- **Trying Christmas before December:** on a local preview, `?datum=2026-12-13` pretends it is another day (`gameDate()` in seasons.js). It only works on localhost; tests set `gameClock`.
+- Christmas is open to everyone with a hatched frog. It is a time of year, not a milestone.
