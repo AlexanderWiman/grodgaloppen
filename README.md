@@ -15,7 +15,7 @@ Progress stays in this browser's `grodgaloppen` localStorage entry. New defaults
 
 Run `node tests/progression.cjs` from this directory. Covers quest rewards, duplicate protection, care, shops, ownership, save reloads, playable adventure completion/pause and three-round cup progression.
 
-Files: app.js (character/editor/base state), race.js (shared hopping engine), astrid.js (trust and regular quests), world.js (adventures, care, cup and home).
+Files: audio.js (sound effects and generative background music), app.js (character/editor/base state), race.js (shared hopping engine), astrid.js (trust and regular quests), world.js (adventures, care, cup and home).
 
 Garden checks: `node tests/garden.cjs` covers migration, ownership, bounds, collection preservation, planting, growth, feeding and saving.
 
@@ -27,3 +27,8 @@ Run `node tests/race.cjs` to play the real engine with simulated players (`N=30 
 
 ## Publishing
 Pushing to `main` runs all tests and deploys `dist/` to GitHub Pages via `.github/workflows/pages.yml`.
+
+## Music, difficulty and home screen
+- Background music is generated live with Web Audio (no files). Each place has a theme in `musicThemes` (audio.js); `setMusic(name)` crossfades. Music and sound effects have separate toggles in the header.
+- Difficulty (Lätt/Lagom/Svår) only scales rival speed (`difficulties` in race.js); Svår pays 25 % more. `node tests/race.cjs` checks the ordering.
+- `manifest.webmanifest` + `sw.js` make the game installable and playable offline. The service worker serves from cache and refreshes in the background, so a new deploy shows on the next start. Add new files to `FILES` in sw.js.

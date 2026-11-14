@@ -1,0 +1,17 @@
+{
+  "name": "The Big Frog Race",
+  "short_name": "Frog Race",
+  "description": "Hoppa med din groda genom Älvskogen – lopp, äventyr och en egen glänta.",
+  "lang": "sv",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f8f7ef",
+  "theme_color": "#345d43",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
