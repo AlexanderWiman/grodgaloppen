@@ -77,3 +77,10 @@ Pushing to `main` runs all tests and deploys `dist/` to GitHub Pages via `.githu
   - `shopTick(now)` takes the time as a parameter so tests can fast-forward.
 - **Up to twelve frogs** (`MAX_FROGS` in frogs.js).
 - `node tests/home.cjs` covers furniture, the shop, stars, twelve frogs and saving.
+
+## Skogsdrottningen – Astrid's stepmother
+- She doesn't live in Älvbyn. She visits on **two random days every week** (`queenVisitDays`, which gives the same days for everyone). On those days she shows a banner on the race tab and gets her own tab under Äventyr (`dist/queen.js`, images in `assets/skogsdrottningen-*.webp`).
+- **Gift:** one per visit, rotating through `queenGifts`: dewdrops, an emerald lantern and a golden mirror for the cottage, and an emerald tree for the glade.
+- **Task:** one per visit (`queenTasks`), and it has to be done the same day. You win a race, catch 3 fish, sell 2 goods, make 5 perfect jumps, or care for your frog 3 times. Progress counts through the real game actions, because `afterRaceHooks` and wrappers around `fishCatch`, `shopSell` and `careAction` report to her. Each task gives +60 dewdrops, and after three tasks she gives a framed portrait of herself for the cottage.
+- **Fika:** on visit days she sits in the cottage and comments on how it is furnished (`queenFikaLine`).
+- Tests use `queenClock` and `queenOverride` to control the day. `node tests/queen.cjs` covers the visit days, the gift, all five tasks, the fika lines and saving.

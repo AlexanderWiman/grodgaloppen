@@ -1,8 +1,8 @@
 // Offline support: the whole game is cached on first visit.
 // Pages are served from the cache at once and refreshed in the background,
 // so a new version shows up on the next start.
-const CACHE='frograce-v4';
-const FILES=['./','index.html','style.css','audio.js','village.js','garden.js','world.js','race.js','leaderboard.js','frogs.js','saga.js','seasons.js','fishing.js','house.js','shop.js','astrid.js','app.js','i18n.js','manifest.webmanifest','icons/icon-192.png','icons/icon-512.png','icons/apple-touch-icon.png','assets/astrid-crown.webp','assets/astrid-portrait.webp','assets/astrid-start.webp'];
+const CACHE='frograce-v5';
+const FILES=['./','index.html','style.css','audio.js','village.js','garden.js','world.js','race.js','leaderboard.js','frogs.js','saga.js','seasons.js','fishing.js','house.js','shop.js','queen.js','astrid.js','app.js','i18n.js','manifest.webmanifest','icons/icon-192.png','icons/icon-512.png','icons/apple-touch-icon.png','assets/astrid-crown.webp','assets/astrid-portrait.webp','assets/astrid-start.webp','assets/skogsdrottningen-portratt.webp','assets/skogsdrottningen-glanta.webp'];
 
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(FILES)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
