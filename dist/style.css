@@ -379,3 +379,45 @@ nav button{flex:1 1 0;min-width:0;padding:10px 2px;font-size:13px;text-align:cen
 @media(max-width:700px){.fishPond{height:230px}.fishTeam{width:42%}.fishLower{grid-template-columns:1fr}.fishAction .primary{flex:1;min-width:0}.trollPanel{grid-template-columns:80px 1fr;gap:12px}.fishBookGrid{grid-template-columns:repeat(3,1fr)}}
 .fishControls p#fishStatus{display:block;min-height:40px;margin:0 0 10px}
 .weatherChip{position:absolute;right:12px;bottom:10px;z-index:5;background:#fffef0dd;border-radius:14px;padding:5px 10px;font-size:11px;font-weight:600;color:#4b6156}
+
+/* Inside the mushroom cottage. */
+.gardenCottage{cursor:pointer}
+.houseRoom{position:relative;width:100%;aspect-ratio:5/3;min-height:280px;overflow:hidden;border-radius:26px;border:1px solid #c9b48f;isolation:isolate;background:#f3e3c3}
+.houseBackdrop{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.houseTeam{position:absolute;left:4%;bottom:4%;width:20%;min-width:90px;z-index:60;pointer-events:none}
+.houseTeam svg{width:100%;display:block}
+.houseItem{position:absolute;width:15%;min-width:58px;border:0;background:none;padding:0;transform:translate(-50%,-85%) scale(calc(var(--size) * var(--flip)),var(--size));transform-origin:50% 85%;touch-action:none;cursor:grab;filter:drop-shadow(0 4px 3px #4b3a2a22)}
+.houseItem:hover{transform:translate(-50%,-85%) scale(calc(var(--size) * var(--flip)),var(--size));filter:drop-shadow(0 0 5px #fff7bb)}
+.houseItem.floorItem{width:24%;transform:translate(-50%,-50%) scale(calc(var(--size) * var(--flip)),var(--size));transform-origin:50% 50%}
+.houseItem svg{width:100%;display:block;pointer-events:none}
+.houseItem.selected{outline:2px dashed #8d6744;outline-offset:4px;border-radius:12px}
+.houseItem:focus-visible{outline:3px solid #315d44}
+.houseEmpty{position:absolute;left:50%;top:45%;transform:translate(-50%,-50%);background:#fffef0dd;padding:10px 16px;border-radius:14px;font-size:13px;color:#6b5728;z-index:70;text-align:center}
+
+/* The shop on the village square. */
+.shopFront{position:relative;border-radius:22px;background:#f6ecd6;border:1px solid #e1cfa6;padding:56px 18px 18px;overflow:hidden}
+.shopAwning{position:absolute;left:0;right:0;top:0;height:38px;background:repeating-linear-gradient(90deg,#c96c5e 0 34px,#fff2d9 34px 68px);border-bottom:4px solid #9e5149;border-radius:0 0 50% 50%/0 0 30% 30%}
+.shopShelf{display:flex;flex-wrap:wrap;gap:10px;background:#c79a62;border-radius:12px;padding:12px;min-height:96px;box-shadow:inset 0 -8px 0 #a37a4c}
+.shopGood{background:#fffef8;border-radius:10px;padding:6px 10px;text-align:center;min-width:86px}
+.shopGood b{display:block;font-size:12px}
+.shopGood small{font-size:10px;color:#8a6d2e}
+.shopGoodArt{height:38px}
+.shopGoodArt svg{height:100%;max-width:100%}
+.shopGoodArt.small{height:30px;width:44px;display:inline-block}
+.shopEmpty{margin:auto;font-size:13px;color:#fff8e6;text-align:center}
+.shopQueue{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:16px}
+.shopCustomer{display:flex;gap:12px;align-items:flex-start;background:#fffef8;border:1px solid var(--line);border-radius:14px;padding:12px;animation:appear .35s ease-out}
+.shopCustomerArt{width:64px;height:64px;flex:none}
+.shopCustomerArt svg{width:100%;height:100%}
+.shopCustomer p{font-size:12px;margin:4px 0;color:#4a5f43}
+.shopCustomer small{display:block;font-size:11px;color:var(--muted)}
+.shopCustomer .shopFav{color:#c0645c}
+.shopCustomer .primary{margin-top:8px;padding:10px 16px;width:auto}
+.shopNext{grid-column:1/-1;font-size:12px;color:#8a6d2e;margin:0}
+.shopStockList{display:flex;flex-direction:column;gap:8px}
+.shopStockRow{display:grid;grid-template-columns:48px 1fr 40px 40px;gap:8px;align-items:center}
+.shopStockRow b{display:block;font-size:13px}
+.shopStockRow small{font-size:11px;color:var(--muted)}
+.shopStockRow button{padding:8px 0;margin:0;width:40px;font-size:16px;line-height:1}
+.shopStockRow button:disabled{opacity:.35}
+@media(max-width:700px){.houseRoom{aspect-ratio:1.05}.houseItem{width:24%}.houseItem.floorItem{width:36%}.houseTeam{width:30%}.shopFront{padding:48px 12px 12px}}

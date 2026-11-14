@@ -16,5 +16,5 @@ assert.equal(tr('5 lyckade hopp · 2 perfekta · 1 missar'),'5 good jumps · 2 p
 assert.equal(tr('✓ Kapitlet är klart. Solstenen lyser i kronan.'),'✓ The chapter is done. The Sun Stone shines in the crown.');
 assert.equal(tr('  Tävla  '),'  Race  ','whitespace kept');
 assert.equal(tr('Modiga Näckros'),'Modiga Näckros','unknown text is left alone');
-assert.equal(tr('Hudfärg #efc6a1'),'Skin colour #efc6a1');
+assert.equal(tr('Hudfärg #efc6a1'),'Skin colour #efc6a1');assert.equal(tr('Väggfärg #d5e3ef'),'Wall colour #d5e3ef');assert.equal(tr('Fiska i dammen'),'Fishing in the pond');assert.equal(tr('Nästa kund om 12 s'),'Next customer in 12 s');
 console.log('PASS: phrases, numbers, names, quotes, sentences, colours and unknown text.');

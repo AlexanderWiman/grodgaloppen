@@ -63,3 +63,17 @@ Pushing to `main` runs all tests and deploys `dist/` to GitHub Pages via `.githu
   - Each catch goes into `state.fishing.bucket` and gives 2 dewdrops. The first catch of each kind gives a bonus.
 - **Tuss**, the troll under the bridge, has six wishes in `trollWishes`. Each one asks for certain fish from the bucket and gives dewdrops or a decoration for the glade (Trollsten, Brolykta and, last of all, Tuss himself). Once you are friends, he peeks out under the glade bridge.
 - **Weather**: `pickWeather` sometimes adds rain or snow to a race. Rain (25 %) gives a slightly narrower green field (×0.97) and +1 drop per good hop. Snow (only in winter and on the winter track) gives a slower pointer and shorter hops, and the rivals slow down too. There is no weather in the crystal cave or under water. `weatherOverride` forces a weather in tests, and `node tests/race.cjs` checks that weather keeps races fair.
+
+## Mushroom cottage, the village shop and twelve frogs (survey 2, step 3)
+- **Svamphuset** is a tab under Gläntan, and tapping the cottage in the glade opens it too (`dist/house.js`).
+  - There are 12 pieces of furniture in `houseFurniture`. You buy each once with dewdrops, then drag, resize, mirror or store it, the same way as in the glade.
+  - Wall and floor colours are free.
+  - The aquarium shows up to three fish kinds you have caught, and the painting shows your racing frog.
+- **Butiken** is a tab under Älvbyn (`dist/shop.js`). You put fish from the bucket and berries from the glade on the shelf.
+  - While the shelf has goods, a customer comes about every 40 s (`SHOP_EVERY`), also while you are away. At most three wait, and never more than there are goods.
+  - Customers have favourites (`likes`) and pay 1.5× for them.
+  - Every fifth sale gives a shop star and 25 dewdrops.
+  - Tuss shops too once he is your friend.
+  - `shopTick(now)` takes the time as a parameter so tests can fast-forward.
+- **Up to twelve frogs** (`MAX_FROGS` in frogs.js).
+- `node tests/home.cjs` covers furniture, the shop, stars, twelve frogs and saving.
