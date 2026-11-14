@@ -24,6 +24,8 @@ assert(g.run("buyWear('wings-star')"));assert.equal(g.run('state.coins'),360);as
 assert(g.run("buyWear('hat-top')"));g.run('startEgg();for(let i=0;i<5;i++)crackEgg()');const second=g.run('state.frogs[1].id');
 g.run(`switchFrog('${second}')`);assert.equal(g.run("wearing('frogHat')"),'hat-none');g.run("wear('hat-top')");g.run("switchFrog('f1')");assert.equal(g.run("wearing('frogHat')"),'hat-top');
 assert(g.run('frogHatArt().length')>0,'the hat is drawn');assert(g.run('frog().indexOf(frogHatArt())>frog().indexOf(\'cx="222" cy="143"\')&&frog().indexOf(frogHatArt())<frog().indexOf(\'cx="194" cy="140"\')'),'the hat sits over the eye domes but under the eye whites');assert(g.run('wingShape().includes("path")'));
+// Every hairstyle draws both layers, with and without a hair band.
+for(const hs of ['short','long','curly','braid','ponytail','pigtails','bun','twobraids','puffs','bob','wavy'])for(const band of ['outfit','none','#d9788a']){g.run(`state.hairstyle='${hs}';state.hairBand='${band}'`);assert(g.run('hairBackShape().length')>60&&g.run('hairShape().length')>200,hs+' '+band);assert(!g.run('frog()').includes('undefined'),hs+' draws cleanly')}
 // New garden things have art; buyable ones cost drops, festival ones do not.
 for(const id of ['bench','swing','fountain','birdhouse','mushroomring','lanternstring','tulips','parasol','pumpkin','snowman'])assert(g.run(`gardenArt('${id}').length`)>60,id);
 g.run('state.coins=100');assert(g.run("buyDecoration('bench')"));assert(!g.run("buyDecoration('snowman')"));

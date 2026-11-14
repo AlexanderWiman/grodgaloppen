@@ -161,3 +161,9 @@ Pushing to `main` runs all tests and deploys `dist/` to GitHub Pages via `.githu
   - `hairShape()` is drawn in front: a side-parted fringe, locks that frame the face, shine and shadow strands, and eyebrows.
   - Short hair shows the ears.
 - **Eyes** (`eyeShape()`) have a white, an iris with a pupil and catch-light, an upper lid line and a lash. The iris colour is `state.eyeColor` (default brown).
+- **Hairstyles:** short, long, curly, braid, ponytail, pigtails, bun, two braids, afro puffs, straight bob and long wavy. Each one is a back layer and a front layer, and `mirrorX` mirrors the side pieces.
+- **Hair ties and clips:** ties and bands follow `state.hairBand`, which is the outfit colour, none, or one of five colours (`hairBandColour()`). Styles without ties get a little bow clip once a colour is chosen.
+- **Eyes and mouths:**
+  - Eyes: winking, glancing sideways and long lashes join round, almond and happy.
+  - Mouths: cheeky grin, tongue out, cat mouth and gap-toothed join the old four.
+  - Eye colour: six to choose from (`state.eyeColor`).
