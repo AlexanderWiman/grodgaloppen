@@ -110,3 +110,34 @@ Pushing to `main` runs all tests and deploys `dist/` to GitHub Pages via `.githu
 - The fairy's wings sit on her back. `wingShape()` moves them from head height down to the shoulders, and they are still drawn behind her.
 - The frog's hat rests on its head between the eyes. `frogHatArt()` is drawn before the eyes so they peek over the brim, and the cap and beanie are lifted less than the other hats. Jewels (bow tie, pearls, bell, medallion) hang under the chin instead of across the mouth.
 - The castle is a painted illustration (`assets/skogsdrottningen-slott.webp`) in the same style as Skogsdrottningen's portraits. It was made with Higgsfield (GPT Image 2.5) from a text prompt only, without uploading the portraits. The family chose it out of three options. The waterfall falls from a cliff into a pool.
+
+## Things that unlock as you play, and a growing home (survey 3, step 3)
+- **Progress** (`dist/progress.js`): new parts open one by one as you play. Once a milestone has been reached it stays open (`state.unlocked`). `checkUnlocks()` runs in `render()` and shows "Nytt i spelet!", and the glade shows the three nearest goals with progress bars (`goalsHTML`). Locked parts show what opens them (`lockedHint`).
+
+  | Milestone | Opens when … |
+  |---|---|
+  | Tapetmönster | 4 furniture |
+  | Grannar på fika | a table and a chair |
+  | Fler möbler | 8 furniture |
+  | Verkstaden | 10 shop sales |
+  | Beställningar | 3 things crafted |
+  | Bävrarna | 10 furniture and 3 shop stars |
+  | Grodhus | 3 frogs |
+  | Fler fiskar | 20 fish caught |
+  | Eldflugespelet | the firefly adventure is done |
+
+- **The cottage** (house.js):
+  - Five wallpaper patterns.
+  - Eight more pieces of furniture (`tier:2`).
+  - Neighbours on fika: once per neighbour and day, +10 dewdrops, and they comment on the furniture they like.
+  - The beavers Bo and Bea build an upper floor for 250 dewdrops in ten minutes of real time (`houseStartBuild`, `houseBuildCheck`). Items remember which floor they are on (`lvl`).
+- **Frog houses:** each frog can have a house in the glade, in its own colour and with a name sign, for 60 dewdrops (`frogHouseBuild` in frogs.js). Moving it back to the collection and out again is free.
+- **The shop:**
+  - The workshop makes berry jam, fish pie and boot planters (`shopRecipes`).
+  - Neighbours place one order a day, with at most two open at once. Orders never expire and pay about double.
+- **Fish:** after 20 catches you can also get crucian carp and zander. In winter the pond freezes, and the arctic char bites through the ice hole.
+- **Fånga eldflugor** (`dist/fireflies.js`) is a 20-second game.
+  - Golden fireflies count three.
+  - Each firefly is worth a dewdrop, at most 40 a day.
+  - After 30 fireflies you get a firefly jar for the glade.
+- `node tests/progress.cjs` goes through all nine unlocks and every new part.

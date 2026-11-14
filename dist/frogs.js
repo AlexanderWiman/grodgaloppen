@@ -90,7 +90,7 @@ function crackEgg(){
 function frogCard(f){
  const s=frogStage(f),p=personalities[f.personality],next=frogStages[s+1],active=f.id===state.activeFrog;
  const pct=next?Math.round(((f.xp||0)-frogStages[s].xp)/(next.xp-frogStages[s].xp)*100):100;
- return `<article class="frogCard ${active?'active':''}"><div class="frogCardArt stage${s}">${miniFrog(f.frog,['','🌱','🌿','✨'][s])}</div><div class="frogCardBody"><h3>${escapeText(f.frogName)}${active?' <span class="pill">Tävlar nu</span>':''}</h3><div class="eyebrow">${frogStages[s].name} · ${f.personality}</div><p><b>${p.ability}:</b> ${p.desc(s)}</p><div class="xpBar" aria-label="Erfarenhet"><i style="width:${pct}%"></i></div><small>${next?`${f.xp||0} / ${next.xp} erfarenhet till ${next.name}`:'Fullvuxen magisk groda ✦'} · Vänskap ${f.bond||0}/100</small>${active?'':`<button class="outline" data-pick-frog="${f.id}">Låt ${escapeText(f.frogName)} tävla</button>`}</div></article>`;
+ return `<article class="frogCard ${active?'active':''}"><div class="frogCardArt stage${s}">${miniFrog(f.frog,['','🌱','🌿','✨'][s])}</div><div class="frogCardBody"><h3>${escapeText(f.frogName)}${active?' <span class="pill">Tävlar nu</span>':''}</h3><div class="eyebrow">${frogStages[s].name} · ${f.personality}</div><p><b>${p.ability}:</b> ${p.desc(s)}</p><div class="xpBar" aria-label="Erfarenhet"><i style="width:${pct}%"></i></div><small>${next?`${f.xp||0} / ${next.xp} erfarenhet till ${next.name}`:'Fullvuxen magisk groda ✦'} · Vänskap ${f.bond||0}/100</small>${active?'':`<button class="outline" data-pick-frog="${f.id}">Låt ${escapeText(f.frogName)} tävla</button>`}${typeof frogHouseButton==='function'?frogHouseButton(f):''}</div></article>`;
 }
 function frogsPanelHTML(){
  ensureFrogs();syncFrogs();
@@ -100,6 +100,7 @@ function frogsPanelHTML(){
 }
 function wireFrogsPanel(rerender){
  document.querySelectorAll('[data-pick-frog]').forEach(b=>b.onclick=()=>{if(switchFrog(b.dataset.pickFrog)){sidebar();rerender();toast(state.frogName+' är redo att tävla!')}});
+ document.querySelectorAll('[data-frog-house]').forEach(b=>b.onclick=()=>{if(frogHouseBuild(b.dataset.frogHouse)){sfx('chime');sidebar();rerender();toast('Grodhuset står i gläntan!')}});
  if($('#newEgg'))$('#newEgg').onclick=()=>{if(startEgg()){sidebar();rerender()}};
  if($('#crackEgg'))$('#crackEgg').onclick=()=>{const f=crackEgg();sfx(f?'evolve':'tick');if(f){toast(`Ett nytt grodbarn! Säg hej till ${f.frogName}.`);sidebar()}rerender()};
 }
@@ -114,3 +115,21 @@ function frogStageArt(){
  if(s>=3)art+='<ellipse cx="140" cy="184" rx="90" ry="46" fill="none" stroke="#fff3a6" stroke-opacity=".55" stroke-width="3"/><g fill="#fff3a6"><path d="M58 146l3 8 8 3-8 3-3 8-3-8-8-3 8-3Z"/><path d="M246 112l2 6 6 2-6 2-2 6-2-6-6-2 6-2Z"/><path d="M120 128l2 5 5 2-5 2-2 5-2-5-5-2 5-2Z"/></g>';
  return art;
 }
+
+// Frog houses with name signs (survey 3, step 3; unlocks with three frogs). Each frog can have one
+// little house in the glade, in its own colour. If the house is moved back to the collection it
+// can be put out again for free.
+const FROG_HOUSE_COST=60;
+decorations.push({id:'froghouse',name:'Grodhus',from:'Byggs i Grodvän'});
+function frogHouseFor(id){return (state.garden?.items||[]).find(o=>o.id==='froghouse'&&o.frog===id)}
+function frogHouseBuild(id){
+ if(typeof unlocked==='function'&&!unlocked('froghouses'))return false;
+ const f=(state.frogs||[]).find(f=>f.id===id);if(!f||frogHouseFor(id))return false;
+ ensureGarden();state.frogHouses??={};const paid=!!state.frogHouses[id];if(!paid&&state.coins<FROG_HOUSE_COST)return false;if(state.garden.items.length>=24)return false;
+ if(!paid){state.coins-=FROG_HOUSE_COST;state.frogHouses[id]=true}
+ const n=state.garden.items.filter(o=>o.id==='froghouse').length;
+ state.garden.items.push({uid:'g'+state.garden.next++,id:'froghouse',frog:id,x:14+(n%6)*14,y:80-(n>5?10:0),scale:.9,angle:0});save();return true;
+}
+function frogHouseButton(f){if(typeof unlocked==='function'&&!unlocked('froghouses'))return '';if(frogHouseFor(f.id))return '<small class="frogHouseDone">🏠 Har ett hus i gläntan</small>';const paid=state.frogHouses?.[f.id];return `<button class="outline" data-frog-house="${f.id}" ${!paid&&state.coins<FROG_HOUSE_COST?'disabled':''}>🏠 ${paid?'Ställ ut huset igen':'Bygg ett hus · '+FROG_HOUSE_COST+' ✦'}</button>`}
+function frogHouseLabel(o){const f=(state.frogs||[]).find(f=>f.id===o.frog);return 'Grodhus: '+(f?f.frogName:'')}
+function frogHouseArt(id){const f=(state.frogs||[]).find(f=>f.id===id)||{frog:'#88ad55',frogName:''};const name=escapeText(f.frogName).slice(0,12);return `<svg viewBox="0 0 120 110" aria-hidden="true"><ellipse cx="60" cy="100" rx="46" ry="7" fill="#7d9a6a"/><path d="M30 98V60H82V98Z" fill="#f2e3c2"/><path d="M20 62Q56 18 92 62Z" fill="${f.frog}" stroke="#00000022" stroke-width="2"/><g fill="#ffffff66"><circle cx="44" cy="48" r="4"/><circle cx="62" cy="38" r="3"/><circle cx="74" cy="52" r="3.5"/></g><path d="M48 98V80Q56 70 64 80V98Z" fill="#8a6a45"/><circle cx="73" cy="72" r="5" fill="#bfe0d8" stroke="#8a6a45" stroke-width="2"/><path d="M100 98V70" stroke="#8a6a45" stroke-width="3"/><rect x="84" y="58" width="32" height="14" rx="3" fill="#fffaf0" stroke="#8a6a45" stroke-width="1.5"/><text x="100" y="68" text-anchor="middle" font-size="8" font-family="sans-serif" fill="#4b3a2a">${name}</text></svg>`}
