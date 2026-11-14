@@ -4,7 +4,7 @@ function game(saved=null){let stored=saved;const nodes=new Map();const $=k=>{if(
 const g=game();g.run('state.hatched=true;ensureGarden();ensureVillage();ensureFishing();ensureShop();ensureHouse();ensureFrogs();state.coins=5000');
 const open=id=>g.run(`unlocked('${id}')`),check=()=>JSON.parse(g.run('JSON.stringify(checkUnlocks().map(m=>m.id))'));
 // A new player has none of it.
-assert.deepEqual(check(),[]);for(const id of ['wallpaper','fika','furniture2','workshop','orders','beavers','froghouses','morefish','fireflies','memory','secretforest','challenger','yard'])assert(!open(id),id+' starts locked');
+assert.deepEqual(check(),[]);for(const id of ['wallpaper','fika','furniture2','workshop','orders','beavers','froghouses','morefish','fireflies','memory','secretforest','challenger','yard','yardanimals'])assert(!open(id),id+' starts locked');
 assert(!g.run("houseBuy('sofa')"),'second furniture set is locked');assert(!g.run("houseSetPattern('dots')"));assert(!g.run("houseInviteFika('mira')"));
 g.run('state.garden.berries=10');assert(!g.run("shopCraft('jam')"),'workshop is locked');assert(!g.run("frogHouseBuild(state.frogs[0].id)"));
 for(let i=0;i<300;i++)assert(!['ruda','gos','roding'].includes(g.run('pickFish(Math.random,false,true)')),'no new fish yet');
@@ -38,8 +38,8 @@ g.run("state.decorOwned.push('lantern')");assert(check().includes('fireflies'));
 // 8 stickers → sticker memory.
 g.run('state.stickers=["s0","s1","s2","s3","s4","s5","s6","s7"]');assert(check().includes('memory'));
 // 25 wins → the secret forest; 3 wins on Mästare → Stora Gorm. The garden opened with the furniture.
-g.run('state.wins=25;state.masterWins=3');{const c=check();assert(c.includes('secretforest')&&c.includes('challenger'))}assert(g.run("unlocked('yard')"));
+g.run('state.wins=25;state.masterWins=3;state.yard={beds:[],harvests:8}');{const c=check();assert(c.includes('secretforest')&&c.includes('challenger'))}assert(g.run("unlocked('yard')"));
 g.run('state.shop.served=0;state.house.owned=[]');assert(open('workshop')&&open('wallpaper'));assert.equal(g.run('nextGoals().length'),0);
-const back=game(g.saved);for(const id of ['wallpaper','fika','furniture2','workshop','orders','beavers','froghouses','morefish','fireflies','memory','secretforest','challenger','yard'])assert(back.run(`unlocked('${id}')`),id+' after reload');
+const back=game(g.saved);for(const id of ['wallpaper','fika','furniture2','workshop','orders','beavers','froghouses','morefish','fireflies','memory','secretforest','challenger','yard','yardanimals'])assert(back.run(`unlocked('${id}')`),id+' after reload');
 g.run("tab='fireflies';render()");assert(g.run("$('#content').innerHTML").includes('Börja fånga'));g.run("tab='house';render()");assert(g.run("$('#content').innerHTML").includes('Övervåningen'));g.run("tab='shop';render()");assert(g.run("$('#content').innerHTML").includes('Verkstaden'));
 console.log('PASS: nine unlocks in order, wallpaper, fika, more furniture, workshop, orders, beavers, frog houses, new fish, fireflies.');

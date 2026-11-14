@@ -219,3 +219,23 @@ Christmas lives in `dist/jul.js` and runs from 1 December to 6 January (`holiday
   - Crops: carrots 3 min, strawberries 5 min (4 berries), sunflowers 10 min, pumpkins 20 min.
   - Ten harvests give a scarecrow for the glade.
 - **Frogs play in the glade:** with more than one frog, the others hop around the glade. Tap one and it plays with your frog. Once a day per frog, that gives +2 friendship to the other frog and +1 to yours (`frogPlay`).
+
+## A more useful garden (survey 5)
+The family asked for everything they grow to be usable. Harvests now go into the **pantry** (`state.yard.pantry`) instead of turning straight into dewdrops.
+- **More crops:**
+  - Radishes are there from the start.
+  - Peas open after 3 harvests and potatoes after 6 (`yardCrops[...].from`). The four old crops stay open.
+  - Each harvest gives 1–4 of the crop (`yield`).
+- **Quick buttons:** Skörda allt, Vattna allt and Plantera i alla tomma (`yardAll`).
+- **The kitchen** sits in the cottage, under the room. It has seven dishes (`yardDishes`): radish salad, carrot soup, pea soup, pumpkin soup, pancakes with strawberries, strawberry cake and sunflower cookies.
+  - Food can be shared with the frog for +6 friendship (`feedFrog`).
+- **The shop** sells straight from the pantry:
+  - `shopHave`, `shopTake`, `shopGive` and `shopGoodArt` are wrapped for goods marked `pantry`.
+  - Customers have new favourites.
+  - Village orders can ask for garden food (`yardOrderGoods`).
+- **Neighbours:**
+  - One gift a day to each neighbour who lives in the village (`giveNeighbour`).
+  - Cooked food gives 3 friendship, a favourite 2 and anything else 1, plus 10 dewdrops as thanks.
+- **Animals** open after 8 harvests (milestone `yardanimals`):
+  - The hen house costs 150 dewdrops. It lays an egg every 15 minutes, with at most 4 waiting.
+  - The rabbit Nos costs 120 dewdrops. Nos gets one carrot a day, which moves every growing bed 3 minutes closer to ripe (`feedRabbit`).

@@ -40,12 +40,11 @@ g.run('state.coins=0');assert(g.run('waterRose(0)'));assert.equal(g.run('waterRo
 let n=10;for(let i=0;i<5;i++)for(let k=0;k<3;k++){if(i===0&&k===0)continue;g.run(`gameClock=()=>new Date(2026,11,${n++},12)`);const res=g.run(`waterRose(${i})`);assert(res,'rose '+i+' day '+k)}
 assert.equal(g.run('state.coins'),150);assert(g.run("ensureRoses().done&&state.decorOwned.includes('emeraldrose')"));assert(!g.run('roseCanWater()'),'nothing left to water');
 
-// The kitchen garden: plant, water, wait, harvest; ten harvests give a scarecrow.
-const t0=Date.parse('2026-11-16T12:00:00');g.run('state.coins=0');
-assert.equal(g.run(`yardTap(0,${t0}).did`),'planted');assert.equal(g.run(`yardTap(0,${t0}).did`),'watered');assert.equal(g.run(`yardTap(0,${t0+60000}).did`),'growing');assert.equal(g.run(`yardTap(0,${t0+3*60000}).coins`),12);
-g.run("ensureYard().pick='strawberry'");const berries=g.run('state.garden.berries');g.run(`yardTap(1,${t0})`);g.run(`yardTap(1,${t0})`);assert.equal(g.run(`yardTap(1,${t0+5*60000}).berries`),4);assert.equal(g.run('state.garden.berries'),berries+4);
+// The kitchen garden: plant, water, wait, harvest into the pantry; ten harvests give a scarecrow.
+const t0=Date.parse('2026-11-16T12:00:00');
+assert.equal(g.run(`yardTap(0,${t0}).did`),'planted');assert.equal(g.run(`yardTap(0,${t0}).did`),'watered');assert.equal(g.run(`yardTap(0,${t0+60000}).did`),'growing');assert.equal(g.run(`yardTap(0,${t0+3*60000}).n`),3);assert.equal(g.run("pantryHave('carrot')"),3);
 assert.equal(g.run(`yardTap(9,${t0})`),null);
-let got;for(let i=0;i<8;i++){g.run(`yardTap(2,${t0})`);g.run(`yardTap(2,${t0})`);got=g.run(`yardTap(2,${t0+5*60000})`)}assert(got.scarecrow);assert.equal(g.run('state.yard.harvests'),10);assert(g.run("state.decorOwned.includes('scarecrow')"));
+let got;for(let i=0;i<9;i++){g.run(`yardTap(2,${t0})`);g.run(`yardTap(2,${t0})`);got=g.run(`yardTap(2,${t0+5*60000})`)}assert(got.scarecrow);assert.equal(g.run('state.yard.harvests'),10);assert(g.run("state.decorOwned.includes('scarecrow')"));
 
 // Frogs play in the glade: only the other frogs, a little friendship once a day each.
 assert.equal(g.run('frogPlayHTML()'),'','no playmates with one frog');
