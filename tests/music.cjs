@@ -34,4 +34,7 @@ for(const name of themes){
  // Phrases fill exactly two bars and end on the home note.
  for(const phrase of Object.values(JSON.parse(m0))){let len=0;phrase.forEach((n,i)=>{if(n)len=Math.max(len,i+n.len)});assert(len<=16);const last=[...phrase].reverse().find(Boolean);assert([0,run(`musicThemes[${JSON.stringify(name)}].scale.length`)].includes(last.deg),name+' phrase ends at home')}
 }
+// The music picker: a chosen song wins over the place's own theme; "follow the place" clears it.
+run("musicWanted='meadow';state.musicChoice='winter'");assert.equal(run('musicTheme()'),'winter');run("state.musicChoice='nope'");assert.equal(run('musicTheme()'),'meadow','unknown songs are ignored');run('state.musicChoice=null');assert.equal(run('musicTheme()'),'meadow');
+assert.deepEqual(Object.keys(run('musicNames')).sort(),themes.slice().sort(),'every theme has a name in the picker');
 console.log(`PASS: ${themes.length} music themes play soft, varied and below 1000 Hz.`);

@@ -84,3 +84,13 @@ Pushing to `main` runs all tests and deploys `dist/` to GitHub Pages via `.githu
 - **Task:** one per visit (`queenTasks`), and it has to be done the same day. You win a race, catch 3 fish, sell 2 goods, make 5 perfect jumps, or care for your frog 3 times. Progress counts through the real game actions, because `afterRaceHooks` and wrappers around `fishCatch`, `shopSell` and `careAction` report to her. Each task gives +60 dewdrops, and after three tasks she gives a framed portrait of herself for the cottage.
 - **Fika:** on visit days she sits in the cottage and comments on how it is furnished (`queenFikaLine`).
 - Tests use `queenClock` and `queenOverride` to control the day. `node tests/queen.cjs` covers the visit days, the gift, all five tasks, the fika lines and saving.
+
+## Skogsdrottningens slott, music picker and less scrolling (survey 3, step 1)
+- **The castle** (`Äventyr › Slottet`, in `dist/queen.js`) opens the first time she invites you on a visit day ("Följ med till mitt slott"), and then stays open.
+  - On the first visit she gives you **Skogsflöjten**. Blowing it makes her visit today (`state.queen.calledDay`), with a gift and a task. Afterwards the flute rests for three days (`QUEEN_FLUTE_REST`).
+  - She tells one new **story about when Astrid was little** each day you visit (`astridStories`, eight in all, +15 dewdrops each). The stories you have heard can be read again, and after all eight you get *Astrids sagobok* for the cottage.
+  - The castle has its own music theme, `emerald`.
+- **Music picker:** the 🎵 button opens a menu with Off, Följer platsen, or any of the 15 themes (`state.musicChoice`, `musicTheme()` and `musicNames` in audio.js).
+- **Phones:** on phones the race tracks and the glade and cottage collections are now swipeable rows. The race tab no longer shows the sidebar at the bottom, the rivals section folds open, and the hero image is shorter. That makes the race tab about 1,340 px instead of 4,030 px, and the glade about 1,500 px instead of 4,450 px.
+- **Fishing line:** the rod sits in the fairy's hand and the line runs from its tip to the float. `fishDrawLine()` measures the real layout and runs again when the window is resized.
+- On `localhost` the service worker never serves from its cache, so a local preview always shows fresh files.
