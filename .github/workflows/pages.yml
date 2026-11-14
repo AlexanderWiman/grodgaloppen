@@ -24,6 +24,7 @@ jobs:
         with:
           node-version: 20
       - run: for t in tests/*.cjs; do node "$t"; done
+      - run: cd server && npm ci && node test.js
 
   deploy:
     needs: test

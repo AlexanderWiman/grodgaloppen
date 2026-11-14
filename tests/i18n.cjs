@@ -1,0 +1,20 @@
+// English translation layer: phrases, numbers, names, quotes, sentences and leaderboard words.
+const fs=require('fs'),vm=require('vm'),assert=require('node:assert/strict');
+const src=fs.readFileSync('dist/i18n.js','utf8').split('const I18N_ATTRS')[0];
+const c=vm.createContext({state:{lang:'en'},console});vm.runInContext(src,c);
+const tr=s=>vm.runInContext(`tr(${JSON.stringify(s)})`,c);
+assert.equal(tr('Välj ditt nästa lopp'),'Choose your next race');
+assert.equal(tr('Plats 2 av 4'),'Place 2 of 4','numbers carry over');
+assert.equal(tr('7 av 9 banor öppna'),'7 of 9 tracks open');
+assert.equal(tr('3 av 5 kapitel'),'3 of 5 chapters','keys with fixed numbers work for other numbers');
+assert.equal(tr('Du gick om Klöver!'),'You passed Klöver!','names stay Swedish');
+assert.equal(tr('Pipp är redo att tävla!'),'Pipp is ready to race!');
+assert.equal(tr('Hinder: snigeln!'),'Obstacle: the snail!');
+assert.equal(tr('”Snyggt hopp, vännen.”'),'“Lovely jump, friend.”','quotes');
+assert.equal(tr('När mörkret kommer tänder alla sina lyktor och vandrar runt dammen. Hjälp byn att förbereda!'),'When darkness comes everyone lights their lanterns and walks around the pond. Help the village prepare!','sentences');
+assert.equal(tr('5 lyckade hopp · 2 perfekta · 1 missar'),'5 good jumps · 2 perfect · 1 misses');
+assert.equal(tr('✓ Kapitlet är klart. Solstenen lyser i kronan.'),'✓ The chapter is done. The Sun Stone shines in the crown.');
+assert.equal(tr('  Tävla  '),'  Race  ','whitespace kept');
+assert.equal(tr('Modiga Näckros'),'Modiga Näckros','unknown text is left alone');
+assert.equal(tr('Hudfärg #efc6a1'),'Skin colour #efc6a1');
+console.log('PASS: phrases, numbers, names, quotes, sentences, colours and unknown text.');
