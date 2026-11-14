@@ -183,3 +183,18 @@ Christmas lives in `dist/jul.js` and runs from 1 December to 6 January (`holiday
 - **Sleeping frogs:** all year, when it is night in the glade, the frogs sleep in beds in the cottage (`sleepingFrogsHTML`). The cottage has its own Godnatt / God morgon button.
 - **Trying Christmas before December:** on a local preview, `?datum=2026-12-13` pretends it is another day (`gameDate()` in seasons.js). It only works on localhost; tests set `gameClock`.
 - Christmas is open to everyone with a hatched frog. It is a time of year, not a milestone.
+
+## The fairy's wardrobe and sticker memory (survey 4, step 2)
+- **She sits on the frog:** `fairyFrontShape()` in seasons.js is drawn after the frog's body (only when there is a rider). It holds her lap, the near leg hanging down the frog's side with its shoe, the hand resting on the frog's back, and her bag. Before this she sank into the frog's back and her legs never showed.
+  - The ball gown gets a wider lap. Overalls give trousers. The winter coat keeps its white trim.
+- **New wardrobe items** (bought with dewdrops, `wardrobe` in seasons.js):
+  - Clothes: tunic with belt, flower dress and knitted jumper (`outfitShape()`).
+  - Shoes: slippers (free), red shoes, wellies, ballet shoes, winter boots and sparkly shoes.
+  - Glasses (`glassesShape()`, over the eyes): round, sunglasses, heart and star.
+  - Bags: flower basket, shoulder bag and pearl bag.
+- **Wardrobe layout:** the buttons sit side by side, and a small picture of the fairy and frog stays at the top of the wardrobe while scrolling (`.wardrobePreview`).
+- **Sticker memory** (`dist/memory.js`, tab Gläntan → Memory):
+  - It opens after 8 stickers (milestone `memory`).
+  - There are 6 or 8 pairs, built from the player's own stickers first.
+  - Dewdrops: 6 per pair minus 2 for each extra turn, at least 10, at most 40 a day.
+  - The fewest turns for each size is kept as a record.

@@ -14,7 +14,8 @@ const milestones=[
  {id:'beavers',name:'Bävrarna bygger en övervåning',where:'Svamphuset',goal:'Ha 10 möbler och 3 butiksstjärnor',count:()=>[Math.min(houseOwnedCount(),10)+Math.min(Math.floor((state.shop?.served||0)/5),3),13]},
  {id:'froghouses',name:'Grodhus med namnskylt',where:'Grodvän',goal:'Ha 3 grodor',count:()=>[(state.frogs||[]).length,3]},
  {id:'morefish',name:'Fler fiskar i dammen',where:'Fiska',goal:'Fånga 20 fiskar',count:()=>[fishCaughtTotal(),20]},
- {id:'fireflies',name:'Fånga eldflugor',where:'Gläntan',goal:'Klara äventyret Den vilsekomna eldflugan',count:()=>[state.decorOwned?.includes('lantern')?1:0,1]}
+ {id:'fireflies',name:'Fånga eldflugor',where:'Gläntan',goal:'Klara äventyret Den vilsekomna eldflugan',count:()=>[state.decorOwned?.includes('lantern')?1:0,1]},
+ {id:'memory',name:'Memory med klistermärken',where:'Gläntan',goal:'Samla 8 klistermärken',count:()=>[(state.stickers||[]).length,8]}
 ];
 let unlockOverride=null; // tests may set {id:true}
 function unlocked(id){if(unlockOverride&&id in unlockOverride)return unlockOverride[id];return !!state.unlocked?.[id]}
