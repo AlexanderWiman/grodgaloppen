@@ -31,6 +31,8 @@ function eyeShape(){const iris=state.eyeColor||'#6b4a2e';return [149,161].map((x
 function hairBandColour(){const v=state.hairBand;if(!v||v==='outfit')return state.outfit;return v==='none'?null:v}
 function hairTie(x,y,r=3){const b=hairBandColour();return b?`<circle cx="${x}" cy="${y}" r="${r}" fill="${b}" stroke="#000" stroke-opacity=".18"/>`:`<circle cx="${x}" cy="${y}" r="${r*.8}" fill="${state.hair}" stroke="#000" stroke-opacity=".3"/>`}
 const mirrorX=d=>d.replace(/(-?\d+(?:\.\d+)?) (-?\d+(?:\.\d+)?)/g,(m,x,y)=>(306-x)+' '+y);
+// A braid hanging behind the head and shoulder, a little outside the face (mirrored for the right side).
+function braidChain(flip){const c=state.hair,pts=[[136,88,5.5,6.5],[134.5,98,5.2,6.2],[136,107.5,5,6],[134.5,116.5,4.6,5.6],[135.5,125,4.2,5]].map(([x,y,rx,ry])=>[flip?306-x:x,y,rx,ry]);return `<g fill="${c}" stroke="#000" stroke-opacity=".18" stroke-width="1">${pts.map(([x,y,rx,ry],i)=>`<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" transform="rotate(${(i%2?18:-18)*(flip?-1:1)} ${x} ${y})"/>`).join('')}</g><path d="M${flip?170:136} 84Q${flip?173:133} 96 ${flip?170:136} 110Q${flip?173:133} 120 ${flip?171:135} 128" stroke="#fff" stroke-opacity=".2" stroke-width="1.5" fill="none" stroke-linecap="round"/>`+hairTie(flip?170.5:135.5,130.5,2.8)+`<path d="M${flip?172:133} 133Q${flip?173:132} 138 ${flip?174.5:130.5} 140M${flip?170.5:135.5} 133V140" stroke="${c}" stroke-width="1.8" stroke-linecap="round"/>`}
 function hairBackShape(){const c=state.hair,shade='fill="#000" opacity=".16"',side=d=>`<path d="${d}" fill="${c}"/><path d="${mirrorX(d)}" fill="${c}"/>`;
  const cap=`<path d="M134 84Q130 55 153 53Q176 55 172 84Z" fill="${c}"/>`;
  const curls=(list,col)=>`<g fill="${col}">${list.map(([x,y,r])=>`<circle cx="${x}" cy="${y}" r="${r}"/>`).join('')}</g>`;
@@ -38,8 +40,8 @@ function hairBackShape(){const c=state.hair,shade='fill="#000" opacity=".16"',si
   long:cap+side('M136 66Q125 96 129 128Q136 136 144 128Q141 104 142 82Z')+`<path d="M134 92Q131 110 135 126M172 92Q175 110 171 126" stroke="#000" stroke-opacity=".15" stroke-width="2" fill="none" stroke-linecap="round"/>`,
   short:cap+side('M136 68Q132 90 137 99Q142 101 143 93Q141 82 143 74Z'),
   curly:cap+curls([[133,64,10],[129,78,10],[131,92,9.5],[136,104,8.5],[143,54,10],[155,50,10],[167,55,10],[175,67,10],[177,81,10],[175,95,9.5],[170,106,8.5]],c)+`<g ${shade}>${[[131,92,6],[175,95,6],[136,104,5],[170,106,5]].map(([x,y,r])=>`<circle cx="${x+1.5}" cy="${y+2}" r="${r}"/>`).join('')}</g>`,
-  braid:cap+side('M136 68Q133 88 138 96Q142 96 143 88Z'),
-  twobraids:cap+side('M136 68Q133 88 138 96Q142 96 143 88Z'),
+  braid:cap+side('M136 68Q133 88 138 96Q142 96 143 88Z')+braidChain(false),
+  twobraids:cap+side('M136 68Q133 88 138 96Q142 96 143 88Z')+braidChain(false)+braidChain(true),
   ponytail:cap+`<path d="M165 60Q188 56 186 82Q184 102 172 112Q178 94 173 78Q170 68 164 66Z" fill="${c}"/><path d="M172 66Q182 70 180 88" stroke="#000" stroke-opacity=".15" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M168 64Q178 62 181 72" stroke="#fff" stroke-opacity=".28" stroke-width="2" fill="none" stroke-linecap="round"/>`+hairTie(166,62,3.2),
   pigtails:cap+side('M140 67Q122 72 120 96Q122 112 129 116Q127 98 135 84Z')+`<path d="M127 80Q122 94 125 108M179 80Q184 94 181 108" stroke="#000" stroke-opacity=".15" stroke-width="2" fill="none" stroke-linecap="round"/>`+hairTie(139,69)+hairTie(167,69),
   bun:cap+`<circle cx="153" cy="49" r="9.5" fill="${c}"/><path d="M147 47Q153 41 159 47Q156 53 150 51" stroke="#000" stroke-opacity=".18" stroke-width="1.6" fill="none"/><path d="M148 44Q153 40 158 43" stroke="#fff" stroke-opacity=".3" stroke-width="1.6" fill="none" stroke-linecap="round"/>`+(hairBandColour()?`<path d="M145 56Q153 59 161 56" stroke="${hairBandColour()}" stroke-width="3.4" fill="none" stroke-linecap="round"/>`:''),
@@ -53,15 +55,15 @@ function hairShape(){const c=state.hair,shine='stroke="#fff" stroke-opacity=".2"
  const fringe=frame(88)+sweep;
  const pulled=frame(86)+`<path d="M146 60Q153 58 160 60" ${shine}/><path d="M144 67Q153 61 162 67" ${dark}/>`;
  const parted=frame(86)+`<path d="M153 55.8V63.4" stroke="#000" stroke-opacity=".28" stroke-width="1.1"/><path d="M143 62Q147 59 151 58.6M155 58.6Q159 59 163 62" ${shine}/>`;
- const braidChain=(flip)=>{const pts=[[140,88,5.5,6.5],[138.5,98,5.2,6.2],[140,107.5,5,6],[138.5,116.5,4.6,5.6],[139.5,125,4.2,5]].map(([x,y,rx,ry])=>[flip?306-x:x,y,rx,ry]);return `<g fill="${c}" stroke="#000" stroke-opacity=".18" stroke-width="1">${pts.map(([x,y,rx,ry],i)=>`<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" transform="rotate(${(i%2?18:-18)*(flip?-1:1)} ${x} ${y})"/>`).join('')}</g>`+hairTie(flip?166.5:139.5,130.5,2.8)+`<path d="M${flip?168:137} 133Q${flip?169:136} 138 ${flip?170.5:134.5} 140M${flip?166.5:139.5} 133V140" stroke="${c}" stroke-width="1.8" stroke-linecap="round"/>`};
+
  const clip=()=>{const b=state.hairBand&&state.hairBand!=='none'?hairBandColour():null;return b?`<g transform="translate(163 61) rotate(18)"><path d="M0 0L-5.5-3.4V3.4ZM0 0L5.5-3.4V3.4Z" fill="${b}" stroke="#000" stroke-opacity=".2" stroke-width=".6"/><circle r="1.7" fill="${b}" stroke="#000" stroke-opacity=".25" stroke-width=".6"/></g>`:''};
  const brows=`<path d="M143.6 74.6q3.4-2.4 7-.9M157.4 73.7q3.6-1.5 7 .9" stroke="${c}" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M143.6 74.6q3.4-2.4 7-.9M157.4 73.7q3.6-1.5 7 .9" stroke="#000" stroke-opacity=".3" stroke-width="1.5" fill="none" stroke-linecap="round"/>`;
  return ({
   long:fringe+`<path d="M138 72Q132 92 138 112Q141 120 137 127Q147 123 146 110Q142 94 143 76Z" fill="${c}"/><path d="M168 72Q172 86 169 98Q167 104 170 108Q164 106 164 96Q165 84 163 76Z" fill="${c}"/><path d="M139 86Q137 100 141 114" ${shine}/><path d="M142 90Q142 104 144 112" ${dark}/>`+clip(),
   short:frame(79)+sweep+clip(),
   curly:`<g fill="${c}">${[[142,63,5.5],[150,59.5,5.5],[158,59.5,5.5],[165,63,5.5],[138,71,5],[168,71,5]].map(([x,y,r])=>`<circle cx="${x}" cy="${y}" r="${r}"/>`).join('')}</g><g ${shine.replace('stroke-width="2"','stroke-width="1.5"')}>${[[140,61],[148,57.5],[156,57.5],[163,61]].map(([x,y])=>`<path d="M${x} ${y}q2-1.5 4 0"/>`).join('')}</g>`+clip(),
-  braid:fringe+braidChain(false)+`<path d="M140 84Q137 96 140 110Q137 120 139 128" ${shine}/>`,
-  twobraids:parted+braidChain(false)+braidChain(true),
+  braid:fringe,
+  twobraids:parted,
   ponytail:pulled,
   pigtails:parted,
   bun:pulled,
