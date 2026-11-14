@@ -38,3 +38,6 @@ Pushing to `main` runs all tests and deploys `dist/` to GitHub Pages via `.githu
 - Surprise obstacles appear now and then in races (narrower window, bonus drops when cleared, a longer bump when missed).
 - Rivals Klöver, Mossa and Pärla have pace curves, lines during the race and a head-to-head record (`state.rivalRecord`).
 - Online leaderboard: `server/` is a small Node + Postgres API on Railway (project `grodgaloppen-topplista`, service `api`). Names come only from `server/names.json` (copied in `dist/leaderboard.js`); the server rejects anything else, times under 12 s and more than 20 submissions per 10 minutes. Deploy with `cd server && railway up -s api`. Allowed origins: `ALLOWED_ORIGINS`.
+
+## Several frogs
+`frogs.js`: hatch up to six frogs (an egg costs 200 drops or comes as a reward), pick who races, frogs grow through four stages (Liten → Ung → Stor → Magisk groda) from races, adventures and care. Each stage adds stats, colours and a stronger ability. Personalities (Modig, Sömnig, Busig, Nyfiken, Glad) each give an ability through `frogAbilityMods()`. Friendship unlocks five short stories per personality. The active frog is mirrored into the old single-frog fields and synced back in `save()`. `node tests/frogs.cjs`.

@@ -139,3 +139,32 @@ body.gardenView aside{display:none}
 .leaderOfferActions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .leaderOfferActions .outline{width:auto;margin:0}
 @media(max-width:700px){.rivalSay{top:62px;font-size:11px}.rivalCard{padding:13px}.rivalPortrait{width:60px;height:60px}}
+/* Step 3: frogs, stages, picker, stories */
+.frogsPanel{margin-top:26px}
+.frogCards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.frogCard{display:flex;gap:14px;background:#fffef8;border:1px solid var(--line);border-radius:16px;padding:14px}
+.frogCard.active{border:2px solid #839c60;background:#f4f6e9;padding:13px}
+.frogCard h3{margin:0;font-size:17px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.frogCard p{font-size:12px;line-height:1.55;color:var(--muted);margin:6px 0}
+.frogCard small{font-size:11px;color:var(--muted)}
+.frogCard .outline{margin:10px 0 0}
+.frogCardArt{width:70px;height:70px;flex:none;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle,#fff,#e8eedb 70%)}
+.frogCardArt svg{width:54px}
+.frogCardArt.stage2{background:radial-gradient(circle,#fff,#dbe9c4 70%)}
+.frogCardArt.stage3{background:radial-gradient(circle,#fffbe0,#e9dcff 70%);box-shadow:0 0 16px #f3e7a0}
+.xpBar{height:6px;border-radius:6px;background:#e7ebdb;overflow:hidden;margin:4px 0}
+.xpBar i{display:block;height:100%;background:linear-gradient(90deg,#99ae6c,#d6b64f)}
+.eggArea{margin-top:14px;text-align:center}
+.eggMini p{font-size:13px;color:var(--muted)}
+.eggButton.small{width:150px}
+.frogStories{margin-top:18px}
+.frogStories ol{padding-left:20px;margin:0}
+.frogStories li{font-size:13px;line-height:1.6;margin:8px 0}
+.frogStories .lockedStory{color:var(--muted);list-style:none;margin-left:-20px}
+.frogPicker{display:flex;flex-direction:column;gap:6px;width:100%}
+.frogPicker>span{font-weight:700;color:var(--muted);font-size:10px;letter-spacing:1px;text-transform:uppercase}
+.frogPicker div{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+.frogPicker button{flex:none;display:flex;align-items:center;gap:6px;border:1px solid var(--line);background:#fffef8;border-radius:20px;padding:5px 12px 5px 6px;font:inherit;font-size:12px;color:var(--ink);cursor:pointer}
+.frogPicker button svg{width:30px}
+.frogPicker button[aria-pressed="true"]{border-color:var(--green);background:#e9eedf;font-weight:700}
+.raceNote{font-size:13px;margin:8px 0 0}
