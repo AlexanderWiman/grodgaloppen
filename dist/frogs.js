@@ -6,7 +6,7 @@
 // syncFrogs() copies those fields back before every save.
 
 const FROG_FIELDS=['frog','frogName','pattern','baseStats','personality','bond','careLog'];
-const MAX_FROGS=6,EGG_COST=200;
+const MAX_FROGS=12,EGG_COST=200;
 
 const personalities={
  Modig:{ability:'Modigt språng',about:'Nyfiken på nästa stora språng och alltid redo för äventyr.',desc:s=>`Hoppar över hinder utan rädsla: +${2+s} extra daggdroppar per hinder.`,mods:s=>({surpriseDrops:2+s,hop:1+.01*s})},
@@ -95,7 +95,7 @@ function frogCard(f){
 function frogsPanelHTML(){
  ensureFrogs();syncFrogs();
  const f=activeFrog(),stories=frogStories[f.personality]||[];
- const egg=state.newEgg?`<div class="eggMini"><button class="eggButton small" id="crackEgg" aria-label="Knacka på ägget">${eggArt(state.newEgg.clicks)}</button><p>Knacka på ägget! ${state.newEgg.clicks} / 5</p></div>`:state.frogs.length>=MAX_FROGS?'<p class="royalExplain">Dammen är full – sex grodor är max.</p>':`<button class="primary" id="newEgg" ${eggCanHatch()?'':'disabled'}>${(state.eggs||0)>0?`🥚 Kläck ett ägg (${state.eggs} kvar)`:`🥚 Kläck ett nytt ägg · ${EGG_COST} ✦`}</button>`;
+ const egg=state.newEgg?`<div class="eggMini"><button class="eggButton small" id="crackEgg" aria-label="Knacka på ägget">${eggArt(state.newEgg.clicks)}</button><p>Knacka på ägget! ${state.newEgg.clicks} / 5</p></div>`:state.frogs.length>=MAX_FROGS?'<p class="royalExplain">Dammen är full – tolv grodor är max.</p>':`<button class="primary" id="newEgg" ${eggCanHatch()?'':'disabled'}>${(state.eggs||0)>0?`🥚 Kläck ett ägg (${state.eggs} kvar)`:`🥚 Kläck ett nytt ägg · ${EGG_COST} ✦`}</button>`;
  return `<section class="frogsPanel"><div class="sectionHead"><h2>Dina grodor</h2><span class="pill">${state.frogs.length} av ${MAX_FROGS}</span></div><p class="royalExplain">Välj vem som tävlar. Grodor växer av lopp, äventyr och omvårdnad, och får starkare förmågor och nya färger.</p><div class="frogCards">${state.frogs.map(frogCard).join('')}</div><div class="eggArea">${egg}</div></section><section class="frogStories editor"><h3>${escapeText(genitive(f.frogName))} berättelser</h3><p>Ni låser upp en ny berättelse för varje 20 i vänskap.</p><ol>${stories.map((t,i)=>(f.bond||0)>=(i+1)*20?`<li>${t}</li>`:`<li class="lockedStory">🔒 Låses upp vid ${(i+1)*20} i vänskap</li>`).join('')}</ol></section>`;
 }
 function wireFrogsPanel(rerender){
