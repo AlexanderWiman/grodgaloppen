@@ -59,7 +59,7 @@ function hairBackShape(){const c=state.hair,shade='fill="#000" opacity=".16"',si
  return '<g class="hair-back">'+({
   long:cap+`<path d="M137.5 80Q136 100 140.5 116H165.5Q170 100 168.5 80Z" fill="${c}"/>`+side('M136 66Q125 96 129 128Q136 136 144 128Q141 104 142 82Z')+`<path d="M134 92Q131 110 135 126M172 92Q175 110 171 126" stroke="#000" stroke-opacity=".15" stroke-width="2" fill="none" stroke-linecap="round"/>`,
   short:cap+side('M136 68Q132 90 137 99Q142 101 143 93Q141 82 143 74Z'),
-  curly:cap+curls([[133,64,10],[129,78,10],[131,92,9.5],[136,104,8.5],[143,54,10],[155,50,10],[167,55,10],[175,67,10],[177,81,10],[175,95,9.5],[170,106,8.5]],c)+`<g ${shade}>${[[131,92,6],[175,95,6],[136,104,5],[170,106,5]].map(([x,y,r])=>`<circle cx="${x+1.5}" cy="${y+2}" r="${r}"/>`).join('')}</g>`,
+  curly:cap+`<path d="M137.5 80Q136 100 140.5 116H165.5Q170 100 168.5 80Z" fill="${c}"/>`+curls([[133,64,10],[129,78,10],[131,92,9.5],[136,104,8.5],[143,54,10],[155,50,10],[167,55,10],[175,67,10],[177,81,10],[175,95,9.5],[170,106,8.5]],c)+`<g ${shade}>${[[131,92,6],[175,95,6],[136,104,5],[170,106,5]].map(([x,y,r])=>`<circle cx="${x+1.5}" cy="${y+2}" r="${r}"/>`).join('')}</g>`,
   braid:cap+side('M136 68Q133 88 138 96Q142 96 143 88Z')+braidChain(false),
   twobraids:cap+side('M136 68Q133 88 138 96Q142 96 143 88Z')+braidChain(false)+braidChain(true),
   ponytail:cap+`<path d="M165 60Q188 56 186 82Q184 102 172 112Q178 94 173 78Q170 68 164 66Z" fill="${c}"/><path d="M172 66Q182 70 180 88" stroke="#000" stroke-opacity=".15" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M168 64Q178 62 181 72" stroke="#fff" stroke-opacity=".28" stroke-width="2" fill="none" stroke-linecap="round"/>`+hairTie(166,62,3.2),
