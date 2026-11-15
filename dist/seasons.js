@@ -41,15 +41,25 @@ function celebrateFestival(){
 afterRaceHooks.push(()=>{const f=festival();if(!f.done&&f.races<2){f.races++;if(f.races===2)raceNotes.push('🎀 Byn har nästan förberett '+seasons[currentSeason()].festival.name+'!')}});
 function festivalHTML(){
  const f=festival(),s=seasons[currentSeason()],fest=s.festival;
- if(f.done)return `<section class="festival done"><div class="festIcon">${fest.icon}</div><div><div class="eyebrow">${s.name.toUpperCase()} I ÄLVBYN</div><h3>${fest.name} är firad!</h3><p>${fest.text} Nästa fest kommer när årstiden byts.</p></div></section>`;
+ if(f.done)return `<section class="festival done"><div class="festIcon">${fest.icon}</div><div><div class="eyebrow">${s.name.toUpperCase()} I ÄLVBYN</div><h3>${fest.name} är firad!</h3><p>${fest.text} Nästa fest kommer när årstiden byts.</p><button class="outline festWatch" id="festWatch">${fest.icon} Titta på festen</button></div></section>`;
  return `<section class="festival"><div class="festIcon">${fest.icon}</div><div><div class="eyebrow">${s.name.toUpperCase()} I ÄLVBYN</div><h3>Snart: ${fest.name}</h3><p>${fest.text} Hjälp byn att förbereda!</p><ul class="festTasks">${festivalTasks.map(t=>`<li class="${festivalTaskDone(f,t.id)?'ok':''}">${festivalTaskDone(f,t.id)?'✓':t.icon} ${t.text}${t.id==='races'?` (${Math.min(2,f.races)}/2)`:''}</li>`).join('')}</ul><div class="festActions">${f.berries?'':`<button class="outline" id="festBerries" ${state.garden?.berries>=3?'':'disabled'}>Ge 3 bär</button>`}${f.decorate?'':`<button class="outline" id="festDecorate" ${state.coins>=30?'':'disabled'}>Pynta · 30 ✦</button>`}<button class="primary" id="festStart" ${festivalReady()?'':'disabled'}>Starta festen!</button></div></div></section>`;
 }
+// The festival scenes (paper craft, made with Higgsfield): one picture per season of the whole village
+// celebrating round the pond. The player's own fairy and frog stand on the empty path in front.
+function festSceneHTML(season=currentSeason()){const fest=seasons[season].festival;return `<div class="festScene festScene-${season}"><img src="assets/fest/${season}.webp" alt="${fest.name} i Älvbyn: grannarna firar runt dammen" width="1600" height="894"><span class="festRider">${frog()}</span><div class="festSparkle" aria-hidden="true">${Array.from({length:14},(_,i)=>`<i style="left:${(i*37)%92+4}%;top:${(i*23)%52+4}%;animation-delay:${((i*.37)%3).toFixed(2)}s"></i>`).join('')}</div></div>`}
+// r is the result of celebrateFestival() (rewards shown), or null to just watch the party again.
+function showFestivalScene(r){
+ const fest=seasons[currentSeason()].festival;
+ $('#content').innerHTML=`<section class="festParty"><div class="festConfetti" aria-hidden="true">${r?Array.from({length:18},(_,i)=>`<i style="left:${i*5.5}%;animation-delay:${i*.15}s">${['🎉','✦',fest.icon,'🌸'][i%4]}</i>`).join(''):''}</div><div class="eyebrow">ÄLVBYN FIRAR</div><h2>${fest.name}!</h2>${festSceneHTML()}<p>${fest.text}</p>${r?`<ul class="rewardList"><li>+60 daggdroppar</li><li>${decorations.find(d=>d.id===fest.item).name} till gläntan</li>${r.sticker?`<li>Klistermärke: ${r.sticker.icon} ${r.sticker.name}</li>`:''}</ul>`:''}<button class="primary" id="festBack">Tillbaka till byn</button></section>`;
+ $('#festBack').onclick=()=>{setMusic('village');renderVillage()};
+}
 function wireFestival(){
+ if($('#festWatch'))$('#festWatch').onclick=()=>{setMusic('festival');showFestivalScene(null);scrollTo?.(0,0)};
  if($('#festBerries'))$('#festBerries').onclick=()=>{if(festivalBerries()){renderVillage();toast('Bären står på festbordet!')}};
  if($('#festDecorate'))$('#festDecorate').onclick=()=>{if(festivalDecorate()){sidebar();renderVillage();toast('Torget glittrar av girlanger!')}};
  if($('#festStart'))$('#festStart').onclick=()=>{const r=celebrateFestival();if(!r)return;sidebar();setMusic('festival');sfx('win');
-  $('#content').innerHTML=`<section class="festParty"><div class="confetti" aria-hidden="true">${Array.from({length:18},(_,i)=>`<i style="left:${i*5.5}%;animation-delay:${i*.15}s">${['🎉','✦',r.fest.icon,'🌸'][i%4]}</i>`).join('')}</div><div class="eyebrow">ÄLVBYN FIRAR</div><h2>${r.fest.name}!</h2><div class="partyRow">${['mira','tagge','tilda','vide'].filter(id=>state.village?.residents.includes(id)).map(id=>`<span class="partyGuest">${residentArt(id)}</span>`).join('')}<span class="partyGuest frogGuest">${frog()}</span></div><p>${r.fest.text}</p><ul class="rewardList"><li>+60 daggdroppar</li><li>${decorations.find(d=>d.id===r.fest.item).name} till gläntan</li>${r.sticker?`<li>Klistermärke: ${r.sticker.icon} ${r.sticker.name}</li>`:''}</ul><button class="primary" id="festBack">Tillbaka till byn</button></section>`;
-  $('#festBack').onclick=()=>{setMusic('village');renderVillage()}};
+  showFestivalScene(r);};
+
 }
 
 // ---------- Daily surprise ----------
