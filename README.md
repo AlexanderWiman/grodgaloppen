@@ -239,3 +239,24 @@ The family asked for everything they grow to be usable. Harvests now go into the
 - **Animals** open after 8 harvests (milestone `yardanimals`):
   - The hen house costs 150 dewdrops. It lays an egg every 15 minutes, with at most 4 waiting.
   - The rabbit Nos costs 120 dewdrops. Nos gets one carrot a day, which moves every growing bed 3 minutes closer to ripe (`feedRabbit`).
+
+## Trips, berry picking, birthdays and New Year (survey 5)
+
+The family asked to see the journey between places instead of landing in the shop straight from the cottage. They also asked for birthday parties in the glade, more holidays and a berry-picking game on a timer.
+
+- **Trips between places** (`resor.js`, loaded after `app.js` because it wraps `render()`): when the fairy moves between the glade, the cottage, the garden, the pond, Bärbacken, Älvbyn, the shop, the castle or the secret forest, the frog hops along a path for 1.1–2 seconds.
+  - Tapping skips the trip.
+  - Trips can be turned off with "Visa inte resor" or in the 🎵 menu.
+  - They are skipped when the device asks for reduced motion.
+  - Tabs that are not places, such as races and the wardrobe, keep the fairy where she was.
+- **Berry picking** (`kalas.js`, tab "Bärplockning" in the glade) opens after **5 won races** (milestone `berries`). Berries pop up on nine bushes for 30 seconds:
+  - Blue berries give 1 point and golden berries 3. Green berries are not ripe.
+  - Points become dewdrops, at most 30 a round and 40 a day.
+  - The berries go to the pantry, and the kitchen can bake a blueberry pie with them.
+- **Birthdays:** under "🎂 Födelsedagar" in the glade, up to 8 names and dates can be added. 29 February is celebrated on the 28th in other years.
+  - On the day, the glade has bunting, balloons, a cake and the neighbours.
+  - "Sjung för …" gives 50 dewdrops once a year per person.
+  - The first party ever also gives the frog a party hat and the glade a birthday cake.
+- **New Year** (31 December–1 January, on top of Christmas): tap the sky in the glade to shoot fireworks. Twelve rockets give 50 dewdrops and a star fountain, once a year.
+
+To test the dates locally, open `http://localhost:8765/?datum=2026-12-31`. Tests: `tests/kalas.cjs`.
