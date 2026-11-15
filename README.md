@@ -312,3 +312,5 @@ All four scenes show the whole village by the pond: Tagge, Tilda, Mira, Vide and
 - The still picture is the poster, so the scene shows at once and also works without internet.
 - The film plays muted in a loop. 🔈 turns on its sound and pauses the game music, and tapping the film shows it full screen.
 - `sw.js` lets `.mp4` files and range requests go straight to the network, because the cache cannot store films that are loaded in parts.
+
+**The frog's old look is back:** the family wanted the frog to look as it did before the paper redesign. `frog()` now draws the original lying frog again, with its shading, dots and eye colours, and frog hats, jewels and goggles sit in their old places. The fairy keeps her paper look: her face, hair, leaf hat, wings and dress, plus paper grain over her only. She sits where she sat before.
