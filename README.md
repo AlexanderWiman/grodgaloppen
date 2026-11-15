@@ -303,3 +303,6 @@ The mushroom cottage has a bedroom with a little bed for every frog (`dist/sovru
 - Once the bedroom is open, the frogs no longer sleep downstairs.
 
 Tests are in `tests/sovrum.cjs`.
+## Taking frog gear off
+
+Gear the family has bought in the gear shop can be taken off and put on again. A worn item shows "✓ På · Ta av", and one that is off shows "Sätt på". Only gear that is on gives its bonus and shows on the frog (goggles, scarf). The game saves which items are off in `state.gearOff`, and `gearOn(id)` and `toggleGear(id)` are in `app.js`. Tests are in `tests/gear.cjs`.

@@ -800,3 +800,5 @@ body[data-holiday="jul"] .villageMap:before{content:'';position:absolute;left:0;
 .bedHeart{position:absolute;right:10%;top:6%;color:#f29ca2;font-size:14px}
 @media(max-width:600px){.bedGrid{grid-template-columns:repeat(3,1fr)}.bedroom{padding-top:136px}}
 @media(prefers-reduced-motion:reduce){.bedZ,.bed.bounce .bedSitter{animation:none}}
+/* Gear on and off */
+.shop .card .gearToggle{width:100%;margin:0}
