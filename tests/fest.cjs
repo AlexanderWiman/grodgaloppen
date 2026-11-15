@@ -10,4 +10,5 @@ g.run("const f=festival();f.berries=true;f.decorate=true;f.races=2");const r=g.r
 let page=g.nodes.get('#content').innerHTML;assert(page.includes('assets/fest/autumn.webp')&&page.includes('+60 daggdroppar')&&page.includes('Lyktfesten'));
 assert(g.run('festivalHTML()').includes('id="festWatch"'),'watch again once celebrated');
 g.run('showFestivalScene(null)');page=g.nodes.get('#content').innerHTML;assert(page.includes('assets/fest/autumn.webp')&&!page.includes('daggdroppar'),'watching again gives no new rewards');
+assert(g.run('festSceneHTML()').includes('<video src="assets/fest/autumn.mp4"'),'Lyktfesten plays its film');assert(fs.existsSync('dist/assets/fest/autumn.mp4'));assert(fs.readFileSync('dist/sw.js','utf8').includes("endsWith('.mp4')"),'films bypass the offline cache');
 console.log('PASS: festival scenes for every season, with the player in front, and watching again.');

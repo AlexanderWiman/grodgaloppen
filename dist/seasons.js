@@ -46,12 +46,19 @@ function festivalHTML(){
 }
 // The festival scenes (paper craft, made with Higgsfield): one picture per season of the whole village
 // celebrating round the pond. The player's own fairy and frog stand on the empty path in front.
-function festSceneHTML(season=currentSeason()){const fest=seasons[season].festival;return `<div class="festScene festScene-${season}"><img src="assets/fest/${season}.webp" alt="${fest.name} i Älvbyn: grannarna firar runt dammen" width="1600" height="894"><span class="festRider">${frog()}</span><div class="festSparkle" aria-hidden="true">${Array.from({length:14},(_,i)=>`<i style="left:${(i*37)%92+4}%;top:${(i*23)%52+4}%;animation-delay:${((i*.37)%3).toFixed(2)}s"></i>`).join('')}</div></div>`}
+// Seasons that also have a 30-second film (Higgsfield). The picture is the poster, so the scene shows at
+// once and also without internet; the film starts muted, and the sound button turns its sound on.
+const festFilms={autumn:'assets/fest/autumn.mp4'};
+function festSceneHTML(season=currentSeason()){const fest=seasons[season].festival,film=festFilms[season];return `<div class="festScene festScene-${season}${film?' hasFilm':''}">${film?`<video src="${film}" poster="assets/fest/${season}.webp" autoplay muted loop playsinline preload="auto" aria-label="${fest.name} i Älvbyn: grannarna firar runt dammen"></video><button class="festSound" id="festSound" aria-label="Ljud på filmen">🔈</button>`:`<img src="assets/fest/${season}.webp" alt="${fest.name} i Älvbyn: grannarna firar runt dammen" width="1600" height="894">`}<span class="festRider">${frog()}</span><div class="festSparkle" aria-hidden="true">${Array.from({length:14},(_,i)=>`<i style="left:${(i*37)%92+4}%;top:${(i*23)%52+4}%;animation-delay:${((i*.37)%3).toFixed(2)}s"></i>`).join('')}</div></div>`}
 // r is the result of celebrateFestival() (rewards shown), or null to just watch the party again.
 function showFestivalScene(r){
  const fest=seasons[currentSeason()].festival;
  $('#content').innerHTML=`<section class="festParty"><div class="festConfetti" aria-hidden="true">${r?Array.from({length:18},(_,i)=>`<i style="left:${i*5.5}%;animation-delay:${i*.15}s">${['🎉','✦',fest.icon,'🌸'][i%4]}</i>`).join(''):''}</div><div class="eyebrow">ÄLVBYN FIRAR</div><h2>${fest.name}!</h2>${festSceneHTML()}<p>${fest.text}</p>${r?`<ul class="rewardList"><li>+60 daggdroppar</li><li>${decorations.find(d=>d.id===fest.item).name} till gläntan</li>${r.sticker?`<li>Klistermärke: ${r.sticker.icon} ${r.sticker.name}</li>`:''}</ul>`:''}<button class="primary" id="festBack">Tillbaka till byn</button></section>`;
  $('#festBack').onclick=()=>{setMusic('village');renderVillage()};
+ const v=document.querySelector?.('.festScene video'),snd=$('#festSound');
+ // Tapping the film shows it full screen.
+ if(v)v.onclick=()=>{if(v.requestFullscreen)v.requestFullscreen().catch(()=>{});else if(v.webkitEnterFullscreen)v.webkitEnterFullscreen()};
+ if(v&&snd)snd.onclick=()=>{v.muted=!v.muted;snd.textContent=v.muted?'🔈':'🔊';snd.setAttribute('aria-label',v.muted?'Ljud på filmen':'Ljud av filmen');if(!v.muted){if(typeof stopMusic==='function')stopMusic();v.play?.()}else if(typeof setMusic==='function')setMusic('festival')};
 }
 function wireFestival(){
  if($('#festWatch'))$('#festWatch').onclick=()=>{setMusic('festival');showFestivalScene(null);scrollTo?.(0,0)};

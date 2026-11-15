@@ -9,6 +9,8 @@ self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(keys=>Promis
 self.addEventListener('fetch',e=>{
   const req=e.request,url=new URL(req.url);
   if(req.method!=='GET'||url.origin!==location.origin)return;
+  // Films stream straight from the network (browsers ask for them in parts, which the cache cannot store).
+  if(req.headers.has('range')||url.pathname.endsWith('.mp4'))return;
   // Local preview (python -m http.server) always loads fresh files.
   if(location.hostname==='localhost'||location.hostname==='127.0.0.1')return;
   e.respondWith(caches.open(CACHE).then(async cache=>{

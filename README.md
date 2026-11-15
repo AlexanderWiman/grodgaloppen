@@ -307,3 +307,8 @@ All four scenes show the whole village by the pond: Tagge, Tilda, Mira, Vide and
 **Code**
 - `festSceneHTML()` builds the scene and `showFestivalScene(r)` shows it, both in `seasons.js`.
 - Tests are in `tests/fest.cjs`.
+
+**Festival films:** Lyktfesten also has a 30-second film made with Higgsfield (Seedance 2.5, 480p, about 1.7 MB) at `dist/assets/fest/autumn.mp4`. It is listed in `festFilms` in `seasons.js`.
+- The still picture is the poster, so the scene shows at once and also works without internet.
+- The film plays muted in a loop. 🔈 turns on its sound and pauses the game music, and tapping the film shows it full screen.
+- `sw.js` lets `.mp4` files and range requests go straight to the network, because the cache cannot store films that are loaded in parts.
