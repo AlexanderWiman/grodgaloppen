@@ -15,6 +15,7 @@ const milestones=[
  {id:'froghouses',name:'Grodhus med namnskylt',where:'Grodvän',goal:'Ha 3 grodor',count:()=>[(state.frogs||[]).length,3]},
  {id:'morefish',name:'Fler fiskar i dammen',where:'Fiska',goal:'Fånga 20 fiskar',count:()=>[fishCaughtTotal(),20]},
  {id:'fireflies',name:'Fånga eldflugor',where:'Gläntan',goal:'Klara äventyret Den vilsekomna eldflugan',count:()=>[state.decorOwned?.includes('lantern')?1:0,1]},
+ {id:'berries',name:'Bärplockning',where:'Gläntan',goal:'Vinn 5 lopp',count:()=>[state.wins||0,5]},
  {id:'memory',name:'Memory med klistermärken',where:'Gläntan',goal:'Samla 8 klistermärken',count:()=>[(state.stickers||[]).length,8]},
  {id:'secretforest',name:'Den hemliga skogen',where:'Äventyr',goal:'Vinn 25 lopp',count:()=>[state.wins||0,25]},
  {id:'challenger',name:'Stora Gorm utmanar',where:'Tävla',goal:'Vinn 3 lopp på Mästare',count:()=>[state.masterWins||0,3]},
