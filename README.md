@@ -262,3 +262,28 @@ The family asked to see the journey between places instead of landing in the sho
 - **New Year** (31 December–1 January, on top of Christmas): tap the sky in the glade to shoot fireworks. Twelve rockets give 50 dewdrops and a star fountain, once a year.
 
 To test the dates locally, open `http://localhost:8765/?datum=2026-12-31`. Tests: `tests/kalas.cjs`.
+
+## The fairy and frog in paper style
+
+The family thought the fairies looked sloppily drawn. They tried a painted style and chose the paper-craft look instead. Because the paper look is built from flat shapes, it can still be drawn in code, so every choice in the game keeps working: hairstyles, colours, eyes, mouths, headwear and the wardrobe.
+
+**Frog**
+- The frog sits up.
+- It has a big round thigh, a lighter belly, a big head with the eyes on top, and toes with round tips.
+- Its lighter and darker paper colours are mixed from the frog's own colour with `mixHex`.
+
+**Fairy**
+- Her head is larger, and she sits on the frog's back holding reins made of a vine.
+- Her face is turned three-quarters, with big glossy eyes, round pink cheeks and a pointed ear.
+- Her hair is in paper layers: the back hair is a darker layer, and a fringe sweeps across the forehead.
+- She has a smaller leaf hat, two pairs of veined wings, a belt and a jagged hem.
+
+**Paper effect**
+- Every piece casts a soft shadow (filter `fgPaper`).
+- A fine paper grain covers the whole picture (filter `fgGrain`).
+
+**Positioning in code**
+- `FAIRY_SEAT` moves the fairy, who is still drawn in her own coordinates, onto the frog's back.
+- `FROG_HEAD` moves frog hats, jewellery, goggles and stage marks onto the new head.
+
+**Phone fix:** The shared gradients are also kept in a zero-size picture at the top of the page. Without it, browsers drew them as nothing whenever the first frog picture was hidden, which happened on phones because the sidebar is hidden there.
