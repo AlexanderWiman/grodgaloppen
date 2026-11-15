@@ -57,7 +57,7 @@ function hairBackShape(){const c=state.hair,shade='fill="#000" opacity=".16"',si
  const cap=`<path d="M134 84Q130 55 153 53Q176 55 172 84Z" fill="${c}"/>`;
  const curls=(list,col)=>`<g fill="${col}">${list.map(([x,y,r])=>`<circle cx="${x}" cy="${y}" r="${r}"/>`).join('')}</g>`;
  return '<g class="hair-back">'+({
-  long:cap+side('M136 66Q125 96 129 128Q136 136 144 128Q141 104 142 82Z')+`<path d="M134 92Q131 110 135 126M172 92Q175 110 171 126" stroke="#000" stroke-opacity=".15" stroke-width="2" fill="none" stroke-linecap="round"/>`,
+  long:cap+`<path d="M137.5 80Q136 100 140.5 116H165.5Q170 100 168.5 80Z" fill="${c}"/>`+side('M136 66Q125 96 129 128Q136 136 144 128Q141 104 142 82Z')+`<path d="M134 92Q131 110 135 126M172 92Q175 110 171 126" stroke="#000" stroke-opacity=".15" stroke-width="2" fill="none" stroke-linecap="round"/>`,
   short:cap+side('M136 68Q132 90 137 99Q142 101 143 93Q141 82 143 74Z'),
   curly:cap+curls([[133,64,10],[129,78,10],[131,92,9.5],[136,104,8.5],[143,54,10],[155,50,10],[167,55,10],[175,67,10],[177,81,10],[175,95,9.5],[170,106,8.5]],c)+`<g ${shade}>${[[131,92,6],[175,95,6],[136,104,5],[170,106,5]].map(([x,y,r])=>`<circle cx="${x+1.5}" cy="${y+2}" r="${r}"/>`).join('')}</g>`,
   braid:cap+side('M136 68Q133 88 138 96Q142 96 143 88Z')+braidChain(false),
@@ -67,7 +67,7 @@ function hairBackShape(){const c=state.hair,shade='fill="#000" opacity=".16"',si
   bun:cap+`<circle cx="153" cy="49" r="9.5" fill="${c}"/><path d="M147 47Q153 41 159 47Q156 53 150 51" stroke="#000" stroke-opacity=".18" stroke-width="1.6" fill="none"/><path d="M148 44Q153 40 158 43" stroke="#fff" stroke-opacity=".3" stroke-width="1.6" fill="none" stroke-linecap="round"/>`+(hairBandColour()?`<path d="M145 56Q153 59 161 56" stroke="${hairBandColour()}" stroke-width="3.4" fill="none" stroke-linecap="round"/>`:''),
   puffs:cap+curls([[137,56,11.5],[169,56,11.5]],c)+curls([[132,51,2.4],[141,47,2.2],[135,61,2],[174,51,2.4],[165,47,2.2],[171,61,2]],'#ffffff14')+(hairBandColour()?`<path d="M141 66Q146 61 147 55M165 66Q160 61 159 55" stroke="${hairBandColour()}" stroke-width="3.2" fill="none" stroke-linecap="round"/>`:''),
   bob:cap,
-  wavy:cap+side('M136 66Q123 80 130 92Q123 104 130 116Q125 124 132 131Q142 134 145 125Q140 117 144 108Q139 98 144 88Q140 78 142 72Z')+`<path d="M131 96Q128 106 132 114M175 96Q178 106 174 114" stroke="#000" stroke-opacity=".15" stroke-width="2" fill="none" stroke-linecap="round"/>`
+  wavy:cap+`<path d="M137.5 80Q136 100 140.5 116H165.5Q170 100 168.5 80Z" fill="${c}"/>`+side('M136 66Q123 80 130 92Q123 104 130 116Q125 124 132 131Q142 134 145 125Q140 117 144 108Q139 98 144 88Q140 78 142 72Z')+`<path d="M131 96Q128 106 132 114M175 96Q178 106 174 114" stroke="#000" stroke-opacity=".15" stroke-width="2" fill="none" stroke-linecap="round"/>`
  })[state.hairstyle]+'</g>'}
 function hairShape(){const c=state.hair,shine='stroke="#fff" stroke-opacity=".2" stroke-width="1.5" fill="none" stroke-linecap="round"',dark='stroke="#000" stroke-opacity=".18" stroke-width="1.6" fill="none" stroke-linecap="round"';
  const frame=y=>`<path d="M135.5 ${y}Q133 58 153 55.5Q173 58 170.5 ${y}Q168 ${y} 166.5 ${y-4}Q166 72 161 67Q157 63.5 153 63.5Q149 63.5 145 67Q140 72 139.5 ${y-4}Q138 ${y} 135.5 ${y}Z" fill="${c}"/>`;
