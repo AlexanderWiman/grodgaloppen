@@ -783,3 +783,6 @@ body[data-holiday="jul"] .villageMap:before{content:'';position:absolute;left:0;
 .festWatch{width:auto;margin:0}
 @media(max-width:600px){.festRider{width:25%}.festParty{padding:22px 10px}.festParty h2{font-size:28px}}
 @media(prefers-reduced-motion:reduce){.festRider,.festSparkle i,.festConfetti i{animation:none}}
+
+/* Gear on and off */
+.shop .card .gearToggle{width:100%;margin:0}
