@@ -553,9 +553,9 @@ body[data-tab=race] aside{display:none}
 .beavers svg,.beaverPair svg{width:100%;display:block}
 .beaverCard{display:grid;grid-template-columns:90px 1fr;gap:14px;align-items:start}
 .beaverCard h3{margin-top:0}
-.fikaGuest{position:absolute;left:30%;top:28%;width:22%;max-width:170px;z-index:61;text-align:center;pointer-events:none}
-.fikaGuest span{display:block;width:70%;margin:auto}.fikaGuest svg{width:100%}
-.fikaGuest p{background:#fffef0f2;border-radius:12px;padding:6px 8px;font-size:11px;line-height:1.4;color:#4a5f43;margin:4px 0 0;box-shadow:0 3px 8px #4b3a2a22}
+.fikaGuest{position:absolute;width:15%;max-width:120px;transform:translate(-50%,-88%);text-align:center;pointer-events:none}
+.fikaGuest span{display:block;width:100%;margin:auto}.fikaGuest svg{width:100%}
+.fikaGuest p{position:absolute;bottom:96%;left:50%;width:170%;max-width:200px;transform:translateX(-50%);background:#fffef0f2;border-radius:12px;padding:6px 8px;font-size:11px;line-height:1.4;color:#4a5f43;margin:0;box-shadow:0 3px 8px #4b3a2a22;animation:fikaSay 9s ease forwards}@keyframes fikaSay{0%,80%{opacity:1}100%{opacity:0;visibility:hidden}}
 .orderCard{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--line);border-radius:14px;padding:12px;margin-top:10px;background:#fffef8}
 .orderCard p{margin:4px 0;font-size:13px}.orderCard small{display:block;color:var(--muted);font-size:11px}
 .orderCard .primary{margin-top:8px;padding:10px 16px;width:auto}
@@ -563,7 +563,7 @@ body[data-tab=race] aside{display:none}
 .craftRow{grid-template-columns:48px 1fr auto}
 .frogHouseDone{display:block;margin-top:8px;color:#5f7457}
 @media(max-width:850px){.houseExtras{grid-template-columns:1fr}.goalList{grid-template-columns:1fr}}
-@media(max-width:700px){.fikaGuest{width:34%;left:28%;top:8%}.beavers span{width:52px}}
+@media(max-width:700px){.fikaGuest{width:22%}.fikaGuest p{font-size:10px;width:190%}.beavers span{width:52px}}
 .fireflyField{position:relative;height:340px;border-radius:22px;overflow:hidden;background:radial-gradient(ellipse at 70% 15%,#f7f0c040 0 8%,transparent 9%),linear-gradient(#1f3a44,#2e5245 60%,#36573f);border:1px solid #2f4a3c;touch-action:manipulation;user-select:none;-webkit-user-select:none}
 .fireflyField:before{content:'';position:absolute;left:0;right:0;bottom:0;height:30%;background:radial-gradient(ellipse at 20% 100%,#27402f 0 50%,transparent 51%),radial-gradient(ellipse at 80% 100%,#223a2b 0 45%,transparent 46%)}
 .fireflyHud{position:absolute;top:10px;left:12px;right:12px;display:flex;justify-content:space-between;color:#fff7c9;font-weight:700;font-size:14px;z-index:3}
@@ -783,6 +783,7 @@ body[data-holiday="jul"] .villageMap:before{content:'';position:absolute;left:0;
 .festWatch{width:auto;margin:0}
 @media(max-width:600px){.festRider{width:25%}.festParty{padding:22px 10px}.festParty h2{font-size:28px}}
 @media(prefers-reduced-motion:reduce){.festRider,.festSparkle i,.festConfetti i{animation:none}}
+@media(prefers-reduced-motion:reduce){.fikaGuest p{animation:none}}
 
 /* Grodornas sovrum */
 .bedroom{position:relative;border-radius:22px;overflow:hidden;border:1px solid #d9c9a8;padding:150px 14px 18px;background:linear-gradient(#efe2c8 0,#efe2c8 128px,#c99d6b 128px,#b98d5f 100%);min-height:320px}
