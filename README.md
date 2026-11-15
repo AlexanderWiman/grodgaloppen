@@ -293,3 +293,7 @@ All four scenes show the whole village by the pond: Tagge, Tilda, Mira, Vide and
 - The still picture is the poster, so the scene shows at once and also works without internet.
 - The film plays muted in a loop. 🔈 turns on its sound and pauses the game music, and tapping the film shows it full screen.
 - `sw.js` lets `.mp4` files and range requests go straight to the network, because the cache cannot store films that are loaded in parts.
+
+## Taking frog gear off
+
+Gear the family has bought in the gear shop can be taken off and put on again. A worn item shows "✓ På · Ta av", and one that is off shows "Sätt på". Only gear that is on gives its bonus and shows on the frog (goggles, scarf). The game saves which items are off in `state.gearOff`, and `gearOn(id)` and `toggleGear(id)` are in `app.js`. Tests are in `tests/gear.cjs`.
