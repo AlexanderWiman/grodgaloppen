@@ -263,30 +263,11 @@ The family asked to see the journey between places instead of landing in the sho
 
 To test the dates locally, open `http://localhost:8765/?datum=2026-12-31`. Tests: `tests/kalas.cjs`.
 
-## The fairy and frog in paper style
+## Shading on phones
 
-The family thought the fairies looked sloppily drawn. They tried a painted style and chose the paper-craft look instead. Because the paper look is built from flat shapes, it can still be drawn in code, so every choice in the game keeps working: hairstyles, colours, eyes, mouths, headwear and the wardrobe.
+The gradients that every frog picture shares are also kept in a zero-size picture at the top of the page. Without that copy, browsers drew them as nothing whenever the first frog picture was hidden, which happens on phones because the sidebar is hidden there.
 
-**Frog**
-- The frog sits up.
-- It has a big round thigh, a lighter belly, a big head with the eyes on top, and toes with round tips.
-- Its lighter and darker paper colours are mixed from the frog's own colour with `mixHex`.
-
-**Fairy**
-- Her head is larger, and she sits on the frog's back holding reins made of a vine.
-- Her face is turned three-quarters, with big glossy eyes, round pink cheeks and a pointed ear.
-- Her hair is in paper layers: the back hair is a darker layer, and a fringe sweeps across the forehead.
-- She has a smaller leaf hat, two pairs of veined wings, a belt and a jagged hem.
-
-**Paper effect**
-- Every piece casts a soft shadow (filter `fgPaper`).
-- A fine paper grain covers the whole picture (filter `fgGrain`).
-
-**Positioning in code**
-- `FAIRY_SEAT` moves the fairy, who is still drawn in her own coordinates, onto the frog's back.
-- `FROG_HEAD` moves frog hats, jewellery, goggles and stage marks onto the new head.
-
-**Phone fix:** The shared gradients are also kept in a zero-size picture at the top of the page. Without it, browsers drew them as nothing whenever the first frog picture was hidden, which happened on phones because the sidebar is hidden there.
+The family tried a paper-craft redesign of the fairy and the frog (#29). They then asked for both to get their old look back (#31), so only this fix remains from that work.
 
 ## Festival scenes
 
@@ -312,5 +293,3 @@ All four scenes show the whole village by the pond: Tagge, Tilda, Mira, Vide and
 - The still picture is the poster, so the scene shows at once and also works without internet.
 - The film plays muted in a loop. 🔈 turns on its sound and pauses the game music, and tapping the film shows it full screen.
 - `sw.js` lets `.mp4` files and range requests go straight to the network, because the cache cannot store films that are loaded in parts.
-
-**The frog's old look is back:** the family wanted the frog to look as it did before the paper redesign. `frog()` now draws the original lying frog again, with its shading, dots and eye colours, and frog hats, jewels and goggles sit in their old places. The fairy keeps her paper look: her face, hair, leaf hat, wings and dress, plus paper grain over her only. She sits where she sat before.
