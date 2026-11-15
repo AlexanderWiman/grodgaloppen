@@ -784,3 +784,22 @@ body[data-holiday="jul"] .villageMap:before{content:'';position:absolute;left:0;
 @media(max-width:600px){.festRider{width:25%}.festParty{padding:22px 10px}.festParty h2{font-size:28px}}
 @media(prefers-reduced-motion:reduce){.festRider,.festSparkle i,.festConfetti i{animation:none}}
 @media(prefers-reduced-motion:reduce){.fikaGuest p{animation:none}}
+
+/* Grodornas sovrum */
+.bedroom{position:relative;border-radius:22px;overflow:hidden;border:1px solid #d9c9a8;padding:150px 14px 18px;background:linear-gradient(#efe2c8 0,#efe2c8 128px,#c99d6b 128px,#b98d5f 100%);min-height:320px}
+.bedroom.night{background:linear-gradient(#5d6a8f 0,#5d6a8f 128px,#7d6248 128px,#6e5640 100%)}
+.bedroomWindow{position:absolute;left:50%;top:14px;width:104px;transform:translateX(-50%)}.bedroomWindow svg{width:100%;display:block}
+.bedroomLamp{position:absolute;left:10%;top:60px;width:120px;height:120px;border-radius:50%;background:radial-gradient(#ffe7a0aa,#ffe7a000 70%);pointer-events:none}
+.bedGrid{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:14px 10px}
+.bed{position:relative;border:0;background:none;padding:0;text-align:center;color:inherit;-webkit-tap-highlight-color:transparent}.bed:hover{transform:none;filter:none}.bed svg{width:100%;display:block}
+.bed small{display:inline-block;margin-top:2px;padding:2px 9px;border-radius:10px;background:#fbf6ec;font-size:11px;color:#5a4a36}
+.bedSitter{position:absolute;left:52%;top:18%;width:38%}.bedSitter svg{width:100%}
+.bed.bounce .bedSitter{animation:bedBounce .5s ease-out}
+@keyframes bedBounce{40%{transform:translateY(-35%)}}
+.bedZ{position:absolute;left:30%;top:-4%;font:700 14px Fredoka,sans-serif;color:#fff6c8;animation:bedZ 2.6s ease-in-out infinite}.bedZ i{font-style:normal;font-size:10px;margin-left:2px}
+@keyframes bedZ{0%{opacity:0;transform:translateY(6px)}40%{opacity:1}100%{opacity:0;transform:translateY(-10px)}}
+.bedHeart{position:absolute;right:10%;top:6%;color:#f29ca2;font-size:14px}
+@media(max-width:600px){.bedGrid{grid-template-columns:repeat(3,1fr)}.bedroom{padding-top:136px}}
+@media(prefers-reduced-motion:reduce){.bedZ,.bed.bounce .bedSitter{animation:none}}
+/* Gear on and off */
+.shop .card .gearToggle{width:100%;margin:0}

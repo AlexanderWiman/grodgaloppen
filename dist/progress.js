@@ -19,6 +19,7 @@ const milestones=[
  {id:'memory',name:'Memory med klistermärken',where:'Gläntan',goal:'Samla 8 klistermärken',count:()=>[(state.stickers||[]).length,8]},
  {id:'secretforest',name:'Den hemliga skogen',where:'Äventyr',goal:'Vinn 25 lopp',count:()=>[state.wins||0,25]},
  {id:'challenger',name:'Stora Gorm utmanar',where:'Tävla',goal:'Vinn 3 lopp på Mästare',count:()=>[state.masterWins||0,3]},
+ {id:'bedroom',name:'Grodornas sovrum',where:'Svamphuset',goal:'Ha 2 grodor',count:()=>[(state.frogs||[]).length,2]},
  {id:'yard',name:'Trädgården vid svamphuset',where:'Gläntan',goal:'Ha 6 möbler i svamphuset',count:()=>[houseOwnedCount(),6]},
  {id:'yardanimals',name:'Höns och kanin',where:'Trädgården',goal:'Skörda 8 gånger i trädgården',count:()=>[state.yard?.harvests||0,8],after:'yard'}
 ];
