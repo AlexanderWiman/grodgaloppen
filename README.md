@@ -22,6 +22,8 @@ Garden checks: `node tests/garden.cjs` covers migration, ownership, bounds, coll
 ## Älvbyn
 Mira (fairy) and Tagge (hedgehog) are initial neighbours. Help one neighbour to invite Tilda (mouse), and three to invite Vide (fairy). Each has a conversation and one-time quest. The square sells berries and welcomes Astrid. Village progress is stored with the existing save. Run `node tests/village.cjs` for unlocking, quest prerequisites, consumption and duplicate reward checks.
 
+The village map (`villageMapHTML` in `dist/village.js`) is a little storybook map: dirt paths run from the square to every place, and each place is a real `<button>` with a wooden SVG signpost beside it. Tap the square to scroll down to the square's stalls and festival, a house to talk to that neighbour, an empty plot to see who may move in, the shop to go to Butiken, and the signpost "Till gläntan" to walk home. Places sit at `villageSpots` (desktop) and `villageSpotsPhone` (a taller map under 550px), and the paths are drawn from the same numbers. `node tests/villagemap.cjs`.
+
 ## Race balance
 Run `node tests/race.cjs` to play the real engine with simulated players (`N=30 node tests/race.cjs` prints the table without assertions while tuning).
 
