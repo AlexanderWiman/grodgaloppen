@@ -287,3 +287,28 @@ The family thought the fairies looked sloppily drawn. They tried a painted style
 - `FROG_HEAD` moves frog hats, jewellery, goggles and stage marks onto the new head.
 
 **Phone fix:** The shared gradients are also kept in a zero-size picture at the top of the page. Without it, browsers drew them as nothing whenever the first frog picture was hidden, which happened on phones because the sidebar is hidden there.
+
+## Festival scenes
+
+The family said the festival only showed a mouse and their own figure hopping back and forth. Each season's festival now has its own painted paper-craft scene, made with Higgsfield in the same style as the fairy:
+
+- Spring: Blomsterfesten.
+- Summer: Sommarmarknaden.
+- Autumn: Lyktfesten.
+- Winter: Snöstjärnefesten.
+
+All four scenes show the whole village by the pond: Tagge, Tilda, Mira, Vide and the frogs. The pictures are `dist/assets/fest/<season>.webp`, about 110 kB each, and they are cached for offline play.
+
+**In the game**
+- The player's own fairy and frog (`frog()`) stand on the empty path in front.
+- Small lights twinkle in the scene.
+- After the festival, "Titta på festen" in the village shows the scene again, with no new rewards.
+
+**Code**
+- `festSceneHTML()` builds the scene and `showFestivalScene(r)` shows it, both in `seasons.js`.
+- Tests are in `tests/fest.cjs`.
+
+**Festival films:** Lyktfesten also has a 30-second film made with Higgsfield (Seedance 2.5, 480p, about 1.7 MB) at `dist/assets/fest/autumn.mp4`. It is listed in `festFilms` in `seasons.js`.
+- The still picture is the poster, so the scene shows at once and also works without internet.
+- The film plays muted in a loop. 🔈 turns on its sound and pauses the game music, and tapping the film shows it full screen.
+- `sw.js` lets `.mp4` files and range requests go straight to the network, because the cache cannot store films that are loaded in parts.
