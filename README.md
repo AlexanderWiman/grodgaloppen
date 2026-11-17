@@ -306,3 +306,15 @@ Tests are in `tests/sovrum.cjs`.
 ## Taking frog gear off
 
 Gear the family has bought in the gear shop can be taken off and put on again. A worn item shows "✓ På · Ta av", and one that is off shows "Sätt på". Only gear that is on gives its bonus and shows on the frog (goggles, scarf). The game saves which items are off in `state.gearOff`, and `gearOn(id)` and `toggleGear(id)` are in `app.js`. Tests are in `tests/gear.cjs`.
+
+## Exploring the castle, garden animals, a lighter trip card and claimed quests
+
+- **Utforska slottet** (`dist/slott.js`): four painted rooms made with Higgsfield in the castle's own style, at `dist/assets/slott/`. They are the throne room, the library, the kitchen and the tower room.
+  - Each room hides three glinting things. Every find gives 10 dewdrops once.
+  - Finding all twelve gives a little castle tower for the glade and 50 dewdrops.
+  - The rooms can be explored before the queen has shown the way. Before her first visit, the castle page shows the castle itself, not just her portrait. Her stories and the flute still come with that first visit.
+- **Garden animals** are shown in the garden picture: the hen house, three hens that walk around and peck, and Nos's hutch with Nos hopping about. Tap the hen house to collect eggs, or Nos to give a carrot.
+- **The trip card** is bigger, filling the screen on phones. It stays light at night, showing a soft dusk instead of darkening.
+- **Astrid's quests** leave the list once their reward has been collected. When every quest is done, a single "Alla uppdrag klara" card is shown instead.
+
+Tests are in `tests/slott.cjs`.
