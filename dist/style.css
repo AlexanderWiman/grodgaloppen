@@ -831,3 +831,59 @@ body[data-holiday="jul"] .villageMap:before{content:'';position:absolute;left:0;
 .castleGateNote{margin:14px 0;font-size:14px}.castleGateNote .primary{width:auto;margin-left:8px}
 @media(max-width:600px){.castleFind{min-width:40px}}
 @media(prefers-reduced-motion:reduce){.castleFind{animation:none}}
+/* Races fill the phone screen, and work with the phone turned (family wish) */
+body.racing header,body.racing #subNav,body.racing .intro,body.racing footer,body.racing #installHint,body.racing aside,body.racing #content>.sectionHead,body.racing .raceInfo{display:none!important}
+body.racing .layout{display:block}
+body.racing main{padding-top:max(8px,env(safe-area-inset-top))}
+@media(max-width:700px){
+ body.racing main{padding-left:10px;padding-right:10px}
+ body.racing .jumpWorld{height:min(50svh,440px);border-radius:18px}
+ body.racing .jumpControls{margin-top:8px;padding:8px 12px}
+ body.racing .jumpAction .primary{padding:16px}
+ body.racing #jumpFeedback{font-size:12px;margin:6px 0 0;min-height:2.8em}
+ body.racing .raceLane{margin-top:8px;gap:4px}
+ body.racing .laneRow{grid-template-columns:64px 1fr;font-size:10px}
+ body.racing .laneWater{height:22px}
+ body.racing .laneWater b svg{height:20px}
+}
+@media(orientation:landscape) and (max-height:560px){
+ body.racing main{padding:6px 10px 0;max-width:none}
+ body.racing #content{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(220px,1fr);gap:8px 12px;align-items:start}
+ body.racing .storyStage{grid-column:1/-1}
+ body.racing .jumpWorld{grid-column:1;grid-row:1/span 3;height:calc(100svh - 16px);margin:0}
+ body.racing .jumpControls{grid-column:2;margin:0;padding:8px 10px}
+ body.racing .jumpControls #jumpFeedback{font-size:11px}
+ body.racing .raceLane{grid-column:2;margin:0;gap:3px}
+ body.racing .laneRow{grid-template-columns:56px 1fr;font-size:10px}
+ body.racing .laneWater{height:20px}
+ body.racing .laneRow small,body.racing .jumpControls>p:first-child,body.racing .kbdHint{display:none}
+ body.racing .jumpAction .primary{padding:10px 14px}
+ body.racing .timingLabel{margin-bottom:4px}
+ body.racing #jumpFeedback{margin:4px 0 0;min-height:0}
+}
+/* Moving scenery in the races */
+.jumpWorld{isolation:isolate}.raceAmbient{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:-1}
+.rcloud{position:absolute;left:-90px;width:84px;height:24px;border-radius:20px;background:#ffffffd9;box-shadow:22px -9px 0 -2px #ffffffd9,46px -2px 0 -4px #ffffffd9;animation:rcloud linear infinite}
+.rcloud.small{width:56px;height:16px;opacity:.8}
+@keyframes rcloud{from{left:-120px}to{left:110%}}
+.raceHills{position:absolute;left:0;right:0;top:calc(55% - 42px);height:42px;--hill:#00000014;background:radial-gradient(70px 34px at 60px 100%,var(--hill) 98%,transparent 100%) repeat-x;background-size:130px 42px;background-position-x:calc(var(--pan,0) * -2px)}
+.raceHills.near{top:calc(55% - 24px);height:24px;--hill:#00000012;background-size:90px 24px;background-image:radial-gradient(48px 22px at 40px 100%,var(--hill) 98%,transparent 100%);background-position-x:calc(var(--pan,0) * -4px)}
+.raceHills.pond{--hill:#7fae7a55}.raceHills.near.pond{--hill:#5f9a6466}.raceHills.forest{--hill:#6f8f5a66}.raceHills.near.forest{--hill:#58784866}.raceHills.marsh{--hill:#22383f88}.raceHills.night{--hill:#0e152a99}.raceHills.winter{--hill:#ffffffaa}.raceHills.near.winter{--hill:#dbe9f5}.raceHills.castle{--hill:#c8b98a66}.raceHills.clouds{--hill:#ffffffcc}.raceHills.crystal{--hill:#3a2f6688}.raceHills.sea{--hill:#2f6f8a55}
+.rp{position:absolute;width:7px;height:7px;opacity:.85;animation:rpFloat ease-in-out infinite}
+.rp.petal{border-radius:60% 0;background:var(--c);animation-name:rpFall}
+.rp.leaf{width:9px;height:6px;border-radius:0 80%;background:var(--c);animation-name:rpFall}
+.rp.snow{border-radius:50%;background:var(--c);width:6px;height:6px;animation-name:rpSnow}
+.rp.bubble{border-radius:50%;border:1.5px solid #ffffffcc;background:#ffffff22;width:9px;height:9px;animation-name:rpRise}
+.rp.firefly,.rp.sparkle{border-radius:50%;background:var(--c);box-shadow:0 0 8px 3px color-mix(in srgb,var(--c) 60%,transparent);width:5px;height:5px;animation-name:rpBlink}
+@keyframes rpFall{0%{transform:translate(0,-30px) rotate(0);opacity:0}15%{opacity:.9}100%{transform:translate(-60px,170px) rotate(320deg);opacity:0}}
+@keyframes rpSnow{0%{transform:translate(0,-30px);opacity:0}15%{opacity:1}50%{transform:translate(12px,70px)}100%{transform:translate(-8px,170px);opacity:0}}
+@keyframes rpRise{0%{transform:translateY(160px);opacity:0}20%{opacity:.9}100%{transform:translate(10px,-20px);opacity:0}}
+@keyframes rpBlink{0%,100%{transform:translate(0,0);opacity:.15}50%{transform:translate(14px,-12px);opacity:1}}
+.rsplash{position:absolute;bottom:26px;width:90px;height:22px;transform:translateX(-50%) scale(.3);pointer-events:none;border-radius:50%;z-index:2}
+.rsplash.water{border:3px solid #ffffffcc;animation:rsplash .7s ease-out forwards}.rsplash.water.late{animation-delay:.12s;border-width:2px}
+.rsplash.dust{background:radial-gradient(#efe2c4dd,#efe2c400 70%);animation:rsplash .6s ease-out forwards}
+@keyframes rsplash{to{transform:translateX(-50%) scale(1.7);opacity:0}}
+#jumpRider svg{transform-origin:50% 100%}
+#jumpRider.squash svg{animation:rsquash .28s ease-out}
+@keyframes rsquash{30%{transform:scale(1.12,.84)}70%{transform:scale(.96,1.05)}}
+@media(prefers-reduced-motion:reduce){.rcloud,.rp,.rsplash,#jumpRider.squash svg{animation:none}.rp{display:none}}
