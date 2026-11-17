@@ -318,3 +318,17 @@ Gear the family has bought in the gear shop can be taken off and put on again. A
 - **Astrid's quests** leave the list once their reward has been collected. When every quest is done, a single "Alla uppdrag klara" card is shown instead.
 
 Tests are in `tests/slott.cjs`.
+
+## Roomier, livelier races
+
+The family found races cramped on phones and wished the tracks were more animated.
+
+- **Full screen:** While a race or adventure runs, the page gets the `racing` class. It hides the header, menus, sidebar and footer. On phones the track becomes about half the screen high, and the timing bar, the jump button and all four frogs fit below it.
+- **Phone turned:** When the phone is turned sideways (landscape, height up to 560 px), the track fills the left side at full height. The jump button and the frogs stand on the right.
+- **Moving scenery** (`raceAmbientHTML` in `race.js`):
+  - Clouds drift by.
+  - Two layers of hills slide past as the frog hops forward.
+  - Every world has something in the air: petals, leaves, fireflies, sparkles, bubbles or snow.
+- **Jumps:** The frog tilts in the air, squashes a little on landing, and water splashes or dust puffs where it lands. Reduced-motion settings turn the effects off.
+
+Tests are in `tests/lopp.cjs`.
