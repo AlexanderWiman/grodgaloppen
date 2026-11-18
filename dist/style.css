@@ -949,3 +949,24 @@ body.racing main{padding-top:max(8px,env(safe-area-inset-top))}
 .podAstrid p{margin:0;font-size:13px;color:#263d32}
 @keyframes podAstrid{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.raceFanSay,.podFrog,.podFan,.podWreath,.podAstrid{animation:none}.raceFinish,.raceSunset{transition:none}}
+/* More Astrid: letters in the mailbox, her visits, fika and her room in the castle */
+.astridMail{display:grid;grid-template-columns:56px 1fr auto;align-items:center;gap:8px 14px;background:linear-gradient(90deg,#f6efdc,#eef4e4);border:1px solid #d9cfae;border-radius:18px;padding:10px 14px;margin:0 0 14px}
+.astridMail b{font-size:16px}.astridMail p{margin:2px 0 0;font-size:13px;color:#5d6b58}
+.astridMailbox svg{width:56px;height:56px;display:block}
+.astridLetterBox{grid-column:1/-1;display:grid;gap:10px}.astridLetterBox:empty{display:none}
+.astridLetter{background:#fffaf0;border:1px solid #e6d9b8;border-radius:6px;padding:16px 18px;box-shadow:0 3px 10px #0000000f;font-family:Georgia,'Times New Roman',serif;color:#3d3426;position:relative}
+.astridLetter::before{content:"";position:absolute;right:14px;top:-8px;width:22px;height:22px;border-radius:50%;background:radial-gradient(#d8574d,#a8352e);box-shadow:0 1px 2px #0003}
+.astridLetter h4{margin:0 0 6px;font-size:17px}.astridLetter p{margin:0 0 6px;line-height:1.55}
+.astridSign{text-align:right;font-style:italic;color:#7a5a2a}
+.astridLetter small{display:block;font-family:inherit;font-weight:700;color:#3f8a65}
+.astridLetter.fresh{animation:astridUnfold .6s ease-out}
+@keyframes astridUnfold{from{opacity:0;transform:translateY(-8px) scaleY(.6)}to{opacity:1;transform:none}}
+.astridBanner{flex-wrap:wrap;background:linear-gradient(90deg,#f7ecd0,#e8f2dc);border-color:#e0c98a}
+.astridBanner>div:not(.astridActions){flex:1 1 220px}.astridBanner p{margin:4px 0 0}
+.astridActions{display:flex;flex-wrap:wrap;gap:8px;flex:1 1 100%}
+.astridActions button{flex:1 1 140px;margin:0}
+.astridFika{left:2%;right:auto}
+.castleRoom.shut img{filter:grayscale(.6) brightness(.75)}
+.castleShut{position:absolute;inset:auto 8% 40% 8%;z-index:2;margin:0;padding:12px 14px;border-radius:14px;background:#fffef8ee;text-align:center;font-weight:700;color:#263d32}
+@media(max-width:700px){.astridMail{grid-template-columns:48px 1fr}.astridMail>button{grid-column:1/-1;width:100%;margin:0}.astridMailbox svg{width:48px;height:48px}.astridFika{left:2%;right:auto}.astridActions{grid-column:1/-1}}
+@media(prefers-reduced-motion:reduce){.astridLetter.fresh{animation:none}}
