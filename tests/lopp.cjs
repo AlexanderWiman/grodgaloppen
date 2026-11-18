@@ -12,4 +12,13 @@ assert.equal((vm.runInContext("raceAmbientHTML('pond')",c).match(/raceFish/g)||[
 assert(!/'/.test(vm.runInContext("racePropsURL(raceProps.castle[0],240)",c).slice(5,-2)),'the data URL has no stray quotes');
 const cheer={classList:{s:new Set(),add(...k){k.forEach(x=>this.s.add(x))},remove(...k){k.forEach(x=>this.s.delete(x))}},offsetWidth:0};c.setTimeout=()=>0;c.clearTimeout=()=>{};vm.runInContext('raceCheer',c)({querySelector:()=>cheer},true);assert(cheer.classList.s.has('cheer')&&cheer.classList.s.has('big'),'the fans cheer');
 assert(race.includes("rider.classList.add('trick')")&&race.includes("track.classList?.add?.('sprinting')"),'flips and the finish stretch');assert(css.includes('.jumpWorld.sprinting .raceBunting')&&css.includes('#jumpRider.trick svg'),'flags and flips are styled');
-console.log('PASS: full-screen races, moving scenery, fans, fish, flags and flips in every world.');
+// Fans talk, the finish arch and sunset, and the prize-giving with Astrid's wreath.
+assert(vm.runInContext("raceAmbientHTML('forest')",c).includes('raceFinish')&&vm.runInContext("raceAmbientHTML('forest')",c).includes('raceSunset'),'a finish arch and a sunset wait for the last stretch');
+assert(['Heja Näckros!','4 i rad!','Vilket hopp!','Snyggt!'].includes(vm.runInContext("raceFanLine('Näckros',4)",c)),'the fans cheer with words');
+assert(race.includes('raceFanSay(track,raceFanLine(names[0],streak))'),'fans talk on a streak');
+c.frog=()=>'<svg>me</svg>';
+const pod=vm.runInContext("racePodiumHTML({order:[0,2,1],names:['Näckros','Klöver','Mossa','Pärla'],colors:['#1','#2','#3','#4'],hats:['','🍀','',''],cls:'forest',win:true,playerArt:'<svg>me</svg>'})",c);
+assert(pod.indexOf('p2')<pod.indexOf('p1')&&pod.indexOf('p1')<pod.indexOf('p3'),'second, first, third on the podium');assert(pod.includes('podStep p1 you')&&pod.includes('<svg>me</svg>'),'the family frog stands on top');assert(pod.includes('podWreath')&&pod.includes('Här är segerkransen')&&pod.includes('astrid-portrait.webp'),'Astrid gives the wreath');assert.equal((pod.match(/class="podFan"/g)||[]).length,3,'the animals clap');
+const lost=vm.runInContext("racePodiumHTML({order:[2,0,1],names:['Näckros','Klöver','Mossa','Pärla'],colors:['#1','#2','#3','#4'],hats:['','','',''],cls:'pond',win:false,playerArt:'<svg>me</svg>'})",c);assert(!lost.includes('podWreath')&&!lost.includes('podAstrid')&&lost.includes('podStep p2 you'),'no wreath without a win');
+assert(race.includes("racePodiumHTML({order,names,colors"),'the podium shows after a race');
+console.log('PASS: full-screen races, moving scenery, fans, fish, flags, flips, the finish arch and the podium with Astrid.');
