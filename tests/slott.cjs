@@ -5,11 +5,11 @@ const g=game();g.run('state.hatched=true;ensureGarden();ensureFrogs();ensureVill
 // The castle can be explored before the queen has shown the way: the page shows the castle, not just her portrait.
 g.run('ensureCastle().castle=false;renderCastle()');let page=g.nodes.get('#content').innerHTML;
 assert(page.includes('skogsdrottningen-slott.webp')&&page.includes('UTFORSKA SLOTTET')&&page.includes('assets/slott/tron.webp'));
-assert.equal(g.run('castleRooms.length'),4);for(const r of ['tron','bibliotek','kok','torn'])assert(fs.existsSync(`dist/assets/slott/${r}.webp`),r);
+assert.equal(g.run('castleRooms.length'),5);for(const r of ['tron','bibliotek','kok','torn','astrid'])assert(fs.existsSync(`dist/assets/slott/${r}.webp`),r);
 assert(g.run('castleRooms.every(r=>r.finds.every(f=>castleFindArt[f.id]))'),'every find has a picture');
-// Finding things: once each, 10 dewdrops; all twelve give the castle tower and 50 more.
+// Finding things: once each, 10 dewdrops; all fifteen give the castle tower and 50 more.
 g.run('state.coins=0');let r=JSON.parse(g.run("JSON.stringify(castleFind('tron','key'))"));assert.equal(r.coins,10);assert.equal(g.run("castleFind('tron','key')"),null,'once');assert.equal(g.run("castleFind('tron','book')"),null,'only in its own room');
-g.run("for(const room of castleRooms)for(const f of room.finds)castleFind(room.id,f.id)");assert.equal(g.run('state.coins'),12*10+50);assert(g.run("state.decorOwned.includes('castletower')&&extraGardenArt.castletower.length>50"));
+g.run("queenOpenCastle();for(const room of castleRooms)for(const f of room.finds)castleFind(room.id,f.id)");assert.equal(g.run('state.coins'),15*10+50);assert(g.run("state.decorOwned.includes('castletower')&&extraGardenArt.castletower.length>50"));
 // With the castle opened the stories page still works, and the rooms come after it.
 g.run('queenOpenCastle();renderCastle()');page=g.nodes.get('#content').innerHTML;assert(page.includes('castleCards')||page.includes('castleStory'));
 // Garden animals: houses and animals show in the scene only when you have them.
