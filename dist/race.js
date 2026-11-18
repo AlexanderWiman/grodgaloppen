@@ -92,9 +92,68 @@ function raceAmbientHTML(cls){
  const [k,c]=raceAmbientKinds[cls]||raceAmbientKinds.pond;
  const parts=Array.from({length:12},(_,i)=>`<i class="rp ${k}" style="left:${(i*37)%100}%;top:${(i*23)%55}%;animation-delay:-${(i*1.3).toFixed(1)}s;animation-duration:${(6+(i%5)*1.4).toFixed(1)}s;--c:${c}"></i>`).join('');
  const clouds=['pond','forest','castle','clouds','winter'].includes(cls)?'<span class="rcloud" style="top:7%;animation-duration:40s"></span><span class="rcloud small" style="top:19%;animation-duration:55s;animation-delay:-24s"></span><span class="rcloud small" style="top:12%;animation-duration:47s;animation-delay:-38s"></span>':'';
- return `<div class="raceAmbient" aria-hidden="true">${clouds}<div class="raceHills ${cls}"></div><div class="raceHills near ${cls}"></div>${parts}</div>`;
+ return `<div class="raceAmbient" aria-hidden="true">${clouds}<div class="raceHills ${cls}"></div><div class="raceHills near ${cls}"></div>${typeof raceDetailsHTML==='function'?raceDetailsHTML(cls):''}${parts}</div>`;
 }
 function raceSplash(track,leftPct,cls){if(!track?.insertAdjacentHTML)return;const water=['pond','sea','marsh'].includes(cls);track.insertAdjacentHTML('beforeend',`<span class="rsplash ${water?'water':'dust'}" style="left:${leftPct}%" aria-hidden="true"></span>${water?`<span class="rsplash water late" style="left:${leftPct}%" aria-hidden="true"></span>`:''}`);if(!track.querySelectorAll)return;const els=[...track.querySelectorAll('.rsplash')];setTimeout(()=>els.forEach(e=>e.remove()),900)}
+// More details on the tracks (survey 6): things growing along the way that slide past as the frog
+// hops forward, a row of animals that watch and cheer, fish jumping in the water worlds, and flags
+// and balloons when the finish gets close. A perfect or golden hop makes the frog flip in the air.
+const RP={
+ flower:(x,c)=>`<path d="M${x} 28V16" stroke="#5f8f4a" stroke-width="1.6"/><g fill="${c}"><circle cx="${x-3}" cy="14" r="2.6"/><circle cx="${x+3}" cy="14" r="2.6"/><circle cx="${x}" cy="11" r="2.6"/><circle cx="${x}" cy="17" r="2.6"/></g><circle cx="${x}" cy="14" r="1.8" fill="#f6d36b"/>`,
+ mush:(x,c)=>`<rect x="${x-2.5}" y="19" width="5" height="9" rx="2" fill="#f4ecd8"/><path d="M${x-8} 20Q${x} 8 ${x+8} 20Z" fill="${c}"/><g fill="#fff"><circle cx="${x-3}" cy="16" r="1.3"/><circle cx="${x+3}" cy="17" r="1.1"/></g>`,
+ reed:x=>`<path d="M${x} 28V8M${x+5} 28V12" stroke="#5d7f48" stroke-width="1.6"/><rect x="${x-1.8}" y="7" width="3.6" height="9" rx="1.8" fill="#8a5a36"/><path d="M${x-4} 28Q${x-6} 18 ${x-9} 14" stroke="#6f9a55" stroke-width="1.4" fill="none"/>`,
+ stone:(x,c='#a9a698')=>`<ellipse cx="${x}" cy="26" rx="7" ry="4" fill="${c}"/><ellipse cx="${x-2}" cy="24.6" rx="3" ry="1.3" fill="#fff" opacity=".35"/>`,
+ crystal:(x,c)=>`<path d="M${x} 6L${x+4} 14L${x+3} 28H${x-3}L${x-4} 14Z" fill="${c}"/><path d="M${x+5} 16L${x+9} 21L${x+8} 28H${x+3}Z" fill="${c}" opacity=".75"/><path d="M${x} 6L${x+1} 28" stroke="#fff" stroke-opacity=".5"/>`,
+ pine:(x,snow)=>`<rect x="${x-1.5}" y="22" width="3" height="6" fill="#6b4a32"/><path d="M${x} 2L${x+8} 14H${x+4}L${x+10} 23H${x-10}L${x-4} 14H${x-8}Z" fill="#3f6e52"/>${snow?`<path d="M${x} 2L${x+4} 8Q${x} 10 ${x-4} 8Z" fill="#fff"/>`:''}`,
+ shell:(x,c)=>`<path d="M${x-6} 27Q${x} 14 ${x+6} 27Z" fill="${c}"/><path d="M${x} 27V19M${x-3} 27L${x-1} 20M${x+3} 27L${x+1} 20" stroke="#fff" stroke-opacity=".6"/>`,
+ weed:(x,c='#4f9a7a')=>`<path d="M${x} 28Q${x-5} 20 ${x} 13T${x} 0" stroke="${c}" stroke-width="2.6" fill="none" stroke-linecap="round"/><path d="M${x+5} 28Q${x+9} 22 ${x+5} 16" stroke="${c}" stroke-width="2" fill="none" stroke-linecap="round"/>`,
+ coral:(x,c)=>`<path d="M${x} 28V16M${x} 20L${x-5} 12M${x} 18L${x+5} 10" stroke="${c}" stroke-width="2.6" stroke-linecap="round"/>`,
+ hedge:(x,c)=>`<ellipse cx="${x}" cy="22" rx="10" ry="8" fill="#5f8f4a"/><g fill="${c}"><circle cx="${x-4}" cy="19" r="1.6"/><circle cx="${x+3}" cy="17" r="1.6"/><circle cx="${x+5}" cy="23" r="1.6"/></g>`,
+ lantern:(x,c)=>`<path d="M${x} 28V10" stroke="#4a3a2c" stroke-width="1.6"/><circle cx="${x}" cy="9" r="6" fill="${c}" opacity=".35"/><rect x="${x-2.5}" y="6" width="5" height="6" rx="1.5" fill="${c}"/>`,
+ tuft:(x,c)=>`<path d="M${x-5} 28Q${x-4} 20 ${x-6} 15M${x} 28Q${x} 18 ${x+1} 12M${x+5} 28Q${x+4} 20 ${x+7} 16" stroke="${c}" stroke-width="1.8" fill="none" stroke-linecap="round"/>`,
+ snowman:x=>`<circle cx="${x}" cy="23" r="5.5" fill="#fff"/><circle cx="${x}" cy="14" r="4" fill="#fff"/><path d="M${x+3} 14l3 1-3 1Z" fill="#e8873a"/><rect x="${x-3.5}" y="7" width="7" height="3" fill="#3a3a48"/>`,
+ lily:x=>`<path d="M${x-9} 25A9 4 0 1 0 ${x+9} 25L${x} 25Z" fill="#6f9d52"/>`,
+ puff:x=>`<g fill="#fff" opacity=".85"><circle cx="${x-6}" cy="24" r="6"/><circle cx="${x+2}" cy="21" r="8"/><circle cx="${x+10}" cy="25" r="5"/></g>`
+};
+// [far strip, near strip] for each world; each entry is [prop, x, colour].
+const raceProps={
+ pond:[[['tuft',14,'#6f9a55'],['flower',40,'#f6b6cf'],['reed',70],['flower',104,'#f6d36b'],['stone',134],['tuft',164,'#6f9a55'],['flower',196,'#ffffff'],['reed',224]],[['lily',20],['reed',70],['lily',130],['tuft',176,'#5d8f5a']]],
+ forest:[[['mush',16,'#d0574a'],['tuft',44,'#5f7f45'],['pine',78],['stone',112,'#9a957f'],['mush',140,'#e0a24a'],['tuft',168,'#5f7f45'],['pine',204],['mush',230,'#d0574a']],[['tuft',20,'#4f6f3a'],['mush',72,'#d0574a'],['stone',124,'#8a856f'],['tuft',170,'#4f6f3a']]],
+ marsh:[[['reed',12],['tuft',40,'#3f5f4a'],['mush',70,'#9fe0c0'],['reed',100],['reed',112],['stone',150,'#55625a'],['tuft',184,'#3f5f4a'],['reed',220]],[['reed',24],['tuft',80,'#2f4f3a'],['reed',140],['mush',186,'#c6f0a0']]],
+ crystal:[[['crystal',18,'#b9a6ff'],['stone',50,'#5a5070'],['crystal',86,'#8fd0ff'],['crystal',130,'#ffb0e8'],['stone',166,'#5a5070'],['crystal',206,'#b9a6ff']],[['crystal',30,'#d8ccff'],['stone',100,'#4a4060'],['crystal',160,'#a8e0ff']]],
+ castle:[[['hedge',18,'#f3b5c8'],['flower',50,'#e85f6a'],['lantern',80,'#ffd36b'],['hedge',116,'#ffffff'],['flower',150,'#f6d36b'],['flower',166,'#e85f6a'],['hedge',204,'#f3b5c8']],[['tuft',24,'#5f8f4a'],['flower',80,'#e85f6a'],['tuft',140,'#5f8f4a'],['flower',186,'#f6d36b']]],
+ sea:[[['weed',14],['shell',46,'#f3c2b0'],['coral',80,'#f07a8a'],['weed',114,'#6fae8a'],['stone',148,'#7aa5a8'],['coral',182,'#f6a65a'],['shell',216,'#e8dcf6']],[['weed',24,'#3f8a6a'],['shell',90,'#f3c2b0'],['coral',150,'#f07a8a']]],
+ clouds:[[['puff',30],['puff',120],['puff',200]],[['puff',40],['puff',150]]],
+ night:[[['pine',20],['mush',52,'#b8f0ff'],['lantern',84,'#ffe88a'],['tuft',116,'#2f4a5a'],['pine',150],['mush',186,'#f6f08a'],['tuft',220,'#2f4a5a']],[['tuft',24,'#1f3a4a'],['mush',90,'#b8f0ff'],['tuft',156,'#1f3a4a']]],
+ winter:[[['pine',20,1],['snowman',58],['stone',92,'#e9f2fa'],['pine',126,1],['pine',146,1],['stone',184,'#e9f2fa'],['snowman',222]],[['stone',30,'#f4f9fd'],['pine',100,1],['stone',170,'#f4f9fd']]]
+};
+function racePropsURL(list,w){const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} 28" width="${w}" height="28">${list.map(([k,...a])=>RP[k](...a)).join('')}</svg>`;return `url('data:image/svg+xml,${encodeURIComponent(svg).replace(/'/g,'%27')}')`}
+// Animals that watch the race from the hills, three per world.
+const raceFanArt={
+ rabbit:(c='#c9b49a')=>`<ellipse cx="20" cy="31" rx="10" ry="8" fill="${c}"/><circle cx="20" cy="20" r="7" fill="${c}"/><ellipse cx="16" cy="8" rx="2.6" ry="7" fill="${c}"/><ellipse cx="24" cy="8" rx="2.6" ry="7" fill="${c}"/><ellipse cx="16" cy="9" rx="1.2" ry="4.5" fill="#f2b8c0"/><ellipse cx="24" cy="9" rx="1.2" ry="4.5" fill="#f2b8c0"/><circle cx="17.5" cy="19" r="1.3" fill="#263d32"/><circle cx="22.5" cy="19" r="1.3" fill="#263d32"/><circle cx="20" cy="22" r="1.2" fill="#e88a9a"/>`,
+ hedgehog:()=>`<path d="M6 36Q8 18 22 16Q34 18 36 36Z" fill="#7a5a40"/><path d="M8 26l-4-2M12 20l-3-4M18 17l-1-5M25 17l2-5M31 20l4-3" stroke="#5a4030" stroke-width="2" stroke-linecap="round"/><ellipse cx="11" cy="31" rx="7" ry="5.4" fill="#e8cfa8"/><circle cx="9" cy="29" r="1.2" fill="#263d32"/><circle cx="5" cy="32" r="1.4" fill="#263d32"/>`,
+ squirrel:()=>`<path d="M26 36Q38 30 34 16Q30 8 24 14Q32 20 26 30Z" fill="#c8743a"/><ellipse cx="18" cy="30" rx="8" ry="7" fill="#d9864a"/><circle cx="17" cy="19" r="6" fill="#d9864a"/><path d="M13 14l1-5 3 4M19 13l2-5 2 5" fill="#d9864a"/><circle cx="15" cy="18" r="1.2" fill="#263d32"/><ellipse cx="17" cy="31" rx="4" ry="4" fill="#f2d4b0"/>`,
+ bird:(c='#6f9fd0')=>`<ellipse cx="20" cy="28" rx="9" ry="8" fill="${c}"/><ellipse cx="20" cy="31" rx="5" ry="4" fill="#f6e6c8"/><path d="M27 26l6-3-1 6Z" fill="${c}"/><circle cx="17" cy="24" r="1.3" fill="#263d32"/><path d="M11 26l-4 1 4 1Z" fill="#e8a83a"/><path d="M17 36v3M22 36v3" stroke="#e8a83a" stroke-width="1.4"/>`,
+ mouse:()=>`<path d="M28 34Q38 34 36 26" stroke="#b9a7a0" stroke-width="1.6" fill="none"/><ellipse cx="20" cy="30" rx="9" ry="7" fill="#b9b2ac"/><circle cx="14" cy="22" r="4.4" fill="#b9b2ac"/><circle cx="24" cy="22" r="4.4" fill="#b9b2ac"/><circle cx="14" cy="22" r="2.4" fill="#f2c4c8"/><circle cx="24" cy="22" r="2.4" fill="#f2c4c8"/><circle cx="19" cy="27" r="5" fill="#c9c2bc"/><circle cx="17" cy="26" r="1.1" fill="#263d32"/><circle cx="21" cy="26" r="1.1" fill="#263d32"/><circle cx="19" cy="29" r="1.1" fill="#e88a9a"/>`,
+ owl:()=>`<ellipse cx="20" cy="27" rx="10" ry="11" fill="#8a6a4a"/><ellipse cx="20" cy="30" rx="6" ry="7" fill="#d9c09a"/><path d="M11 18l2-6 4 5M29 18l-2-6-4 5" fill="#8a6a4a"/><circle cx="16" cy="21" r="3.6" fill="#fbf3dc"/><circle cx="24" cy="21" r="3.6" fill="#fbf3dc"/><circle cx="16" cy="21" r="1.7" fill="#263d32"/><circle cx="24" cy="21" r="1.7" fill="#263d32"/><path d="M19 24l1 2 1-2Z" fill="#e8a83a"/>`,
+ crab:()=>`<ellipse cx="20" cy="30" rx="11" ry="7" fill="#e0644e"/><path d="M9 28Q3 22 6 16M31 28Q37 22 34 16" stroke="#e0644e" stroke-width="2.4" fill="none"/><circle cx="6" cy="15" r="3.4" fill="#e0644e"/><circle cx="34" cy="15" r="3.4" fill="#e0644e"/><path d="M16 24V19M24 24V19" stroke="#e0644e" stroke-width="1.6"/><circle cx="16" cy="18" r="2" fill="#fff"/><circle cx="24" cy="18" r="2" fill="#fff"/><circle cx="16" cy="18" r="1" fill="#263d32"/><circle cx="24" cy="18" r="1" fill="#263d32"/>`,
+ fish:(c='#f6a65a')=>`<path d="M8 26Q18 14 30 26Q18 38 8 26Z" fill="${c}"/><path d="M29 26l8-6v12Z" fill="${c}"/><circle cx="14" cy="24" r="1.5" fill="#263d32"/>`
+};
+const raceFans={pond:[['rabbit'],['bird'],['hedgehog']],forest:[['squirrel'],['hedgehog'],['rabbit']],marsh:[['owl'],['mouse'],['bird','#7fae8a']],crystal:[['mouse'],['bird','#b9a6ff'],['hedgehog']],castle:[['mouse'],['rabbit','#efe6da'],['bird','#e88a9a']],sea:[['crab'],['fish'],['crab']],clouds:[['bird','#ffffff'],['owl'],['bird','#f6d36b']],night:[['owl'],['hedgehog'],['mouse']],winter:[['rabbit','#ffffff'],['bird','#e0644e'],['squirrel']]};
+function raceFish(cls){
+ const fish=(c,x,b,d,dur,cl='')=>`<svg class="raceFish${cl}" viewBox="0 0 40 40" style="left:${x}%;bottom:${b}%;animation-delay:-${d}s;animation-duration:${dur}s" aria-hidden="true">${raceFanArt.fish(c)}</svg>`;
+ if(['pond','marsh'].includes(cls))return fish('#f6a65a',44,16,2,7)+fish('#e8d27a',90,22,5,9.5);
+ if(cls==='sea')return fish('#f6a65a',0,30,3,14,' swim')+fish('#9fd0f0',0,18,9,18,' swim')+fish('#f3c2e0',0,40,1,22,' swim');
+ return '';
+}
+function raceBalloons(){return ['#e85f6a','#f6d36b','#6f9fd0','#8cc88a','#c9a0e0'].map((c,i)=>`<span class="raceBalloon" style="left:${8+i*21}%;--c:${c};animation-delay:-${(i*1.7).toFixed(1)}s"></span>`).join('')}
+function raceDetailsHTML(cls){
+ const [far,near]=raceProps[cls]||raceProps.pond;
+ const fans=(raceFans[cls]||raceFans.pond).map(([k,c],i)=>`<span class="raceFan" style="left:${[7,47,91][i]}%;animation-delay:-${i*.7}s"><svg viewBox="0 0 40 40">${raceFanArt[k](c)}</svg><i aria-hidden="true">${['♥','♪','✦'][i]}</i></span>`).join('');
+ return `<div class="raceProps far" style="background-image:${racePropsURL(far,240)}"></div><div class="raceFans">${fans}</div><div class="raceProps near" style="background-image:${racePropsURL(near,200)}"></div>${raceFish(cls)}<div class="raceBunting"></div>${raceBalloons()}`;
+}
+// The audience cheers on every landed hop, and a bit more on perfect ones.
+function raceCheer(track,big){const f=track?.querySelector?.('.raceFans');if(!f?.classList)return;f.classList.remove('cheer','big');void f.offsetWidth;f.classList.add('cheer');if(big)f.classList.add('big');clearTimeout(raceCheer.t);raceCheer.t=setTimeout(()=>f.classList?.remove('cheer','big'),1100)}
 function platformScene(world){return `<div class="landingPlatform ${world.pad}" id="currentPad"></div><div class="landingPlatform ${world.pad}" id="nextPad"></div><span id="landingCue">${world.padLabel}</span>${world.extra==='root'?'<svg id="rootObstacle" viewBox="0 0 100 60" aria-hidden="true"><path d="M5 52Q25 51 30 30Q35 4 50 12Q65 20 60 38Q70 49 95 52" fill="none" stroke="#6f5139" stroke-width="13" stroke-linecap="round"/><path d="M31 28L19 18M60 37L80 26" stroke="#6f5139" stroke-width="7" stroke-linecap="round"/></svg>':world.extra==='fly'?'<div id="guideFly" aria-hidden="true">✦</div>':''}<div id="surpriseThing" aria-hidden="true">${world.surprise?.icon||''}</div>`}
 
 // On small screens, bring the play area into view so track and jump button fit together.
@@ -154,7 +213,7 @@ function startRace(){
   attempted=true;button.disabled=true;sfx('jump');$('#powerThing').hidden=true;
   let verdict=jumpVerdict(shownPhase(),zone);
   if(verdict==='good'&&mods.firstPerfect&&!firstPerfectUsed){verdict='perfect';firstPerfectUsed=true}
-  platformFlight={start:elapsed,success:verdict!=='miss',golden,landed:false};
+  platformFlight={start:elapsed,success:verdict!=='miss',golden,landed:false};if(verdict!=='miss'&&(verdict==='perfect'||golden)&&rider.classList?.add){rider.classList.remove('trick');void rider.offsetWidth;rider.classList.add('trick')}
   if(verdict==='miss'){miss(true);return}
   good++;streak++;bestStreak=Math.max(bestStreak,streak);setStreak();
   let powerNote='';if(P.pad){const k=powerKinds[P.pad];if(P.pad==='turbo')P.turboUntil=elapsed+3;if(P.pad==='shield')P.shield=true;if(P.pad==='clover')P.clover=3;if(P.pad==='star')P.star=true;P.got++;powerNote=' · '+k.icon+' '+k.name+'!';P.pad=null;sfx('golden');setPowerChip()}
@@ -220,7 +279,7 @@ function startRace(){
    const t=Math.min(age/flight,1);
    const x=success?20+50*t:20+8*Math.sin(Math.PI*t),y=-Math.sin(Math.PI*t)*height;
    rider.style.left=x+'%';rider.style.transform=`translate(-50%, ${y}px) rotate(${success?(-12*Math.cos(Math.PI*t)).toFixed(1):0}deg)`;
-   if(age>=flight&&!platformFlight.landed){platformFlight.landed=true;if(success){sfx('land');raceSplash(track,success?70:20,world.className);if(rider.classList?.remove&&rider.classList.add){rider.classList.remove('squash');void rider.offsetWidth;rider.classList.add('squash')}}}
+   if(age>=flight&&!platformFlight.landed){platformFlight.landed=true;if(success){sfx('land');raceSplash(track,success?70:20,world.className);raceCheer(track,platformFlight.golden||rider.classList?.contains?.('trick'));if(rider.classList?.remove&&rider.classList.add){rider.classList.remove('squash','trick');void rider.offsetWidth;rider.classList.add('squash')}}}
    if(age>=flight&&age<flight+bounce){rider.style.transform=`translate(-50%, ${-Math.sin((age-flight)/bounce*Math.PI)*(platformFlight.golden?40:22)}px)`;$('#landingCue').textContent=platformFlight.golden?'Superstuds!':'Studs! Extra fart!'}
    if(age>=flight+bounce&&success){const camera=Math.min((age-flight-bounce)/pan,1)*50;track.style?.setProperty?.('--pan',(scenePan+camera).toFixed(1));rider.style.left=(70-camera)+'%';$('#currentPad').style.left=(20-camera)+'%';$('#nextPad').style.left=(70-camera)+'%';thing.style.left=(45-camera)+'%';$('#landingCue').textContent='Landat!';if(world.extra==='root')$('#rootObstacle').style.left=(45-camera)+'%';if(world.extra==='fly')$('#guideFly').style.left=(70-camera)+'%'}
    if(age>=flight+(success?bounce+pan:.25)){
@@ -249,7 +308,7 @@ function startRace(){
   progress.map((p,i)=>({p,i})).filter(x=>x.p>=100&&!finished.includes(x.i)).sort((a,b)=>b.p-a.p).forEach(x=>{finished.push(x.i);if(x.i===0)finishTime=elapsed});
   progress.forEach((p,i)=>$('#runner'+i).style.left=Math.min(p,100)+'%');
   if(elapsed>1.2&&elapsed<1.4)say(1+Math.floor(seed)%3,'start');
-  if(!sprint&&progress[0]>=70){sprint=true;sfx('sprint');$('#raceTitle').textContent='Slutspurt! Takten ökar…';say(3,'sprint')}
+  if(!sprint&&progress[0]>=70){sprint=true;track.classList?.add?.('sprinting');sfx('sprint');$('#raceTitle').textContent='Slutspurt! Takten ökar…';say(3,'sprint')}
   if(!finished.includes(0)){
    const now=1+progress.slice(1).filter(p=>p>progress[0]).length;
    if(now<place&&elapsed>2){const passed=[1,2,3].find(i=>progress[i]<progress[0]&&progress[i]>progress[0]-6);$('#raceTitle').textContent=passed?'Du gick om '+field[passed-1].name+'!':'Du klättrar uppåt!';sfx('overtake');if(passed)say(passed,'passed')}
